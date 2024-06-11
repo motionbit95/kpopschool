@@ -7,29 +7,26 @@ import {
   Image,
   Text,
 } from "@chakra-ui/react";
+import { Link, useLocation } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
 const Topbar = () => {
   const isLogin = true;
-  const [selected, setSelected] = useState(() => {
-    return localStorage.getItem("selectedButton") || "";
-  });
+  const location = useLocation();
+  const [selected, setSelected] = useState("");
 
   useEffect(() => {
-    localStorage.setItem("selectedButton", selected);
-  }, [selected]);
+    setSelected(location.pathname.substr(1)); // Remove leading "/"
+  }, [location]);
 
-  const handleButtonClick = (buttonName, url = null) => {
+  const handleButtonClick = (buttonName) => {
     setSelected(buttonName);
-    if (url) {
-      window.location.href = url;
-    }
   };
 
   return (
     <Container minW={"container.xl"}>
       <HStack id="header" py={4} justifyContent={"space-between"}>
-        <HStack onClick={() => handleButtonClick("home", "/")}>
+        <HStack as={Link} to="/" onClick={() => handleButtonClick("home")}>
           <Box boxSize={"120px"}>
             <Image src={require("../Asset/Logo/K-popLogo.png")} alt={""} />
           </Box>
@@ -39,26 +36,42 @@ const Topbar = () => {
         </HStack>
         <ButtonGroup size={"lg"} variant={"ghost"}>
           <Button
-            onClick={() => handleButtonClick("teachers", "/teachers")}
-            color={selected === "teachers" ? "#00C3BA" : "black"}
+            as={Link}
+            to="/teachers"
+            onClick={() => handleButtonClick("teachers")}
+            color={
+              location.pathname.startsWith("/teachers") ? "#00C3BA" : "black"
+            }
           >
             Teachers
           </Button>
           <Button
-            onClick={() => handleButtonClick("curriculum", "/curriculum")}
-            color={selected === "curriculum" ? "#00C3BA" : "black"}
+            as={Link}
+            to="/curriculum"
+            onClick={() => handleButtonClick("curriculum")}
+            color={
+              location.pathname.startsWith("/curriculum") ? "#00C3BA" : "black"
+            }
           >
             Curriculum
           </Button>
           <Button
-            onClick={() => handleButtonClick("cummunity", "/cummunity")}
-            color={selected === "cummunity" ? "#00C3BA" : "black"}
+            as={Link}
+            to="/community"
+            onClick={() => handleButtonClick("community")}
+            color={
+              location.pathname.startsWith("/community") ? "#00C3BA" : "black"
+            }
           >
-            Cummunity
+            Community
           </Button>
           <Button
-            onClick={() => handleButtonClick("mypage", "/mypage")}
-            color={selected === "mypage" ? "#00C3BA" : "black"}
+            as={Link}
+            to="/mypage"
+            onClick={() => handleButtonClick("mypage")}
+            color={
+              location.pathname.startsWith("/mypage") ? "#00C3BA" : "black"
+            }
           >
             My Page
           </Button>

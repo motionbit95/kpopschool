@@ -18,11 +18,13 @@ import React from "react";
 const Teachers = () => {
   const Teachers1 = [
     {
+      id: 1,
       name: "Lee Hwan Ho",
       type: "Vocal Trainer",
       Image: require("../../Asset/Image/Trainer1.png"),
     },
     {
+      id: 2,
       name: "Jessie",
       type: "Vocal Trainer",
       Image: require("../../Asset/Image/Trainer1.png"),
@@ -40,6 +42,7 @@ const Teachers = () => {
         <Tabs variant={"unstyled"}>
           <TabList gap={12}>
             <Tab
+              px={0}
               fontSize={"2xl"}
               fontWeight={"600"}
               color={"#E1E4E4"}
@@ -48,6 +51,7 @@ const Teachers = () => {
               All Trainer
             </Tab>
             <Tab
+              px={0}
               fontSize={"2xl"}
               fontWeight={"600"}
               color={"#E1E4E4"}
@@ -56,6 +60,7 @@ const Teachers = () => {
               Vocal Trainer
             </Tab>
             <Tab
+              px={0}
               fontSize={"2xl"}
               fontWeight={"600"}
               color={"#E1E4E4"}
@@ -65,7 +70,7 @@ const Teachers = () => {
             </Tab>
           </TabList>
           <TabPanels>
-            <TabPanel>
+            <TabPanel px={0}>
               {/* 전체 목록 */}
               <Stack spacing={0}>
                 <Stack py={8}>
@@ -126,7 +131,10 @@ const TeacherCard = (props) => {
         overflow="hidden"
         cursor="pointer"
         onClick={() => {
-          console.log(props.item);
+          console.log(props.item.id);
+          // 리플레이스 시 뒤로가기가 안되는 이슈로 href로 이동 후 data를 id에 맞게 가져와야합니다.
+          window.location.href = `/teachers/${props.item.id}`;
+          // window.location.replace(`/teachers/${props.item.id}`);
         }}
       >
         <Image

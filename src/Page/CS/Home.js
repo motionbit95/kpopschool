@@ -13,7 +13,7 @@ import Topbar from "../../Component/Topbar";
 
 const Home = () => {
   return (
-    <Flex flex={1} h={"100vh"} direction={"column"}>
+    <Flex flex={1} direction={"column"}>
       <Container minW={"container.xl"}>
         <Stack spacing={16}>
           <Stack direction={{ base: "column", md: "row" }}>

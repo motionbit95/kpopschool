@@ -27,14 +27,15 @@ function App() {
       ) : (
         <>
           {/* CS 페이지 */}
-          <Topbar />
+
           <BrowserRouter>
+            <Topbar />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/teachers" element={<Teachers />} />
-              <Route path="/detail" element={<TeacherDetail />} />
+              <Route path="/teachers/*" element={<TeacherDetail />} />
               <Route path="/curriculum" element={<Curriculum />} />
-              <Route path="/cummunity" element={<Cummunity />} />
+              <Route path="/community" element={<Cummunity />} />
               <Route path="/mypage" element={<MyPage />} />
             </Routes>
           </BrowserRouter>

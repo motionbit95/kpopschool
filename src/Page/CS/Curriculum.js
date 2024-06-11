@@ -16,11 +16,7 @@ const Curriculum = () => {
       <Container minW={"container.xl"}>
         <Stack>
           <Box py={6}>
-            <Text
-              fontSize={"5xl"}
-              fontWeight={"bold"}
-              color={"rgba(255, 60, 162, 1)"}
-            >
+            <Text fontSize={"5xl"} fontWeight={"bold"} color={"#FF3CA2"}>
               Curriculum
             </Text>
           </Box>
