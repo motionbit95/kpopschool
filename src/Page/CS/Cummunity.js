@@ -22,42 +22,57 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 
 const Cummunity = () => {
-  const events = [
-    {
-      name: "event1",
-      image: require("../../Asset/Image/event1.png"),
-      title: "title1",
-      discription: "description1",
-    },
-    {
-      name: "event1",
-      image: require("../../Asset/Image/event1.png"),
-      title: "title1",
-      discription: "description1",
-    },
-    {
-      name: "event1",
-      image: require("../../Asset/Image/event1.png"),
-      title: "title1",
-      discription: "description1",
-    },
-    {
-      name: "event1",
-      image: require("../../Asset/Image/event1.png"),
-      title: "title1",
-      discription: "description1",
-    },
-  ];
+  const [FAQs, setFAQs] = useState([]);
+  const [events, setEvents] = useState([]);
+  useEffect(() => {
+    const host_url =
+      window.location.hostname === "localhost" ? "http://localhost:8080" : "";
+    console.log(host_url);
+
+    const getFAQs = async () => {
+      fetch(`${host_url}/faq/list`)
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          const sortList = res.sort((a, b) => {
+            return a.index - b.index;
+          });
+          setFAQs(sortList);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    const getEvents = async () => {
+      fetch(`${host_url}/event/list`)
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          const sortList = res.sort((a, b) => {
+            return a.index - b.index;
+          });
+          setEvents(sortList);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    getFAQs();
+    getEvents();
+  }, []);
+
   return (
     <Flex flex={1}>
       <Container minW={"container.xl"}>
         <Box py={6}>
           <Text fontSize={"5xl"} fontWeight={"bold"} color={"#00B2FF"}>
-            Curriculum
+            Cummunity
           </Text>
         </Box>
         <Tabs variant={"unstyled"}>
@@ -88,37 +103,62 @@ const Cummunity = () => {
                 display={"flex"}
                 flexDirection={"row"}
                 gap={2}
+                h={"600px"}
               >
                 <TabList
                   flexDirection={"column"}
-                  w={"400px"}
-                  h={"600px"}
+                  w={"500px"}
                   overflowY={"scroll"}
                   pr={2}
                   gap={4}
+                  css={{
+                    "&::-webkit-scrollbar": {
+                      width: "8px",
+                    },
+                    "&::-webkit-scrollbar-track": {
+                      background: "transparent", // 트랙의 배경을 투명하게 설정
+                    },
+                    "&::-webkit-scrollbar-thumb": {
+                      backgroundColor: "#888", // 스크롤바 색상
+                      borderRadius: "10px", // 스크롤바 모서리 둥글게
+                      border: "none", // 스크롤바 보더 제거
+                    },
+                  }}
                 >
-                  {events.map((item, id) => (
+                  {events.map((event, id) => (
                     <Tab p={0} key={id}>
                       <Stack align={"start"}>
                         <Box borderRadius={"xl"} overflow={"hidden"}>
-                          <Image src={item.image} alt={""} />
+                          <Image src={event.thumbnail} alt={""} />
                         </Box>
-                        <Text>{item.name}</Text>
+                        <Text>{event.title}</Text>
                       </Stack>
                     </Tab>
                   ))}
                 </TabList>
-                <TabPanels>
-                  {events.map((item, id) => (
-                    <TabPanel key={id} p={0}>
-                      <Stack>
-                        <Box w={"full"}>
-                          <Image src={item.image} alt={""} />
+                <TabPanels borderLeft={"1px solid #E1E4E4"} h={"full"} pl={2}>
+                  {events.map((event, id) => (
+                    <TabPanel key={id} p={0} h={"full"}>
+                      <Stack h={"full"} spacing={4}>
+                        <Box w={"full"} overflow={"hidden"} borderRadius={"xl"}>
+                          <Image w={"full"} src={event.thumbnail} alt={""} />
                         </Box>
-                        <Text>{item.title}</Text>
-                        <Box>
-                          <Text>{item.discription}</Text>
-                        </Box>
+                        <Stack spacing={8} align={"center"}>
+                          <Box w={"full"}>
+                            <Text
+                              fontSize={"4xl"}
+                              color={"#00C3BA"}
+                              fontWeight={"600"}
+                            >
+                              {event.title}
+                            </Text>
+                          </Box>
+                          <Box w={"60%"}>
+                            <Text color={"#4E4E4E"} fontSize={"lg"}>
+                              {event.description}
+                            </Text>
+                          </Box>
+                        </Stack>
                       </Stack>
                     </TabPanel>
                   ))}
@@ -159,36 +199,3 @@ const Cummunity = () => {
 };
 
 export default Cummunity;
-
-export const FAQs = [
-  {
-    id: 1,
-    question: "How do I pay?",
-    answer: "1",
-  },
-  {
-    id: 2,
-    question: "Video playback error",
-    answer: "2",
-  },
-  {
-    id: 3,
-    question: "AI playback error",
-    answer: "3",
-  },
-  {
-    id: 4,
-    question: "When the loading screen lasts more than 1 minute during payment",
-    answer: "4",
-  },
-  {
-    id: 5,
-    question: "Changing lesson course",
-    answer: "5",
-  },
-  {
-    id: 6,
-    question: "Class refund information",
-    answer: "6",
-  },
-];

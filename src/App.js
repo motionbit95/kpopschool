@@ -8,6 +8,7 @@ import Curriculum from "./Page/CS/Curriculum";
 import Cummunity from "./Page/CS/Cummunity";
 import MyPage from "./Page/CS/MyPage";
 import TeacherDetail from "./Page/CS/TeacherDetail";
+import CurriculumDetail from "./Page/CS/CurriculumDetail";
 
 function App() {
   const isAdmin = window.location.pathname.includes("/admin");
@@ -35,6 +36,7 @@ function App() {
               <Route path="/teachers" element={<Teachers />} />
               <Route path="/teachers/*" element={<TeacherDetail />} />
               <Route path="/curriculum" element={<Curriculum />} />
+              <Route path="/detail" element={<CurriculumDetail />} />
               <Route path="/community" element={<Cummunity />} />
               <Route path="/mypage" element={<MyPage />} />
             </Routes>

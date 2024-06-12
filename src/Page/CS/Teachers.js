@@ -13,9 +13,34 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const Teachers = () => {
+  const [teachers, setTeachers] = useState([]);
+
+  useEffect(() => {
+    const host_url =
+      window.location.hostname === "localhost" ? "http://localhost:8080" : "";
+    console.log(host_url);
+
+    const getTeachers = async () => {
+      fetch(`${host_url}/teachers/list`)
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          const sortList = res.sort((a, b) => {
+            return a.index - b.index;
+          });
+          setTeachers(sortList);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getTeachers();
+    console.log(Teachers);
+  }, []);
+
   const Teachers1 = [
     {
       id: 1,
@@ -78,9 +103,10 @@ const Teachers = () => {
                     Vocal Trainer
                   </Text>
                   <SimpleGrid columns={4} spacing={4} py={4}>
-                    {Teachers1.map((item) => (
-                      <TeacherCard item={item} />
-                    ))}
+                    {teachers.map(
+                      (item) =>
+                        item.category === "Vocal" && <TeacherCard item={item} />
+                    )}
                   </SimpleGrid>
                 </Stack>
                 <Stack py={8}>
@@ -88,9 +114,10 @@ const Teachers = () => {
                     Dance Trainer
                   </Text>
                   <SimpleGrid columns={4} spacing={4} py={4}>
-                    {Teachers1.map((item) => (
-                      <TeacherCard item={item} />
-                    ))}
+                    {teachers.map(
+                      (item) =>
+                        item.category === "Dance" && <TeacherCard item={item} />
+                    )}
                   </SimpleGrid>
                 </Stack>
               </Stack>
@@ -98,17 +125,19 @@ const Teachers = () => {
             <TabPanel>
               {/* 보컬 강사 */}
               <SimpleGrid columns={4} spacing={4} py={4}>
-                {Teachers1.map((item) => (
-                  <TeacherCard item={item} />
-                ))}
+                {teachers.map(
+                  (item) =>
+                    item.category === "Vocal" && <TeacherCard item={item} />
+                )}
               </SimpleGrid>
             </TabPanel>
             <TabPanel>
               {/* 댄스 강사 */}
               <SimpleGrid columns={4} spacing={4} py={4}>
-                {Teachers1.map((item) => (
-                  <TeacherCard item={item} />
-                ))}
+                {teachers.map(
+                  (item) =>
+                    item.category === "Dance" && <TeacherCard item={item} />
+                )}
               </SimpleGrid>
             </TabPanel>
           </TabPanels>
@@ -138,7 +167,7 @@ const TeacherCard = (props) => {
         }}
       >
         <Image
-          src={props.item.Image}
+          src={props.item.profile}
           alt={""}
           borderRadius={"xl"}
           objectFit={"cover"}
@@ -151,7 +180,7 @@ const TeacherCard = (props) => {
       <Text fontSize={"2xl"} fontWeight={"600"}>
         {props.item.name}
       </Text>
-      <Text fontSize={"lg"}>{props.item.type}</Text>
+      <Text fontSize={"lg"}>{`${props.item.category} Trainer`}</Text>
     </Stack>
   );
 };

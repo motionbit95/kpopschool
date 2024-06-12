@@ -5,7 +5,10 @@ import {
   ButtonGroup,
   Container,
   Flex,
+  Grid,
+  GridItem,
   HStack,
+  Icon,
   IconButton,
   Image,
   Input,
@@ -26,15 +29,36 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
-import { FiChevronRight } from "react-icons/fi";
+import React, { useEffect, useState } from "react";
+import { FiChevronRight, FiStar } from "react-icons/fi";
 
 const TeacherDetail = (props) => {
-  const { type, name, info, image } = props; // 수정필요
-
+  const [teacher, setTeacher] = useState({});
   useEffect(() => {
-    console.log(props);
-  });
+    const host_url =
+      window.location.hostname === "localhost" ? "http://localhost:8080" : "";
+
+    const id = window.location.pathname.split("/").pop();
+    console.log(id);
+
+    fetch(`${host_url}/teachers/get`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: id,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        setTeacher(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <Flex flex={1} direction={"column"}>
       {/* 강사 정보 */}
@@ -48,32 +72,54 @@ const TeacherDetail = (props) => {
           >
             <Text>Teachers</Text>
             <FiChevronRight />
-            <Text>{type}</Text>
+            <Text>{`${teacher.category} Trainer`}</Text>
             <FiChevronRight />
-            <Text color={"#00C3BA"}>{name}</Text>
+            <Text color={"#00C3BA"}>{teacher.name}</Text>
           </HStack>
           <Stack spacing={4}>
             <Text fontSize={"3xl"} fontWeight={"600"} color={"#FFCC00"}>
-              Vocal Trainer
+              {`${teacher.category} Trainer`}
             </Text>
             <HStack justify={"space-between"} align={"flex-start"}>
               <HStack gap={4} h={"250px"}>
                 <Box boxSize={"250px"} bgColor={"gray"} borderRadius={"xl"}>
-                  <Image src={image} alt={""} />
+                  <Image src={teacher.profile} alt={""} />
                 </Box>
-                <Stack justify={"space-between"} h={"full"}>
+                <Stack h={"full"} justify={"space-between"}>
                   <Text fontSize={"3xl"} fontWeight={"600"}>
-                    Lee Hwan Ho
+                    {teacher.name}
                   </Text>
                   <Stack spacing={0} fontSize={"lg"}>
-                    <Text>1</Text>
-                    <Text>2</Text>
-                    <Text>3</Text>
+                    <Text whiteSpace={"pre-line"}>{teacher.career}</Text>
                   </Stack>
                   <Stack spacing={0} fontSize={"sm"}>
-                    <Text>1</Text>
-                    <Text>2</Text>
-                    <Text>3</Text>
+                    <Grid
+                      templateColumns={"repeat(2, 1fr)"}
+                      columnGap={3}
+                      maxW={"400px"}
+                    >
+                      <GridItem>instructor's rating</GridItem>
+                      <GridItem alignContent={"center"}>
+                        <Flex gap={1}>
+                          {Array.from({ length: 5 }, (_, i) => (
+                            <Image
+                              key={i}
+                              src={
+                                i < teacher.rating
+                                  ? require("../../Asset/Icon/starFill.png")
+                                  : require("../../Asset/Icon/starDefault.png")
+                              }
+                              alt="star"
+                              boxSize="18px" // 적절한 크기로 설정
+                            />
+                          ))}
+                        </Flex>
+                      </GridItem>
+                      <GridItem>review</GridItem>
+                      <GridItem>{teacher.review}</GridItem>
+                      <GridItem>student</GridItem>
+                      <GridItem>{teacher.student?.toLocaleString()}</GridItem>
+                    </Grid>
                   </Stack>
                 </Stack>
               </HStack>
@@ -229,7 +275,20 @@ const TeacherDetail = (props) => {
                       <Text fontSize={"lg"}>fiatto</Text>
                       <Text fontSize={"sm"}>Advanced course|VOCAL</Text>
                     </Stack>
-                    <Text>Rating</Text>
+                    <Flex gap={1}>
+                      {Array.from({ length: 5 }, (_, i) => (
+                        <Image
+                          key={i}
+                          src={
+                            i < 5 // 데이터 가져와야함
+                              ? require("../../Asset/Icon/starFill.png")
+                              : require("../../Asset/Icon/starDefault.png")
+                          }
+                          alt="star"
+                          boxSize="20px" // 적절한 크기로 설정
+                        />
+                      ))}
+                    </Flex>
                   </HStack>
                   <Text fontSize={"lg"} color={"#4E4E4E"}>
                     The teacher was very kind and taught well. Vibration, which

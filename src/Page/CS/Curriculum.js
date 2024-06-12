@@ -4,13 +4,23 @@ import {
   ButtonGroup,
   Container,
   Flex,
+  Image,
   SimpleGrid,
   Stack,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 
 const Curriculum = () => {
+  const [isHoveredDance, setIsHoveredDance] = useState(false);
+  const [isHoveredVocal, setIsHoveredVocal] = useState(false);
+
+  const hoverMousedDance = () => setIsHoveredDance(true);
+  const unhoverMousedDance = () => setIsHoveredDance(false);
+
+  const hoverMousedVocal = () => setIsHoveredVocal(true);
+  const unhoverMousedVocal = () => setIsHoveredVocal(false);
+
   return (
     <Flex flex={1}>
       <Container minW={"container.xl"}>
@@ -28,15 +38,15 @@ const Curriculum = () => {
           <SimpleGrid columns={2} gap={16} p={16}>
             <Stack>
               <Box
-                bgImage={require("../../Asset/Image/Curriculum_dance.png")}
-                bgSize={"cover"}
-                bgColor={"black"}
                 borderRadius={"xl"}
                 pt={48}
                 px={8}
                 pb={8}
                 position={"relative"}
                 overflow={"hidden"}
+                cursor={"pointer"}
+                onMouseEnter={hoverMousedDance}
+                onMouseLeave={unhoverMousedDance}
               >
                 <Text
                   fontSize={"4xl"}
@@ -49,6 +59,20 @@ const Curriculum = () => {
                   <br />
                   Curriculum
                 </Text>
+                <Box
+                  position={"absolute"}
+                  top={0}
+                  left={0}
+                  bgSize={"cover"}
+                  borderRadius={"xl"}
+                  boxSize={"full"}
+                >
+                  <Image
+                    transition={"all 0.3s ease-in-out"}
+                    transform={isHoveredDance ? "scale(1.1)" : "scale(1)"}
+                    src={require("../../Asset/Image/Curriculum_dance.png")}
+                  />
+                </Box>
                 <Box
                   position={"absolute"}
                   top={0}
@@ -67,14 +91,15 @@ const Curriculum = () => {
             </Stack>
             <Stack>
               <Box
-                bgImage={require("../../Asset/Image/Curriculum_vocal.png")}
-                bgSize={"cover"}
                 borderRadius={"xl"}
                 pt={48}
                 px={8}
                 pb={8}
                 position={"relative"}
                 overflow={"hidden"}
+                cursor={"pointer"}
+                onMouseEnter={hoverMousedVocal}
+                onMouseLeave={unhoverMousedVocal}
               >
                 <Text
                   fontSize={"4xl"}
@@ -87,6 +112,20 @@ const Curriculum = () => {
                   <br />
                   Curriculum
                 </Text>
+                <Box
+                  position={"absolute"}
+                  top={0}
+                  left={0}
+                  bgSize={"cover"}
+                  borderRadius={"xl"}
+                  boxSize={"full"}
+                >
+                  <Image
+                    transition={"all 0.3s ease-in-out"}
+                    transform={isHoveredVocal ? "scale(1.1)" : "scale(1)"}
+                    src={require("../../Asset/Image/Curriculum_vocal.png")}
+                  />
+                </Box>
                 <Box
                   position={"absolute"}
                   top={0}
