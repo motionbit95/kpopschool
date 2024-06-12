@@ -10,6 +10,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Curriculum = () => {
   const [isHoveredDance, setIsHoveredDance] = useState(false);
@@ -20,6 +21,8 @@ const Curriculum = () => {
 
   const hoverMousedVocal = () => setIsHoveredVocal(true);
   const unhoverMousedVocal = () => setIsHoveredVocal(false);
+
+  const navigate = useNavigate();
 
   return (
     <Flex flex={1}>
@@ -47,6 +50,13 @@ const Curriculum = () => {
                 cursor={"pointer"}
                 onMouseEnter={hoverMousedDance}
                 onMouseLeave={unhoverMousedDance}
+                onClick={() => {
+                  const category = "Dance";
+                  const format = "1:1";
+                  navigate(`/curriculum/${category}`, {
+                    state: { category, format },
+                  });
+                }}
               >
                 <Text
                   fontSize={"4xl"}
@@ -84,9 +94,39 @@ const Curriculum = () => {
               </Box>
               <Text>Supports format</Text>
               <ButtonGroup variant={"outline"} colorScheme="green">
-                <Button>1:1</Button>
-                <Button>1:6</Button>
-                <Button>VOD</Button>
+                <Button
+                  onClick={() => {
+                    const category = "Dance";
+                    const format = "1:1";
+                    navigate(`/curriculum/${category}`, {
+                      state: { category, format },
+                    });
+                  }}
+                >
+                  1:1
+                </Button>
+                <Button
+                  onClick={() => {
+                    const category = "Dance";
+                    const format = "1:6";
+                    navigate(`/curriculum/${category}`, {
+                      state: { category, format },
+                    });
+                  }}
+                >
+                  1:6
+                </Button>
+                <Button
+                  onClick={() => {
+                    const category = "Dance";
+                    const format = "VOD";
+                    navigate(`/curriculum/${category}`, {
+                      state: { category, format },
+                    });
+                  }}
+                >
+                  VOD
+                </Button>
               </ButtonGroup>
             </Stack>
             <Stack>
@@ -100,6 +140,13 @@ const Curriculum = () => {
                 cursor={"pointer"}
                 onMouseEnter={hoverMousedVocal}
                 onMouseLeave={unhoverMousedVocal}
+                onClick={() => {
+                  const category = "Vocal";
+                  const format = "1:1";
+                  navigate(`/curriculum/${category}`, {
+                    state: { category, format },
+                  });
+                }}
               >
                 <Text
                   fontSize={"4xl"}
@@ -137,9 +184,39 @@ const Curriculum = () => {
               </Box>
               <Text>Supports format</Text>
               <ButtonGroup variant={"outline"} colorScheme="green">
-                <Button>1:1</Button>
-                <Button>1:6</Button>
-                <Button>VOD</Button>
+                <Button
+                  onClick={() => {
+                    const category = "Vocal";
+                    const format = "1:1";
+                    navigate(`/curriculum/${category}`, {
+                      state: { category, format },
+                    });
+                  }}
+                >
+                  1:1
+                </Button>
+                <Button
+                  onClick={() => {
+                    const category = "Vocal";
+                    const format = "1:6";
+                    navigate(`/curriculum/${category}`, {
+                      state: { category, format },
+                    });
+                  }}
+                >
+                  1:6
+                </Button>
+                <Button
+                  onClick={() => {
+                    const category = "Vocal";
+                    const format = "VOD";
+                    navigate(`/curriculum/${category}`, {
+                      state: { category, format },
+                    });
+                  }}
+                >
+                  VOD
+                </Button>
               </ButtonGroup>
             </Stack>
           </SimpleGrid>
