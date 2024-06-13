@@ -41,21 +41,6 @@ const Teachers = () => {
     console.log(Teachers);
   }, []);
 
-  const Teachers1 = [
-    {
-      id: 1,
-      name: "Lee Hwan Ho",
-      type: "Vocal Trainer",
-      Image: require("../../Asset/Image/Trainer1.png"),
-    },
-    {
-      id: 2,
-      name: "Jessie",
-      type: "Vocal Trainer",
-      Image: require("../../Asset/Image/Trainer1.png"),
-    },
-  ];
-
   return (
     <Flex flex={1}>
       <Container minW={"container.xl"}>
@@ -149,7 +134,7 @@ const Teachers = () => {
 
 export default Teachers;
 
-const TeacherCard = (props) => {
+export const TeacherCard = (props) => {
   return (
     <Stack spacing={1}>
       <AspectRatio

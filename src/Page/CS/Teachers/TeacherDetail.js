@@ -8,7 +8,6 @@ import {
   Grid,
   GridItem,
   HStack,
-  Icon,
   IconButton,
   Image,
   Input,
@@ -28,12 +27,18 @@ import {
   Th,
   Thead,
   Tr,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { FiChevronRight, FiStar } from "react-icons/fi";
+import { FiChevronRight } from "react-icons/fi";
+import { TeacherCard } from "./Teachers";
+import TeacherInfo from "./TeacherInfo";
 
 const TeacherDetail = (props) => {
   const [teacher, setTeacher] = useState({});
+  const [isFavorite, setIsFavorite] = useState(false);
+  const toast = useToast();
+  const isOkay = false;
   useEffect(() => {
     const host_url =
       window.location.hostname === "localhost" ? "http://localhost:8080" : "";
@@ -59,11 +64,39 @@ const TeacherDetail = (props) => {
         console.log(err);
       });
   }, []);
+
+  const handleClickFavorite = () => {
+    console.log("handleClickFavorite");
+    setIsFavorite(!isFavorite);
+  };
+
+  const handleClickCopyLink = () => {
+    navigator.clipboard
+      .writeText(window.location.href)
+      .then(() => {
+        toast({
+          title: "링크를 저장하였습니다.",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      })
+      .catch((error) => {
+        toast({
+          title: "링크저장에 실패하였습니다.",
+          description: error.toString(),
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      });
+  };
+
   return (
     <Flex flex={1} direction={"column"}>
-      {/* 강사 정보 */}
       <Container minW={"container.xl"}>
         <Stack py={16} spacing={8}>
+          {/* 페이지 정보 */}
           <HStack
             fontWeight={"300"}
             fontSize={"xl"}
@@ -76,78 +109,12 @@ const TeacherDetail = (props) => {
             <FiChevronRight />
             <Text color={"#00C3BA"}>{teacher.name}</Text>
           </HStack>
+          {/* 강사 정보 */}
           <Stack spacing={4}>
             <Text fontSize={"3xl"} fontWeight={"600"} color={"#FFCC00"}>
               {`${teacher.category} Trainer`}
             </Text>
-            <HStack justify={"space-between"} align={"flex-start"}>
-              <HStack gap={4} h={"250px"}>
-                <Box boxSize={"250px"} bgColor={"gray"} borderRadius={"xl"}>
-                  <Image src={teacher.profile} alt={""} />
-                </Box>
-                <Stack h={"full"} justify={"space-between"}>
-                  <Text fontSize={"3xl"} fontWeight={"600"}>
-                    {teacher.name}
-                  </Text>
-                  <Stack spacing={0} fontSize={"lg"}>
-                    <Text whiteSpace={"pre-line"}>{teacher.career}</Text>
-                  </Stack>
-                  <Stack spacing={0} fontSize={"sm"}>
-                    <Grid
-                      templateColumns={"repeat(2, 1fr)"}
-                      columnGap={3}
-                      maxW={"400px"}
-                    >
-                      <GridItem>instructor's rating</GridItem>
-                      <GridItem alignContent={"center"}>
-                        <Flex gap={1}>
-                          {Array.from({ length: 5 }, (_, i) => (
-                            <Image
-                              key={i}
-                              src={
-                                i < teacher.rating
-                                  ? require("../../Asset/Icon/starFill.png")
-                                  : require("../../Asset/Icon/starDefault.png")
-                              }
-                              alt="star"
-                              boxSize="18px" // 적절한 크기로 설정
-                            />
-                          ))}
-                        </Flex>
-                      </GridItem>
-                      <GridItem>review</GridItem>
-                      <GridItem>{teacher.review}</GridItem>
-                      <GridItem>student</GridItem>
-                      <GridItem>{teacher.student?.toLocaleString()}</GridItem>
-                    </Grid>
-                  </Stack>
-                </Stack>
-              </HStack>
-              <ButtonGroup size={"lg"}>
-                <IconButton
-                  aria-label="famous"
-                  icon={
-                    <Image
-                      src={require("../../Asset/Icon/star.png")}
-                      alt={""}
-                      size={"25px"}
-                    />
-                  }
-                  bgColor={"white"}
-                />
-                <IconButton
-                  aria-label="shared"
-                  icon={
-                    <Image
-                      src={require("../../Asset/Icon/shared.png")}
-                      alt={""}
-                      size={"25px"}
-                    />
-                  }
-                  bgColor={"white"}
-                />
-              </ButtonGroup>
-            </HStack>
+            <TeacherInfo teacher={teacher} />
           </Stack>
         </Stack>
       </Container>
@@ -218,6 +185,17 @@ const TeacherDetail = (props) => {
                     and get ready for the next step.
                   </Text>
                 </Box>
+                <Box w={"100%"} display={"flex"} justifyContent={"flex-end"}>
+                  {isOkay ? (
+                    <Button size={"lg"} bgColor={"#FF3CA2"} color={"white"}>
+                      APPLY
+                    </Button>
+                  ) : (
+                    <Button size={"lg"} bgColor={"#00B2FF"} color={"white"}>
+                      CONTINUE
+                    </Button>
+                  )}
+                </Box>
               </Stack>
             </Container>
           </TabPanel>
@@ -281,8 +259,8 @@ const TeacherDetail = (props) => {
                           key={i}
                           src={
                             i < 5 // 데이터 가져와야함
-                              ? require("../../Asset/Icon/starFill.png")
-                              : require("../../Asset/Icon/starDefault.png")
+                              ? require("../../../Asset/Icon/starFill.png")
+                              : require("../../../Asset/Icon/starDefault.png")
                           }
                           alt="star"
                           boxSize="20px" // 적절한 크기로 설정

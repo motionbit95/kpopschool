@@ -1,9 +1,11 @@
 import {
   Box,
+  Button,
   Container,
   Flex,
   HStack,
   Stack,
+  StackDivider,
   Tab,
   TabList,
   TabPanel,
@@ -26,6 +28,9 @@ const CurriculumDetail = () => {
   const location = useLocation();
   let { category } = location.state;
   const [format, setFormat] = useState(location.state.format);
+
+  const isOkay = false;
+
   useEffect(() => {
     window.scrollTo(0, 0);
     console.log(category, format);
@@ -48,7 +53,7 @@ const CurriculumDetail = () => {
             <Text color={"#00C3BA"}>{format}</Text>
           </HStack>
           <Stack spacing={4}>
-            <Text fontSize={"3xl"} fontWeight={"600"} color={"#FFCC00"}>
+            <Text fontSize={"3xl"} fontWeight={"600"} color={"#FF3CA2"}>
               {category}
             </Text>
           </Stack>
@@ -104,44 +109,67 @@ const CurriculumDetail = () => {
         <TabPanels>
           <TabPanel>
             <Container minW={"container.xl"} py={8}>
-              1
-              {/* <Stack>
-                <Text color={"#FFCC00"}>Beginner course</Text>
-                <Text fontSize={"2xl"} fontWeight={"600"}>
-                  Basic Vocal
-                </Text>
-                <HStack spacing={16}>
-                  <Stack spacing={0}>
-                    <Text color={"#C0C0C0"}>Month</Text>
-                    <Text fontWeight={"700"} color={"#00C3BA"}>
-                      3
+              <Stack divider={<StackDivider />} spacing={16}>
+                {Dances.map((dance) => (
+                  // 포멧의 타입에 맞게 해당 요소만 출력되게 하기
+                  // format === "1:1"
+                  <Stack>
+                    <Text
+                      fontSize={"2xl"}
+                      fontWeight={"600"}
+                      color={
+                        dance.title === "Beginner course"
+                          ? "#FFCC00"
+                          : dance.title === "Intermediate course"
+                          ? "#00C3BA"
+                          : "#FF3CA2"
+                      }
+                    >
+                      {dance.title}
                     </Text>
+                    <HStack spacing={16}>
+                      <Stack spacing={0}>
+                        <Text color={"#C0C0C0"}>Month</Text>
+                        <Text fontWeight={"700"} color={"#00C3BA"}>
+                          {dance.month}
+                        </Text>
+                      </Stack>
+                      <Stack spacing={0}>
+                        <Text color={"#C0C0C0"}>Sessions</Text>
+                        <Text fontWeight={"700"} color={"#00C3BA"}>
+                          {dance.sessions}
+                        </Text>
+                      </Stack>
+                      <Stack spacing={0}>
+                        <Text color={"#C0C0C0"}>Price</Text>
+                        <Text fontWeight={"700"} color={"#00C3BA"}>
+                          {dance.price}
+                        </Text>
+                      </Stack>
+                    </HStack>
+                    <Box pt={4}>
+                      <Text fontSize={"lg"} whiteSpace={"pre-line"}>
+                        {dance.description}
+                      </Text>
+                    </Box>
+                    <Box
+                      w={"100%"}
+                      display={"flex"}
+                      justifyContent={"flex-end"}
+                    >
+                      {isOkay ? (
+                        <Button size={"lg"} bgColor={"#FF3CA2"} color={"white"}>
+                          APPLY
+                        </Button>
+                      ) : (
+                        <Button size={"lg"} bgColor={"#00B2FF"} color={"white"}>
+                          CONTINUE
+                        </Button>
+                      )}
+                    </Box>
                   </Stack>
-                  <Stack spacing={0}>
-                    <Text color={"#C0C0C0"}>Sessions</Text>
-                    <Text fontWeight={"700"} color={"#00C3BA"}>
-                      12
-                    </Text>
-                  </Stack>
-                  <Stack spacing={0}>
-                    <Text color={"#C0C0C0"}>Price</Text>
-                    <Text fontWeight={"700"} color={"#00C3BA"}>
-                      $80 per session
-                    </Text>
-                  </Stack>
-                </HStack>
-                <Box pt={4}>
-                  <Text fontSize={"xl"}>
-                    There's a saying that goes in half. Learn basic
-                    vocalizations and breathing techniques to sing. Basic
-                    vocalizations are learned to correct inaccurate
-                    pronunciations and increase the volume when on stage, and
-                    breathing techniques are learned to communicate emotions
-                    while singing or breathe properly. Master your assignment
-                    and get ready for the next step.
-                  </Text>
-                </Box>
-              </Stack> */}
+                ))}
+              </Stack>
             </Container>
           </TabPanel>
           <TabPanel>
@@ -193,7 +221,33 @@ export default CurriculumDetail;
 const Dances = [
   {
     id: 1,
-    name: "Beginner course",
+    title: "Beginner course",
+    month: 3,
+    sessions: 12,
+    price: "$80 per session",
+    description: `- Basic Vocal and Breathing Practices: This course provides an introduction to breathing techniques and basic vocal techniques.
+- Understanding Pitch and Rhythm: Basic Music Theory.
+- Simple K-pop song practice: Perfect for beginners to practice their songs.
+- Basic pronunciation practice: develop correct pronunciation and a sense of rhythm.
+- Learn basic stage manners: basic posture and expressions on stage
+- Beginner Course Reviews and Ratings`,
+  },
+  {
+    id: 2,
+    title: "Intermediate course",
+    month: 3,
+    sessions: 12,
+    price: "$80 per session",
+    description: `- Basic Vocal and Breathing Practices: This course provides an introduction to breathing techniques and basic vocal techniques.
+- Understanding Pitch and Rhythm: Basic Music Theory.
+- Simple K-pop song practice: Perfect for beginners to practice their songs.
+- Basic pronunciation practice: develop correct pronunciation and a sense of rhythm.
+- Learn basic stage manners: basic posture and expressions on stage
+- Beginner Course Reviews and Ratings`,
+  },
+  {
+    id: 3,
+    title: "Advanced course",
     month: 3,
     sessions: 12,
     price: "$80 per session",

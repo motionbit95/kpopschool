@@ -80,7 +80,7 @@ const Curriculum = () => {
                   <Image
                     transition={"all 0.3s ease-in-out"}
                     transform={isHoveredDance ? "scale(1.1)" : "scale(1)"}
-                    src={require("../../Asset/Image/Curriculum_dance.png")}
+                    src={require("../../../Asset/Image/Curriculum_dance.png")}
                   />
                 </Box>
                 <Box
@@ -170,7 +170,7 @@ const Curriculum = () => {
                   <Image
                     transition={"all 0.3s ease-in-out"}
                     transform={isHoveredVocal ? "scale(1.1)" : "scale(1)"}
-                    src={require("../../Asset/Image/Curriculum_vocal.png")}
+                    src={require("../../../Asset/Image/Curriculum_vocal.png")}
                   />
                 </Box>
                 <Box

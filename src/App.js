@@ -3,12 +3,12 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./Page/CS/Home";
 import { Center } from "@chakra-ui/layout";
 import Topbar from "./Component/Topbar";
-import Teachers from "./Page/CS/Teachers";
-import Curriculum from "./Page/CS/Curriculum";
+import Teachers from "./Page/CS/Teachers/Teachers";
+import Curriculum from "./Page/CS/Curriculum/Curriculum";
 import Cummunity from "./Page/CS/Cummunity";
 import MyPage from "./Page/CS/MyPage";
-import TeacherDetail from "./Page/CS/TeacherDetail";
-import CurriculumDetail from "./Page/CS/CurriculumDetail";
+import TeacherDetail from "./Page/CS/Teachers/TeacherDetail";
+import CurriculumDetail from "./Page/CS/Curriculum/CurriculumDetail";
 
 function App() {
   const isAdmin = window.location.pathname.includes("/admin");
