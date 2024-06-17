@@ -8,11 +8,36 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
-import Topbar from "../../Component/Topbar";
-import { TeacherCard } from "./Teachers/Teachers";
+import React, { useEffect, useState } from "react";
+import TeacherInfo from "./Teachers/TeacherInfo";
+import { LessonItem, TeacherItem } from "../../Component/HomeDetail";
 
 const Home = () => {
+  const [teacher, setTeacher] = useState([]);
+
+  useEffect(() => {
+    const host_url =
+      window.location.hostname === "localhost" ? "http://localhost:8080" : "";
+    console.log(host_url);
+
+    const getTeacher = async () => {
+      fetch(`${host_url}/teachers/list`)
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          const sortList = res.sort((a, b) => {
+            return a.index - b.index;
+          });
+          setTeacher(sortList);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getTeacher();
+    console.log(teacher);
+  }, []);
+
   return (
     <Flex flex={1} direction={"column"} gap={24}>
       <Container minW={"container.xl"}>
@@ -68,33 +93,23 @@ const Home = () => {
           </Flex>
         </Container>
       </Box>
-      <Container minW={"container.xl"}>
+      <Container minW={"container.xl"} pb={24}>
         <Stack spacing={16}>
           <Stack>
             <Box>
-              <Text fontSize={"5xl"} color={"#FFCC00"}>
+              <Text fontSize={"5xl"} color={"#FFCC00"} fontWeight={"bold"}>
                 Teachers
               </Text>
             </Box>
-            <Stack spacing={4}>
-              <Text fontSize={"3xl"} fontWeight={"600"} color={"#00C3BA"}>
-                {`Vocal Trainer`}
-              </Text>
-              {/* <TeacherCard /> */}
-            </Stack>
+            <TeacherItem teacher={teacher} />
           </Stack>
           <Stack>
             <Box>
-              <Text fontSize={"5xl"} color={"#FFCC00"}>
+              <Text fontSize={"5xl"} color={"#FF3CA2"} fontWeight={"bold"}>
                 Lessons
               </Text>
             </Box>
-            <Stack spacing={4}>
-              <Text fontSize={"3xl"} fontWeight={"600"} color={"#00C3BA"}>
-                {`Vocal`}
-              </Text>
-              {/* <TeacherCard /> */}
-            </Stack>
+            <LessonItem />
           </Stack>
         </Stack>
       </Container>

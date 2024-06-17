@@ -35,6 +35,43 @@ const CurriculumDetail = () => {
     window.scrollTo(0, 0);
     console.log(category, format);
   }, []);
+
+  const [curriculums, setCurriculums] = useState([]);
+
+  useEffect(() => {
+    const host_url =
+      window.location.hostname === "localhost" ? "http://localhost:8080" : "";
+    console.log(host_url);
+
+    const getCurriculums = async () => {
+      // 필터링은 검색을 통해서 진행한다.
+      fetch(`${host_url}/curriculums/search`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          conditions: [
+            { field: "category", operator: "==", value: category },
+            { field: "format", operator: "==", value: format },
+          ],
+        }),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          setCurriculums(res);
+        })
+        .catch((err) => {
+          // console.log(err);
+          console.log("데이터가 없습니다");
+          setCurriculums([]);
+        });
+    };
+    getCurriculums();
+    console.log(curriculums);
+  }, [category, format]);
+
   return (
     <Flex flex={1} direction={"column"}>
       {/* 강사 정보 */}
@@ -108,80 +145,233 @@ const CurriculumDetail = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <Container minW={"container.xl"} py={8}>
-              <Stack divider={<StackDivider />} spacing={16}>
-                {Dances.map((dance) => (
-                  // 포멧의 타입에 맞게 해당 요소만 출력되게 하기
-                  // format === "1:1"
-                  <Stack>
-                    <Text
-                      fontSize={"2xl"}
-                      fontWeight={"600"}
-                      color={
-                        dance.title === "Beginner course"
-                          ? "#FFCC00"
-                          : dance.title === "Intermediate course"
-                          ? "#00C3BA"
-                          : "#FF3CA2"
-                      }
-                    >
-                      {dance.title}
-                    </Text>
-                    <HStack spacing={16}>
-                      <Stack spacing={0}>
-                        <Text color={"#C0C0C0"}>Month</Text>
-                        <Text fontWeight={"700"} color={"#00C3BA"}>
-                          {dance.month}
-                        </Text>
-                      </Stack>
-                      <Stack spacing={0}>
-                        <Text color={"#C0C0C0"}>Sessions</Text>
-                        <Text fontWeight={"700"} color={"#00C3BA"}>
-                          {dance.sessions}
-                        </Text>
-                      </Stack>
-                      <Stack spacing={0}>
-                        <Text color={"#C0C0C0"}>Price</Text>
-                        <Text fontWeight={"700"} color={"#00C3BA"}>
-                          {dance.price}
-                        </Text>
-                      </Stack>
-                    </HStack>
-                    <Box pt={4}>
-                      <Text fontSize={"lg"} whiteSpace={"pre-line"}>
-                        {dance.description}
+            {format === "1:1" && (
+              <Container minW={"container.xl"} py={8}>
+                <Stack divider={<StackDivider />} spacing={16}>
+                  {curriculums.map((dance) => (
+                    // 포멧의 타입에 맞게 해당 요소만 출력되게 하기
+                    // format === "1:1"
+                    <Stack>
+                      <Text
+                        fontSize={"2xl"}
+                        fontWeight={"600"}
+                        color={
+                          dance.title === "Beginner course"
+                            ? "#FFCC00"
+                            : dance.title === "Intermediate course"
+                            ? "#00C3BA"
+                            : "#FF3CA2"
+                        }
+                      >
+                        {dance.title}
                       </Text>
-                    </Box>
-                    <Box
-                      w={"100%"}
-                      display={"flex"}
-                      justifyContent={"flex-end"}
-                    >
-                      {isOkay ? (
-                        <Button size={"lg"} bgColor={"#FF3CA2"} color={"white"}>
-                          APPLY
-                        </Button>
-                      ) : (
-                        <Button size={"lg"} bgColor={"#00B2FF"} color={"white"}>
-                          CONTINUE
-                        </Button>
-                      )}
-                    </Box>
-                  </Stack>
-                ))}
-              </Stack>
-            </Container>
+                      <HStack spacing={16}>
+                        <Stack spacing={0}>
+                          <Text color={"#C0C0C0"}>Month</Text>
+                          <Text fontWeight={"700"} color={"#00C3BA"}>
+                            {dance.month}
+                          </Text>
+                        </Stack>
+                        <Stack spacing={0}>
+                          <Text color={"#C0C0C0"}>Sessions</Text>
+                          <Text fontWeight={"700"} color={"#00C3BA"}>
+                            {dance.sessions}
+                          </Text>
+                        </Stack>
+                        <Stack spacing={0}>
+                          <Text color={"#C0C0C0"}>Price</Text>
+                          <Text fontWeight={"700"} color={"#00C3BA"}>
+                            {dance.price}
+                          </Text>
+                        </Stack>
+                      </HStack>
+                      <Box pt={4}>
+                        <Text fontSize={"lg"} whiteSpace={"pre-line"}>
+                          {dance.description}
+                        </Text>
+                      </Box>
+                      <Box
+                        w={"100%"}
+                        display={"flex"}
+                        justifyContent={"flex-end"}
+                      >
+                        {isOkay ? (
+                          <Button
+                            size={"lg"}
+                            bgColor={"#FF3CA2"}
+                            color={"white"}
+                          >
+                            APPLY
+                          </Button>
+                        ) : (
+                          <Button
+                            size={"lg"}
+                            bgColor={"#00B2FF"}
+                            color={"white"}
+                          >
+                            CONTINUE
+                          </Button>
+                        )}
+                      </Box>
+                    </Stack>
+                  ))}
+                </Stack>
+              </Container>
+            )}
+            {curriculums.length === 0 && <NotFound />}
+          </TabPanel>
+
+          <TabPanel>
+            {format === "1:6" && (
+              <Container minW={"container.xl"} py={8}>
+                <Stack divider={<StackDivider />} spacing={16}>
+                  {curriculums.map((dance) => (
+                    // 포멧의 타입에 맞게 해당 요소만 출력되게 하기
+                    // format === "1:1"
+                    <Stack>
+                      <Text
+                        fontSize={"2xl"}
+                        fontWeight={"600"}
+                        color={
+                          dance.title === "Beginner course"
+                            ? "#FFCC00"
+                            : dance.title === "Intermediate course"
+                            ? "#00C3BA"
+                            : "#FF3CA2"
+                        }
+                      >
+                        {dance.title}
+                      </Text>
+                      <HStack spacing={16}>
+                        <Stack spacing={0}>
+                          <Text color={"#C0C0C0"}>Month</Text>
+                          <Text fontWeight={"700"} color={"#00C3BA"}>
+                            {dance.month}
+                          </Text>
+                        </Stack>
+                        <Stack spacing={0}>
+                          <Text color={"#C0C0C0"}>Sessions</Text>
+                          <Text fontWeight={"700"} color={"#00C3BA"}>
+                            {dance.sessions}
+                          </Text>
+                        </Stack>
+                        <Stack spacing={0}>
+                          <Text color={"#C0C0C0"}>Price</Text>
+                          <Text fontWeight={"700"} color={"#00C3BA"}>
+                            {dance.price}
+                          </Text>
+                        </Stack>
+                      </HStack>
+                      <Box pt={4}>
+                        <Text fontSize={"lg"} whiteSpace={"pre-line"}>
+                          {dance.description}
+                        </Text>
+                      </Box>
+                      <Box
+                        w={"100%"}
+                        display={"flex"}
+                        justifyContent={"flex-end"}
+                      >
+                        {isOkay ? (
+                          <Button
+                            size={"lg"}
+                            bgColor={"#FF3CA2"}
+                            color={"white"}
+                          >
+                            APPLY
+                          </Button>
+                        ) : (
+                          <Button
+                            size={"lg"}
+                            bgColor={"#00B2FF"}
+                            color={"white"}
+                          >
+                            CONTINUE
+                          </Button>
+                        )}
+                      </Box>
+                    </Stack>
+                  ))}
+                </Stack>
+              </Container>
+            )}
+            {curriculums.length === 0 && <NotFound />}
           </TabPanel>
           <TabPanel>
-            {/* 수정 필요 */}
-            <Container minW={"container.xl"} py={8}>
-              2
-            </Container>
-          </TabPanel>
-          <TabPanel>
-            <Container minW={"container.xl"} py={8}>
-              3
-            </Container>
+            {format === "VOD" && (
+              <Container minW={"container.xl"} py={8}>
+                <Stack divider={<StackDivider />} spacing={16}>
+                  {curriculums.map((dance) => (
+                    // 포멧의 타입에 맞게 해당 요소만 출력되게 하기
+                    // format === "1:1"
+                    <Stack>
+                      <Text
+                        fontSize={"2xl"}
+                        fontWeight={"600"}
+                        color={
+                          dance.title === "Beginner course"
+                            ? "#FFCC00"
+                            : dance.title === "Intermediate course"
+                            ? "#00C3BA"
+                            : "#FF3CA2"
+                        }
+                      >
+                        {dance.title}
+                      </Text>
+                      <HStack spacing={16}>
+                        <Stack spacing={0}>
+                          <Text color={"#C0C0C0"}>Month</Text>
+                          <Text fontWeight={"700"} color={"#00C3BA"}>
+                            {dance.month}
+                          </Text>
+                        </Stack>
+                        <Stack spacing={0}>
+                          <Text color={"#C0C0C0"}>Sessions</Text>
+                          <Text fontWeight={"700"} color={"#00C3BA"}>
+                            {dance.sessions}
+                          </Text>
+                        </Stack>
+                        <Stack spacing={0}>
+                          <Text color={"#C0C0C0"}>Price</Text>
+                          <Text fontWeight={"700"} color={"#00C3BA"}>
+                            {dance.price}
+                          </Text>
+                        </Stack>
+                      </HStack>
+                      <Box pt={4}>
+                        <Text fontSize={"lg"} whiteSpace={"pre-line"}>
+                          {dance.description}
+                        </Text>
+                      </Box>
+                      <Box
+                        w={"100%"}
+                        display={"flex"}
+                        justifyContent={"flex-end"}
+                      >
+                        {isOkay ? (
+                          <Button
+                            size={"lg"}
+                            bgColor={"#FF3CA2"}
+                            color={"white"}
+                          >
+                            APPLY
+                          </Button>
+                        ) : (
+                          <Button
+                            size={"lg"}
+                            bgColor={"#00B2FF"}
+                            color={"white"}
+                          >
+                            CONTINUE
+                          </Button>
+                        )}
+                      </Box>
+                    </Stack>
+                  ))}
+                </Stack>
+              </Container>
+            )}
+            {curriculums.length === 0 && <NotFound />}
           </TabPanel>
           <TabPanel>
             <Container minW={"container.xl"} py={8}>
@@ -217,45 +407,19 @@ const CurriculumDetail = () => {
 
 export default CurriculumDetail;
 
-// 커리큘럼 데이터
-const Dances = [
-  {
-    id: 1,
-    title: "Beginner course",
-    month: 3,
-    sessions: 12,
-    price: "$80 per session",
-    description: `- Basic Vocal and Breathing Practices: This course provides an introduction to breathing techniques and basic vocal techniques.
-- Understanding Pitch and Rhythm: Basic Music Theory.
-- Simple K-pop song practice: Perfect for beginners to practice their songs.
-- Basic pronunciation practice: develop correct pronunciation and a sense of rhythm.
-- Learn basic stage manners: basic posture and expressions on stage
-- Beginner Course Reviews and Ratings`,
-  },
-  {
-    id: 2,
-    title: "Intermediate course",
-    month: 3,
-    sessions: 12,
-    price: "$80 per session",
-    description: `- Basic Vocal and Breathing Practices: This course provides an introduction to breathing techniques and basic vocal techniques.
-- Understanding Pitch and Rhythm: Basic Music Theory.
-- Simple K-pop song practice: Perfect for beginners to practice their songs.
-- Basic pronunciation practice: develop correct pronunciation and a sense of rhythm.
-- Learn basic stage manners: basic posture and expressions on stage
-- Beginner Course Reviews and Ratings`,
-  },
-  {
-    id: 3,
-    title: "Advanced course",
-    month: 3,
-    sessions: 12,
-    price: "$80 per session",
-    description: `- Basic Vocal and Breathing Practices: This course provides an introduction to breathing techniques and basic vocal techniques.
-- Understanding Pitch and Rhythm: Basic Music Theory.
-- Simple K-pop song practice: Perfect for beginners to practice their songs.
-- Basic pronunciation practice: develop correct pronunciation and a sense of rhythm.
-- Learn basic stage manners: basic posture and expressions on stage
-- Beginner Course Reviews and Ratings`,
-  },
-];
+const NotFound = () => {
+  return (
+    <Container minW={"container.xl"}>
+      <Box
+        w={"full"}
+        display={"flex"}
+        alignContent={"center"}
+        justifyContent={"center"}
+      >
+        <Text fontSize={"2xl"} color={"red"}>
+          Not Found
+        </Text>
+      </Box>
+    </Container>
+  );
+};

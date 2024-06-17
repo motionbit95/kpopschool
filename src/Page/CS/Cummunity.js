@@ -24,10 +24,23 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
+import { useLocation } from "react-router-dom";
 
 const Cummunity = () => {
   const [FAQs, setFAQs] = useState([]);
   const [events, setEvents] = useState([]);
+  const location = useLocation();
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  useEffect(() => {
+    if (location.state && location.state.selectedIndex !== undefined) {
+      setSelectedIndex(location.state.selectedIndex);
+    }
+  }, [location.state]);
+
+  const handleTabChange = (index) => {
+    setSelectedIndex(index);
+  };
+
   useEffect(() => {
     const host_url =
       window.location.hostname === "localhost" ? "http://localhost:8080" : "";
@@ -75,7 +88,11 @@ const Cummunity = () => {
             Cummunity
           </Text>
         </Box>
-        <Tabs variant={"unstyled"}>
+        <Tabs
+          variant={"unstyled"}
+          index={selectedIndex}
+          onChange={handleTabChange}
+        >
           <TabList gap={12}>
             <Tab
               px={0}
@@ -165,7 +182,7 @@ const Cummunity = () => {
                 </TabPanels>
               </Tabs>
             </TabPanel>
-            <TabPanel p={0}>
+            <TabPanel p={0} pb={24}>
               <Box py={6} display={"flex"} justifyContent={"flex-end"}>
                 <InputGroup w={"500px"}>
                   <Input />

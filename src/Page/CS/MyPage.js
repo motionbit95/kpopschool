@@ -11,10 +11,23 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const MyPage = () => {
-  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+  const [selectedTabIndex, setSelectedTabIndex] = useState(0); // 버튼 이펙트 인덱스 변경
+  // 로케이션 state
+  const location = useLocation();
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  useEffect(() => {
+    if (location.state && location.state.selectedIndex !== undefined) {
+      setSelectedIndex(location.state.selectedIndex);
+    }
+  }, [location.state]);
+
+  const handleTabChange = (index) => {
+    setSelectedIndex(index);
+  };
 
   const items = [
     {
@@ -38,7 +51,11 @@ const MyPage = () => {
             My Page
           </Text>
         </Box>
-        <Tabs variant={"unstyled"}>
+        <Tabs
+          variant={"unstyled"}
+          index={selectedIndex}
+          onChange={handleTabChange}
+        >
           <TabList gap={12}>
             <Tab
               px={0}

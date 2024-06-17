@@ -9,6 +9,7 @@ import Cummunity from "./Page/CS/Cummunity";
 import MyPage from "./Page/CS/MyPage";
 import TeacherDetail from "./Page/CS/Teachers/TeacherDetail";
 import CurriculumDetail from "./Page/CS/Curriculum/CurriculumDetail";
+import Footer from "./Component/Footer";
 
 function App() {
   const isAdmin = window.location.pathname.includes("/admin");
@@ -40,6 +41,7 @@ function App() {
               <Route path="/community" element={<Cummunity />} />
               <Route path="/mypage" element={<MyPage />} />
             </Routes>
+            <Footer />
           </BrowserRouter>
         </>
       )}
