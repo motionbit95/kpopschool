@@ -14,6 +14,7 @@ import {
   InputGroup,
   InputRightElement,
   Stack,
+  StackDivider,
   Tab,
   TabList,
   TabPanel,
@@ -36,8 +37,7 @@ import TeacherInfo from "./TeacherInfo";
 
 const TeacherDetail = (props) => {
   const [teacher, setTeacher] = useState({});
-  const [isFavorite, setIsFavorite] = useState(false);
-  const toast = useToast();
+  const [curriculums, setCurriculums] = useState([]);
   const isOkay = false;
   useEffect(() => {
     const host_url =
@@ -64,6 +64,39 @@ const TeacherDetail = (props) => {
         console.log(err);
       });
   }, []);
+
+  useEffect(() => {
+    const host_url =
+      window.location.hostname === "localhost" ? "http://localhost:8080" : "";
+    console.log(host_url);
+
+    const getCurriculums = async () => {
+      // 필터링은 검색을 통해서 진행한다.
+      fetch(`${host_url}/curriculums/search`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          conditions: [
+            { field: "teacherId", operator: "==", value: teacher.id },
+          ],
+        }),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          setCurriculums(res);
+        })
+        .catch((err) => {
+          // console.log(err);
+          console.log("데이터가 없습니다");
+          setCurriculums([]);
+        });
+    };
+    getCurriculums();
+    console.log(curriculums);
+  }, [teacher]);
 
   return (
     <Flex flex={1} direction={"column"}>
@@ -122,54 +155,66 @@ const TeacherDetail = (props) => {
         <TabPanels>
           <TabPanel>
             <Container minW={"container.xl"} py={8}>
-              {/* 레슨 정보 */}
-              <Stack>
-                <Text color={"#FFCC00"}>Beginner course</Text>
-                <Text fontSize={"2xl"} fontWeight={"600"}>
-                  Basic Vocal
-                </Text>
-                <HStack spacing={16}>
-                  <Stack spacing={0}>
-                    <Text color={"#C0C0C0"}>Month</Text>
-                    <Text fontWeight={"700"} color={"#00C3BA"}>
-                      3
+              <Stack divider={<StackDivider />} spacing={16}>
+                {curriculums.map((dance) => (
+                  <Stack>
+                    <Text
+                      color={
+                        dance.difficulty === "Beginner"
+                          ? "#FFCC00"
+                          : dance.difficulty === "Intermediate"
+                          ? "#00C3BA"
+                          : dance.difficulty === "Advanced"
+                          ? "#00B2FF"
+                          : "#FF3CA2"
+                      }
+                      fontSize={"lg"}
+                    >{`${dance.difficulty} course`}</Text>
+                    <Text fontSize={"2xl"} fontWeight={"600"}>
+                      {dance.title}
                     </Text>
+                    <HStack spacing={16}>
+                      <Stack spacing={0}>
+                        <Text color={"#C0C0C0"}>Month</Text>
+                        <Text fontWeight={"700"} color={"#00C3BA"}>
+                          {dance.month}
+                        </Text>
+                      </Stack>
+                      <Stack spacing={0}>
+                        <Text color={"#C0C0C0"}>Sessions</Text>
+                        <Text fontWeight={"700"} color={"#00C3BA"}>
+                          {dance.sessions}
+                        </Text>
+                      </Stack>
+                      <Stack spacing={0}>
+                        <Text color={"#C0C0C0"}>Price</Text>
+                        <Text fontWeight={"700"} color={"#00C3BA"}>
+                          {dance.price}
+                        </Text>
+                      </Stack>
+                    </HStack>
+                    <Box pt={4}>
+                      <Text fontSize={"lg"} whiteSpace={"pre-line"}>
+                        {dance.description}
+                      </Text>
+                    </Box>
+                    <Box
+                      w={"100%"}
+                      display={"flex"}
+                      justifyContent={"flex-end"}
+                    >
+                      {isOkay ? (
+                        <Button size={"lg"} bgColor={"#FF3CA2"} color={"white"}>
+                          APPLY
+                        </Button>
+                      ) : (
+                        <Button size={"lg"} bgColor={"#00B2FF"} color={"white"}>
+                          CONTINUE
+                        </Button>
+                      )}
+                    </Box>
                   </Stack>
-                  <Stack spacing={0}>
-                    <Text color={"#C0C0C0"}>Sessions</Text>
-                    <Text fontWeight={"700"} color={"#00C3BA"}>
-                      12
-                    </Text>
-                  </Stack>
-                  <Stack spacing={0}>
-                    <Text color={"#C0C0C0"}>Price</Text>
-                    <Text fontWeight={"700"} color={"#00C3BA"}>
-                      $80 per session
-                    </Text>
-                  </Stack>
-                </HStack>
-                <Box pt={4}>
-                  <Text fontSize={"xl"}>
-                    There's a saying that goes in half. Learn basic
-                    vocalizations and breathing techniques to sing. Basic
-                    vocalizations are learned to correct inaccurate
-                    pronunciations and increase the volume when on stage, and
-                    breathing techniques are learned to communicate emotions
-                    while singing or breathe properly. Master your assignment
-                    and get ready for the next step.
-                  </Text>
-                </Box>
-                <Box w={"100%"} display={"flex"} justifyContent={"flex-end"}>
-                  {isOkay ? (
-                    <Button size={"lg"} bgColor={"#FF3CA2"} color={"white"}>
-                      APPLY
-                    </Button>
-                  ) : (
-                    <Button size={"lg"} bgColor={"#00B2FF"} color={"white"}>
-                      CONTINUE
-                    </Button>
-                  )}
-                </Box>
+                ))}
               </Stack>
             </Container>
           </TabPanel>

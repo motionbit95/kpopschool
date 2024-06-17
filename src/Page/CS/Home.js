@@ -3,7 +3,6 @@ import {
   Button,
   Container,
   Flex,
-  HStack,
   Image,
   Stack,
   Text,
@@ -11,9 +10,19 @@ import {
 import React, { useEffect, useState } from "react";
 import TeacherInfo from "./Teachers/TeacherInfo";
 import { LessonItem, TeacherItem } from "../../Component/HomeDetail";
+import ImageCarousel from "../../Component/ImageCarousel";
 
 const Home = () => {
   const [teacher, setTeacher] = useState([]);
+  const scrollToSection = (id) => {
+    const section = document.getElementById(id);
+    if (section) {
+      const yOffset = -200; // 여백 추가 (위쪽으로 200px)
+      const y =
+        section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
 
   useEffect(() => {
     const host_url =
@@ -68,6 +77,7 @@ const Home = () => {
                 py={8}
                 variant={"outline"}
                 colorScheme="red"
+                onClick={() => scrollToSection("Lessons")}
               >
                 VIEW MORE
               </Button>
@@ -76,36 +86,36 @@ const Home = () => {
         </Stack>
       </Container>
       <Box bgColor={"#E1E4E4"}>
-        <Container
-          minW={"container.xl"}
-          overflowX={"scroll"}
-          py={16}
-          css={{
-            "&::-webkit-scrollbar": {
-              display: "none",
-            },
-          }}
-        >
-          <Flex gap={2}>
+        <Container minW={"container.xl"} py={16}>
+          <ImageCarousel />
+          {/* <Flex
+            overflow={"hidden"}
+            // overflowX={"scroll"}
+            // css={{
+            //   "&::-webkit-scrollbar": {
+            //     display: "none",
+            //   },
+            // }}
+          >
             {Supporters.map((src) => (
               <Image src={src} alt={""} key={src} w={"280px"} />
             ))}
-          </Flex>
+          </Flex> */}
         </Container>
       </Box>
       <Container minW={"container.xl"} pb={24}>
         <Stack spacing={16}>
           <Stack>
             <Box>
-              <Text fontSize={"5xl"} color={"#FFCC00"} fontWeight={"bold"}>
+              <Text fontSize={"6xl"} color={"#FFCC00"} fontWeight={"bold"}>
                 Teachers
               </Text>
             </Box>
             <TeacherItem teacher={teacher} />
           </Stack>
-          <Stack>
+          <Stack id="Lessons">
             <Box>
-              <Text fontSize={"5xl"} color={"#FF3CA2"} fontWeight={"bold"}>
+              <Text fontSize={"6xl"} color={"#FF3CA2"} fontWeight={"bold"}>
                 Lessons
               </Text>
             </Box>
@@ -118,20 +128,3 @@ const Home = () => {
 };
 
 export default Home;
-
-const Supporters = [
-  require("../../Asset/Supporters/강동대학교.png"),
-  require("../../Asset/Supporters/계성고.png"),
-  require("../../Asset/Supporters/대전민예총.png"),
-  require("../../Asset/Supporters/대전시립합창단.png"),
-  require("../../Asset/Supporters/대평중.png"),
-  require("../../Asset/Supporters/목원대학교.png"),
-  require("../../Asset/Supporters/백제예대.png"),
-  require("../../Asset/Supporters/서나무기획사.png"),
-  require("../../Asset/Supporters/서울예대.png"),
-  require("../../Asset/Supporters/서일대학교.png"),
-  require("../../Asset/Supporters/여주대학교.png"),
-  require("../../Asset/Supporters/우송정보대학.png"),
-  require("../../Asset/Supporters/청운대학교.png"),
-  require("../../Asset/Supporters/포항공과대학.png"),
-];

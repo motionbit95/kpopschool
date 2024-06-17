@@ -15,10 +15,11 @@ import { useNavigate } from "react-router-dom";
 
 export const TeacherItem = ({ teacher }) => {
   const Nav = useNavigate();
+
   return (
     <Stack spacing={16}>
       <Stack>
-        <Text fontSize={"3xl"} fontWeight={"600"} color={"#00C3BA"}>
+        <Text fontSize={"40px"} fontWeight={"600"} color={"#00C3BA"}>
           {`Vocal Trainer`}
         </Text>
         <Stack gap={24} pt={4}>
@@ -55,7 +56,7 @@ export const TeacherItem = ({ teacher }) => {
       </Stack>
       <Stack>
         <Text
-          fontSize={"3xl"}
+          fontSize={"40px"}
           fontWeight={"600"}
           color={"#00C3BA"}
           textAlign={"end"}
@@ -117,7 +118,7 @@ export const LessonItem = () => {
   return (
     <Stack spacing={16}>
       <Stack>
-        <Text fontSize={"3xl"} fontWeight={"600"} color={"#00C3BA"}>
+        <Text fontSize={"40px"} fontWeight={"600"} color={"#00C3BA"}>
           {`Vocal`}
         </Text>
         <SimpleGrid display={"flex"} column={2} columnGap={12} pt={4}>
@@ -164,7 +165,7 @@ export const LessonItem = () => {
       </Stack>
       <Stack>
         <Text
-          fontSize={"3xl"}
+          fontSize={"40px"}
           fontWeight={"600"}
           color={"#00C3BA"}
           textAlign={"end"}

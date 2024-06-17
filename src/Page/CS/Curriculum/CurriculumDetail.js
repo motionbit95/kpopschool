@@ -149,19 +149,11 @@ const CurriculumDetail = () => {
               <Container minW={"container.xl"} py={8}>
                 <Stack divider={<StackDivider />} spacing={16}>
                   {curriculums.map((dance) => (
-                    // 포멧의 타입에 맞게 해당 요소만 출력되게 하기
-                    // format === "1:1"
                     <Stack>
                       <Text
                         fontSize={"2xl"}
                         fontWeight={"600"}
-                        color={
-                          dance.title === "Beginner course"
-                            ? "#FFCC00"
-                            : dance.title === "Intermediate course"
-                            ? "#00C3BA"
-                            : "#FF3CA2"
-                        }
+                        color={"#FF3CA2"}
                       >
                         {dance.title}
                       </Text>
