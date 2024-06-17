@@ -11,11 +11,10 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const TeacherItem = ({ teacher }) => {
-  //   useEffect(() => {
-  //     console.log(teacher);
-  //   });
+  const Nav = useNavigate();
   return (
     <Stack spacing={16}>
       <Stack>
@@ -32,6 +31,7 @@ export const TeacherItem = ({ teacher }) => {
                       <Image src={teacher.profile} alt={""} />
                     </Box>
                     <Button
+                      onClick={() => Nav(`/teachers/${teacher.id}`)}
                       size={"lg"}
                       variant={"outline"}
                       colorScheme="green"
@@ -98,6 +98,7 @@ export const TeacherItem = ({ teacher }) => {
                       variant={"outline"}
                       colorScheme="green"
                       fontWeight={"600"}
+                      onClick={() => Nav(`/teachers/${teacher.id}`)}
                     >
                       Apply
                     </Button>
@@ -112,6 +113,7 @@ export const TeacherItem = ({ teacher }) => {
 };
 
 export const LessonItem = () => {
+  const Nav = useNavigate();
   return (
     <Stack spacing={16}>
       <Stack>
@@ -139,9 +141,24 @@ export const LessonItem = () => {
               vocalization, and emotional expression. Prepare your own stage
               right now!
             </Text>
-            <Button color={"white"} bgColor={"#00C3BA"} size={"lg"}>
-              Go CURICULLUM
-            </Button>
+            <Box display={"flex"} justifyContent={"flex-start"}>
+              <Button
+                color={"white"}
+                bgColor={"#00C3BA"}
+                size={"xl"}
+                px={16}
+                py={4}
+                onClick={() => {
+                  const category = "Vocal";
+                  const format = "1:1";
+                  Nav(`/curriculum/${category}`, {
+                    state: { category, format },
+                  });
+                }}
+              >
+                Go CURICULLUM
+              </Button>
+            </Box>
           </Stack>
         </SimpleGrid>
       </Stack>
@@ -168,9 +185,24 @@ export const LessonItem = () => {
               vocalization, and emotional expression. Prepare your own stage
               right now!
             </Text>
-            <Button color={"white"} bgColor={"#00C3BA"} size={"lg"}>
-              Go CURICULLUM
-            </Button>
+            <Box display={"flex"} justifyContent={"flex-end"}>
+              <Button
+                color={"white"}
+                bgColor={"#00C3BA"}
+                size={"xl"}
+                px={16}
+                py={4}
+                onClick={() => {
+                  const category = "Dance";
+                  const format = "1:1";
+                  Nav(`/curriculum/${category}`, {
+                    state: { category, format },
+                  });
+                }}
+              >
+                Go CURICULLUM
+              </Button>
+            </Box>
           </Stack>
           <Box w={"full"} h={"full"} borderRadius={"lg"} overflow={"hidden"}>
             <Image

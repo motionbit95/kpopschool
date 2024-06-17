@@ -65,33 +65,6 @@ const TeacherDetail = (props) => {
       });
   }, []);
 
-  const handleClickFavorite = () => {
-    console.log("handleClickFavorite");
-    setIsFavorite(!isFavorite);
-  };
-
-  const handleClickCopyLink = () => {
-    navigator.clipboard
-      .writeText(window.location.href)
-      .then(() => {
-        toast({
-          title: "링크를 저장하였습니다.",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-        });
-      })
-      .catch((error) => {
-        toast({
-          title: "링크저장에 실패하였습니다.",
-          description: error.toString(),
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
-      });
-  };
-
   return (
     <Flex flex={1} direction={"column"}>
       <Container minW={"container.xl"}>
@@ -149,6 +122,7 @@ const TeacherDetail = (props) => {
         <TabPanels>
           <TabPanel>
             <Container minW={"container.xl"} py={8}>
+              {/* 레슨 정보 */}
               <Stack>
                 <Text color={"#FFCC00"}>Beginner course</Text>
                 <Text fontSize={"2xl"} fontWeight={"600"}>
