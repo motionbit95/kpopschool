@@ -30,15 +30,15 @@ const Cummunity = () => {
   const [FAQs, setFAQs] = useState([]);
   const [events, setEvents] = useState([]);
   const location = useLocation();
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [communityIndex, setCommunityIndex] = useState(0);
   useEffect(() => {
-    if (location.state && location.state.selectedIndex !== undefined) {
-      setSelectedIndex(location.state.selectedIndex);
+    if (location.state && location.state.communityIndex !== undefined) {
+      setCommunityIndex(location.state.communityIndex);
     }
   }, [location.state]);
 
   const handleTabChange = (index) => {
-    setSelectedIndex(index);
+    setCommunityIndex(index);
   };
 
   useEffect(() => {
@@ -90,7 +90,7 @@ const Cummunity = () => {
         </Box>
         <Tabs
           variant={"unstyled"}
-          index={selectedIndex}
+          index={communityIndex}
           onChange={handleTabChange}
         >
           <TabList gap={12}>

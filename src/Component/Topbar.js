@@ -138,9 +138,9 @@ const Topbar = () => {
                       : "black"
                   }
                   onClick={() => {
-                    const selectedIndex = 0;
+                    const communityIndex = 0;
                     Nav(`/community`, {
-                      state: { selectedIndex },
+                      state: { communityIndex },
                     });
                   }}
                 >
@@ -156,9 +156,9 @@ const Topbar = () => {
                       top={12}
                       _hover={{ color: "#00C3BA" }}
                       onClick={() => {
-                        const selectedIndex = 0;
+                        const communityIndex = 0;
                         Nav(`/community`, {
-                          state: { selectedIndex },
+                          state: { communityIndex },
                         });
                       }}
                     >
@@ -172,9 +172,9 @@ const Topbar = () => {
                       top={24}
                       _hover={{ color: "#00C3BA" }}
                       onClick={() => {
-                        const selectedIndex = 1;
+                        const communityIndex = 1;
                         Nav(`/community`, {
-                          state: { selectedIndex },
+                          state: { communityIndex },
                         });
                       }}
                     >
@@ -199,9 +199,9 @@ const Topbar = () => {
                       : "black"
                   }
                   onClick={() => {
-                    const selectedIndex = 0;
+                    const myPageIndex = 0;
                     Nav(`/mypage`, {
-                      state: { selectedIndex },
+                      state: { myPageIndex },
                     });
                   }}
                 >
@@ -217,9 +217,9 @@ const Topbar = () => {
                       top={12}
                       _hover={{ color: "#00C3BA" }}
                       onClick={() => {
-                        const selectedIndex = 0;
+                        const myPageIndex = 0;
                         Nav(`/mypage`, {
-                          state: { selectedIndex },
+                          state: { myPageIndex },
                         });
                       }}
                     >
@@ -233,9 +233,9 @@ const Topbar = () => {
                       top={24}
                       _hover={{ color: "#00C3BA" }}
                       onClick={() => {
-                        const selectedIndex = 1;
+                        const myPageIndex = 1;
                         Nav(`/mypage`, {
-                          state: { selectedIndex },
+                          state: { myPageIndex },
                         });
                       }}
                     >
@@ -249,9 +249,9 @@ const Topbar = () => {
                       top={36}
                       _hover={{ color: "#00C3BA" }}
                       onClick={() => {
-                        const selectedIndex = 2;
+                        const myPageIndex = 2;
                         Nav(`/mypage`, {
-                          state: { selectedIndex },
+                          state: { myPageIndex },
                         });
                       }}
                     >
@@ -265,9 +265,9 @@ const Topbar = () => {
                       top={48}
                       _hover={{ color: "#00C3BA" }}
                       onClick={() => {
-                        const selectedIndex = 3;
+                        const myPageIndex = 3;
                         Nav(`/mypage`, {
-                          state: { selectedIndex },
+                          state: { myPageIndex },
                         });
                       }}
                     >

@@ -30,26 +30,38 @@ const PaymentHistory = () => {
         </Box>
         <Table variant={"simple"}>
           <Tbody>
-            <Tr color={"#00C3BA"} fontWeight={"500"}>
-              <Td>Course</Td>
-              <Td>Devision</Td>
-              <Td>Trainer</Td>
-              <Td>Month</Td>
-              <Td>Price</Td>
-              <Td>PayMent</Td>
-              <Td>Date</Td>
-              <Td>Receipt</Td>
+            <Tr>
+              {headers.map((item) => (
+                <Td
+                  h={"54px"}
+                  color={"#00C3BA"}
+                  fontWeight={"500"}
+                  textAlign={"center"}
+                >
+                  {item}
+                </Td>
+              ))}
             </Tr>
-            {[1, 2, 3, 4, 5, 6, 7].map((item) => (
+            {data.map((item) => (
               <Tr>
-                <Td>Course</Td>
-                <Td>Devision</Td>
-                <Td>Trainer</Td>
-                <Td>Month</Td>
-                <Td>Price</Td>
-                <Td>PayMent</Td>
-                <Td>Date</Td>
-                <Td>Receipt</Td>
+                <Td textAlign={"center"}>{`${item.course} course`}</Td>
+                <Td textAlign={"center"}>{item.devision}</Td>
+                <Td textAlign={"center"}>{item.trainer}</Td>
+                <Td textAlign={"center"}>{`${item.month} month`}</Td>
+                <Td textAlign={"center"}>{item.price}</Td>
+                <Td textAlign={"center"}>{item.payment}</Td>
+                <Td textAlign={"center"}>{item.date}</Td>
+                <Td
+                  display={"flex"}
+                  alignItems="center"
+                  justifyContent={"center"}
+                  py={0}
+                  h={"54px"}
+                >
+                  <Button size={"sm"} fontSize={"13px"}>
+                    Receipt
+                  </Button>
+                </Td>
               </Tr>
             ))}
           </Tbody>
@@ -60,3 +72,57 @@ const PaymentHistory = () => {
 };
 
 export default PaymentHistory;
+
+const headers = [
+  "Course",
+  "Devision",
+  "Trainer",
+  "Month",
+  "Price",
+  "Payment",
+  "Date",
+  "Receipt",
+];
+
+const data = [
+  {
+    course: "Professional",
+    devision: "Vocal",
+    trainer: "Jessie",
+    month: "3",
+    price: "$99",
+    payment: "credit",
+    date: "10:36 01-10-2024",
+    // receipt: "Receipt",
+  },
+  {
+    course: "Intermediate",
+    devision: "Vocal",
+    trainer: "Jessie",
+    month: "3",
+    price: "$90",
+    payment: "Paypal",
+    date: "08:16 01-08-2024",
+    // receipt: "Receipt",
+  },
+  {
+    course: "Beginner",
+    devision: "Vocal",
+    trainer: "Jessie",
+    month: "3",
+    price: "$80",
+    payment: "credit",
+    date: "07:30 01-05-2024",
+    // receipt: "Receipt",
+  },
+  {
+    course: "Beginner",
+    devision: "Vocal",
+    trainer: "Mr.Lee",
+    month: "6",
+    price: "$80",
+    payment: "credit",
+    date: "07:30 01-05-2024",
+    // receipt: "Receipt",
+  },
+];

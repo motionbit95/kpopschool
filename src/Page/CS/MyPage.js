@@ -27,16 +27,29 @@ const MyPage = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState(0); // 버튼 이펙트 인덱스 변경
   // 로케이션 state
   const location = useLocation();
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [myPageIndex, setMyPageIndex] = useState(0);
   useEffect(() => {
-    if (location.state && location.state.selectedIndex !== undefined) {
-      setSelectedIndex(location.state.selectedIndex);
+    if (location.state && location.state.myPageIndex !== undefined) {
+      setMyPageIndex(location.state.myPageIndex);
     }
   }, [location.state]);
 
-  const handleTabChange = (index) => {
-    setSelectedIndex(index);
+  const handleMypageTabChange = (number) => {
+    setMyPageIndex(number);
+    setSelectedTabIndex(0);
   };
+
+  const handleSelectedTabChange = (index) => {
+    setSelectedTabIndex(index);
+  };
+
+  const MypageTabButtons = [
+    "my lessons",
+    "payment",
+    "coupon",
+    "1:1 inquiry",
+    "setting",
+  ];
 
   return (
     <Flex flex={1}>
@@ -51,103 +64,40 @@ const MyPage = () => {
         </Flex>
         <Tabs
           variant={"unstyled"}
-          index={selectedIndex}
-          onChange={handleTabChange}
+          index={myPageIndex}
+          onChange={handleMypageTabChange}
         >
           <TabList gap={12}>
-            <Tab
-              px={0}
-              fontSize={"2xl"}
-              fontWeight={"600"}
-              color={"#E1E4E4"}
-              _selected={{ color: "#00C3BA" }}
-            >
-              my lessons
-            </Tab>
-            <Tab
-              px={0}
-              fontSize={"2xl"}
-              fontWeight={"600"}
-              color={"#E1E4E4"}
-              _selected={{ color: "#00C3BA" }}
-            >
-              payment
-            </Tab>
-            <Tab
-              px={0}
-              fontSize={"2xl"}
-              fontWeight={"600"}
-              color={"#E1E4E4"}
-              _selected={{ color: "#00C3BA" }}
-            >
-              coupon
-            </Tab>
-            <Tab
-              px={0}
-              fontSize={"2xl"}
-              fontWeight={"600"}
-              color={"#E1E4E4"}
-              _selected={{ color: "#00C3BA" }}
-            >
-              1:1 inquiry
-            </Tab>
-            <Tab
-              px={0}
-              fontSize={"2xl"}
-              fontWeight={"600"}
-              color={"#E1E4E4"}
-              _selected={{ color: "#00C3BA" }}
-            >
-              Setting
-            </Tab>
+            {MypageTabButtons.map((tab) => (
+              <Tab
+                px={0}
+                fontSize={"2xl"}
+                fontWeight={"600"}
+                color={"#E1E4E4"}
+                _selected={{ color: "#00C3BA" }}
+              >
+                {tab}
+              </Tab>
+            ))}
           </TabList>
           <TabPanels>
+            {/* My lessons */}
             <TabPanel px={0}>
               <Tabs
                 variant={"unstyled"}
                 display={"flex"}
                 flexDirection={"row"}
                 gap={2}
-                onChange={(index) => setSelectedTabIndex(index)}
+                index={selectedTabIndex}
+                onChange={handleSelectedTabChange}
               >
                 <TabList flexDirection={"column"} pr={2}>
                   {items.map((item, index) => (
-                    <Tab
-                      p={0}
-                      w={"full"}
-                      color={"#C0C0C0"}
-                      _selected={{ color: "black" }}
-                    >
-                      <HStack
-                        w={"250px"}
-                        py={3}
-                        h={"full"}
-                        fontSize={"20px"}
-                        fontWeight={"600"}
-                        spacing={3}
-                      >
-                        {selectedTabIndex === index ? (
-                          <Box
-                            w={"5px"}
-                            h={"full"}
-                            bgColor={"#00C3BA"}
-                            borderRightRadius={"xl"}
-                          />
-                        ) : (
-                          <Box w={"5px"} h={"full"} bgColor={"white"} />
-                        )}
-                        <Box>
-                          <Image
-                            src={
-                              selectedTabIndex === index
-                                ? item.Icon1
-                                : item.Icon2
-                            }
-                          />
-                        </Box>
-                        <Text whiteSpace={"nowrap"}>{item.title}</Text>
-                      </HStack>
-                    </Tab>
+                    <TabButton
+                      item={item}
+                      index={index}
+                      selectedTabIndex={selectedTabIndex}
+                    />
                   ))}
                 </TabList>
                 <TabPanels
@@ -171,52 +121,22 @@ const MyPage = () => {
                 </TabPanels>
               </Tabs>
             </TabPanel>
+            {/* Payment */}
             <TabPanel px={0}>
               <Tabs
                 variant={"unstyled"}
                 display={"flex"}
                 flexDirection={"row"}
                 gap={2}
-                onChange={(index) => setSelectedTabIndex(index)}
+                onChange={handleSelectedTabChange}
               >
                 <TabList flexDirection={"column"} pr={2}>
                   {items2.map((item, index) => (
-                    <Tab
-                      p={0}
-                      w={"full"}
-                      color={"#C0C0C0"}
-                      _selected={{ color: "black" }}
-                    >
-                      <HStack
-                        w={"250px"}
-                        py={3}
-                        h={"full"}
-                        fontSize={"20px"}
-                        fontWeight={"600"}
-                        spacing={3}
-                      >
-                        {selectedTabIndex === index ? (
-                          <Box
-                            w={"5px"}
-                            h={"full"}
-                            bgColor={"#00C3BA"}
-                            borderRightRadius={"xl"}
-                          />
-                        ) : (
-                          <Box w={"5px"} h={"full"} bgColor={"white"} />
-                        )}
-                        <Box>
-                          <Image
-                            src={
-                              selectedTabIndex === index
-                                ? item.Icon1
-                                : item.Icon2
-                            }
-                          />
-                        </Box>
-                        <Text whiteSpace={"nowrap"}>{item.title}</Text>
-                      </HStack>
-                    </Tab>
+                    <TabButton
+                      item={item}
+                      index={index}
+                      selectedTabIndex={selectedTabIndex}
+                    />
                   ))}
                 </TabList>
                 <TabPanels
@@ -236,9 +156,102 @@ const MyPage = () => {
                 </TabPanels>
               </Tabs>
             </TabPanel>
-            <TabPanel px={0}>3</TabPanel>
-            <TabPanel px={0}>4</TabPanel>
-            <TabPanel px={0}>5</TabPanel>
+            {/* coupon */}
+            <TabPanel px={0}>
+              <Tabs
+                variant={"unstyled"}
+                display={"flex"}
+                flexDirection={"row"}
+                gap={2}
+                onChange={handleSelectedTabChange}
+              >
+                <TabList flexDirection={"column"} pr={2}>
+                  {items3.map((item, index) => (
+                    <TabButton
+                      item={item}
+                      index={index}
+                      selectedTabIndex={selectedTabIndex}
+                    />
+                  ))}
+                </TabList>
+                <TabPanels
+                  h={"full"}
+                  borderLeft={"1px solid #E1E4E4"}
+                  minH={"400px"}
+                >
+                  <TabPanel p={0} h={"full"}>
+                    0
+                  </TabPanel>
+                </TabPanels>
+              </Tabs>
+            </TabPanel>
+            {/* 1:1 inquiry */}
+            <TabPanel px={0}>
+              <Tabs
+                variant={"unstyled"}
+                display={"flex"}
+                flexDirection={"row"}
+                gap={2}
+                onChange={handleSelectedTabChange}
+              >
+                <TabList flexDirection={"column"} pr={2}>
+                  {items4.map((item, index) => (
+                    <TabButton
+                      item={item}
+                      index={index}
+                      selectedTabIndex={selectedTabIndex}
+                    />
+                  ))}
+                </TabList>
+                <TabPanels
+                  h={"full"}
+                  borderLeft={"1px solid #E1E4E4"}
+                  minH={"400px"}
+                >
+                  <TabPanel p={0} h={"full"}>
+                    0
+                  </TabPanel>
+                  <TabPanel p={0} h={"full"}>
+                    1
+                  </TabPanel>
+                </TabPanels>
+              </Tabs>
+            </TabPanel>
+            {/* settings */}
+            <TabPanel px={0}>
+              <Tabs
+                variant={"unstyled"}
+                display={"flex"}
+                flexDirection={"row"}
+                gap={2}
+                onChange={handleSelectedTabChange}
+              >
+                <TabList flexDirection={"column"} pr={2}>
+                  {items5.map((item, index) => (
+                    <TabButton
+                      item={item}
+                      index={index}
+                      selectedTabIndex={selectedTabIndex}
+                    />
+                  ))}
+                </TabList>
+                <TabPanels
+                  h={"full"}
+                  borderLeft={"1px solid #E1E4E4"}
+                  minH={"400px"}
+                >
+                  <TabPanel p={0} h={"full"}>
+                    0
+                  </TabPanel>
+                  <TabPanel p={0} h={"full"}>
+                    1
+                  </TabPanel>
+                  <TabPanel p={0} h={"full"}>
+                    2
+                  </TabPanel>
+                </TabPanels>
+              </Tabs>
+            </TabPanel>
           </TabPanels>
         </Tabs>
       </Container>
@@ -247,6 +260,41 @@ const MyPage = () => {
 };
 
 export default MyPage;
+
+const TabButton = ({ item, index, selectedTabIndex }) => {
+  return (
+    <Tab p={0} w={"full"} color={"#C0C0C0"} _selected={{ color: "black" }}>
+      <Text>
+        {selectedTabIndex} {index}
+      </Text>
+      <HStack
+        w={"250px"}
+        py={3}
+        h={"full"}
+        fontSize={"20px"}
+        fontWeight={"600"}
+        spacing={3}
+      >
+        {selectedTabIndex === index ? (
+          <Box
+            w={"5px"}
+            h={"full"}
+            bgColor={"#00C3BA"}
+            borderRightRadius={"xl"}
+          />
+        ) : (
+          <Box w={"5px"} h={"full"} bgColor={"white"} />
+        )}
+        <Box pb={item.title === "Passwords \nand Security" ? 6 : 0}>
+          <Image src={selectedTabIndex === index ? item.Icon1 : item.Icon2} />
+        </Box>
+        <Text whiteSpace={"pre-line"} textAlign={"start"}>
+          {item.title}
+        </Text>
+      </HStack>
+    </Tab>
+  );
+};
 
 const items = [
   {
@@ -276,5 +324,44 @@ const items2 = [
     title: "Payment Method",
     Icon1: require("../../Asset/Icon/Mypage_Icon/icon5.png"),
     Icon2: require("../../Asset/Icon/Mypage_Icon/icon5_default.png"),
+  },
+];
+
+const items3 = [
+  {
+    title: "Retained Coupon",
+    Icon1: require("../../Asset/Icon/Mypage_Icon/icon6.png"),
+    Icon2: require("../../Asset/Icon/Mypage_Icon/icon6_default.png"),
+  },
+];
+
+const items4 = [
+  {
+    title: "Inquiry history",
+    Icon1: require("../../Asset/Icon/Mypage_Icon/icon7.png"),
+    Icon2: require("../../Asset/Icon/Mypage_Icon/icon7_default.png"),
+  },
+  {
+    title: "To make an inquiry",
+    Icon1: require("../../Asset/Icon/Mypage_Icon/icon8.png"),
+    Icon2: require("../../Asset/Icon/Mypage_Icon/icon8_default.png"),
+  },
+];
+
+const items5 = [
+  {
+    title: "User info",
+    Icon1: require("../../Asset/Icon/Mypage_Icon/icon9.png"),
+    Icon2: require("../../Asset/Icon/Mypage_Icon/icon9_default.png"),
+  },
+  {
+    title: "Passwords \nand Security",
+    Icon1: require("../../Asset/Icon/Mypage_Icon/icon10.png"),
+    Icon2: require("../../Asset/Icon/Mypage_Icon/icon10_default.png"),
+  },
+  {
+    title: "Information",
+    Icon1: require("../../Asset/Icon/Mypage_Icon/icon11.png"),
+    Icon2: require("../../Asset/Icon/Mypage_Icon/icon11_default.png"),
   },
 ];

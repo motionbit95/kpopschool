@@ -34,7 +34,7 @@ const AddCards = () => {
     }
   };
 
-  const handlePaste = (e) => {
+  const handleCardPaste = (e) => {
     const pasteData = e.clipboardData.getData("text").replace(/\D/g, "");
     if (pasteData.length === 16) {
       const newValues = [];
@@ -63,8 +63,11 @@ const AddCards = () => {
                 onKeyPress={handleKeyPress}
                 maxLength={4}
                 ref={(el) => (inputRefs.current[index] = el)}
-                onPaste={handlePaste}
+                onPaste={handleCardPaste}
                 textAlign="center"
+                focusBorderColor="#00C3BA"
+                borderColor={value.length === 4 ? "#00C3BA" : "#E1E4E4"}
+                borderWidth={value.length === 4 ? "2px" : "1px"}
               />
               {index < 3 && <FiMinus color={"#4E4E4E"} />}
             </>
@@ -75,15 +78,25 @@ const AddCards = () => {
         <Stack>
           <Text fontSize={"lg"}>Validity Period</Text>
           <HStack>
-            <Input placeholder="MM" w={"60px"} textAlign={"center"} />
+            <Input
+              placeholder="MM"
+              maxLength={2}
+              w={"60px"}
+              textAlign={"center"}
+            />
             <Text>/</Text>
-            <Input placeholder="YY" w={"60px"} textAlign={"center"} />
+            <Input
+              placeholder="YY"
+              maxLength={2}
+              w={"60px"}
+              textAlign={"center"}
+            />
           </HStack>
         </Stack>
         <Stack>
           <Text fontSize={"lg"}>CVC Number</Text>
           <HStack>
-            <Input w={"100px"} textAlign={"center"} />
+            <Input w={"100px"} textAlign={"center"} maxLength={3} />
           </HStack>
         </Stack>
       </HStack>
