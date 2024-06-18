@@ -264,9 +264,6 @@ export default MyPage;
 const TabButton = ({ item, index, selectedTabIndex }) => {
   return (
     <Tab p={0} w={"full"} color={"#C0C0C0"} _selected={{ color: "black" }}>
-      <Text>
-        {selectedTabIndex} {index}
-      </Text>
       <HStack
         w={"250px"}
         py={3}
