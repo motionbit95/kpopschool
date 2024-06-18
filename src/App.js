@@ -10,6 +10,8 @@ import MyPage from "./Page/CS/MyPage";
 import TeacherDetail from "./Page/CS/Teachers/TeacherDetail";
 import CurriculumDetail from "./Page/CS/Curriculum/CurriculumDetail";
 import Footer from "./Component/Footer";
+import Login from "./Page/CS/account/Login";
+import SignUp from "./Page/CS/account/SignUp";
 
 function App() {
   const isAdmin = window.location.pathname.includes("/admin");
@@ -29,9 +31,9 @@ function App() {
       ) : (
         <>
           {/* CS 페이지 */}
-
           <BrowserRouter>
-            <Topbar />
+            {!window.location.pathname.includes("signin") &&
+              !window.location.pathname.includes("signup") && <Topbar />}
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/teachers" element={<Teachers />} />
@@ -40,8 +42,12 @@ function App() {
               <Route path="/curriculum/*" element={<CurriculumDetail />} />
               <Route path="/community" element={<Cummunity />} />
               <Route path="/mypage" element={<MyPage />} />
+
+              <Route path="/signin" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
             </Routes>
-            <Footer />
+            {!window.location.pathname.includes("signin") &&
+              !window.location.pathname.includes("signup") && <Footer />}
           </BrowserRouter>
         </>
       )}

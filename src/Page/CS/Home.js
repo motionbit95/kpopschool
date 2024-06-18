@@ -88,19 +88,6 @@ const Home = () => {
       <Box bgColor={"#E1E4E4"}>
         <Container minW={"container.xl"} py={16}>
           <ImageCarousel />
-          {/* <Flex
-            overflow={"hidden"}
-            // overflowX={"scroll"}
-            // css={{
-            //   "&::-webkit-scrollbar": {
-            //     display: "none",
-            //   },
-            // }}
-          >
-            {Supporters.map((src) => (
-              <Image src={src} alt={""} key={src} w={"280px"} />
-            ))}
-          </Flex> */}
         </Container>
       </Box>
       <Container minW={"container.xl"} pb={24}>

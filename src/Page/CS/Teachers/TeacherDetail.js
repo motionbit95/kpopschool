@@ -156,46 +156,46 @@ const TeacherDetail = (props) => {
           <TabPanel>
             <Container minW={"container.xl"} py={8}>
               <Stack divider={<StackDivider />} spacing={16}>
-                {curriculums.map((dance) => (
+                {curriculums.map((item) => (
                   <Stack>
                     <Text
                       color={
-                        dance.difficulty === "Beginner"
+                        item.difficulty === "Beginner"
                           ? "#FFCC00"
-                          : dance.difficulty === "Intermediate"
+                          : item.difficulty === "Intermediate"
                           ? "#00C3BA"
-                          : dance.difficulty === "Advanced"
+                          : item.difficulty === "Advanced"
                           ? "#00B2FF"
                           : "#FF3CA2"
                       }
                       fontSize={"lg"}
-                    >{`${dance.difficulty} course`}</Text>
+                    >{`${item.difficulty} course`}</Text>
                     <Text fontSize={"2xl"} fontWeight={"600"}>
-                      {dance.title}
+                      {item.title}
                     </Text>
                     <HStack spacing={16}>
                       <Stack spacing={0}>
                         <Text color={"#C0C0C0"}>Month</Text>
                         <Text fontWeight={"700"} color={"#00C3BA"}>
-                          {dance.month}
+                          {item.month}
                         </Text>
                       </Stack>
                       <Stack spacing={0}>
                         <Text color={"#C0C0C0"}>Sessions</Text>
                         <Text fontWeight={"700"} color={"#00C3BA"}>
-                          {dance.sessions}
+                          {item.sessions}
                         </Text>
                       </Stack>
                       <Stack spacing={0}>
                         <Text color={"#C0C0C0"}>Price</Text>
                         <Text fontWeight={"700"} color={"#00C3BA"}>
-                          {dance.price}
+                          {item.price}
                         </Text>
                       </Stack>
                     </HStack>
                     <Box pt={4}>
                       <Text fontSize={"lg"} whiteSpace={"pre-line"}>
-                        {dance.description}
+                        {item.description}
                       </Text>
                     </Box>
                     <Box

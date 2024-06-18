@@ -4,6 +4,7 @@ import {
   Flex,
   HStack,
   Icon,
+  Image,
   Tab,
   TabList,
   TabPanel,
@@ -13,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import ClassInterestTab from "../../Component/ClassInterestTab";
 
 const MyPage = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState(0); // 버튼 이펙트 인덱스 변경
@@ -31,16 +33,19 @@ const MyPage = () => {
 
   const items = [
     {
-      title: "Classes inProgress",
-      // Icon: "FiClock",
+      title: "Classes in Progress",
+      Icon1: require("../../Asset/Icon/Mypage_Icon/icon1.png"),
+      Icon2: require("../../Asset/Icon/Mypage_Icon/icon1_default.png"),
     },
     {
       title: "Class of interest",
-      // Icon: "FiClock",
+      Icon1: require("../../Asset/Icon/Mypage_Icon/icon2.png"),
+      Icon2: require("../../Asset/Icon/Mypage_Icon/icon2_default.png"),
     },
     {
       title: "Interested teacher",
-      // Icon: "FiClock",
+      Icon1: require("../../Asset/Icon/Mypage_Icon/icon3.png"),
+      Icon2: require("../../Asset/Icon/Mypage_Icon/icon3_default.png"),
     },
   ];
   return (
@@ -114,12 +119,18 @@ const MyPage = () => {
               >
                 <TabList flexDirection={"column"} pr={2}>
                   {items.map((item, index) => (
-                    <Tab p={0} w={"full"} _selected={{ color: "#00C3BA" }}>
+                    <Tab
+                      p={0}
+                      w={"full"}
+                      color={"#C0C0C0"}
+                      _selected={{ color: "black" }}
+                    >
                       <HStack
                         w={"250px"}
                         py={3}
                         h={"full"}
                         fontSize={"20px"}
+                        fontWeight={"600"}
                         spacing={3}
                       >
                         {selectedTabIndex === index ? (
@@ -132,18 +143,31 @@ const MyPage = () => {
                         ) : (
                           <Box w={"5px"} h={"full"} bgColor={"white"} />
                         )}
-                        <Icon />
+                        <Box>
+                          <Image
+                            src={
+                              selectedTabIndex === index
+                                ? item.Icon1
+                                : item.Icon2
+                            }
+                          />
+                        </Box>
                         <Text whiteSpace={"nowrap"}>{item.title}</Text>
                       </HStack>
                     </Tab>
                   ))}
                 </TabList>
-                <TabPanels h={"full"} pl={10} borderLeft={"1px solid #E1E4E4"}>
+                <TabPanels
+                  h={"full"}
+                  pl={10}
+                  borderLeft={"1px solid #E1E4E4"}
+                  minH={"400px"}
+                >
                   <TabPanel px={0} h={"full"}>
                     1
                   </TabPanel>
                   <TabPanel px={0} h={"full"}>
-                    2
+                    <ClassInterestTab />
                   </TabPanel>
                   <TabPanel px={0} h={"full"}>
                     3
