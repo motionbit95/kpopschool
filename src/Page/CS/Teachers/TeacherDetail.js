@@ -103,18 +103,19 @@ const TeacherDetail = (props) => {
       <Container minW={"container.xl"}>
         <Stack py={16} spacing={8}>
           {/* 페이지 정보 */}
-          <HStack
+          <Flex
             fontWeight={"300"}
             fontSize={"xl"}
             color={"#4E4E4E"}
             align={"center"}
+            justify={"flex-end"}
           >
             <Text>Teachers</Text>
             <FiChevronRight />
             <Text>{`${teacher.category} Trainer`}</Text>
             <FiChevronRight />
             <Text color={"#00C3BA"}>{teacher.name}</Text>
-          </HStack>
+          </Flex>
           {/* 강사 정보 */}
           <Stack spacing={4}>
             <Text fontSize={"3xl"} fontWeight={"600"} color={"#FFCC00"}>

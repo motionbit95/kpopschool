@@ -22,9 +22,10 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const CurriculumDetail = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   let { category } = location.state;
   const [format, setFormat] = useState(location.state.format);
@@ -77,18 +78,19 @@ const CurriculumDetail = () => {
       {/* 강사 정보 */}
       <Container minW={"container.xl"}>
         <Stack py={16} spacing={8}>
-          <HStack
+          <Flex
             fontWeight={"300"}
             fontSize={"xl"}
             color={"#4E4E4E"}
             align={"center"}
+            justify={"flex-end"}
           >
             <Text>Curriculum</Text>
             <FiChevronRight />
-            <Text>{category}</Text> {/* 댄스인지 보컬인지에 대한 여부 */}
+            <Text>Intro</Text> {/* 댄스인지 보컬인지에 대한 여부 */}
             <FiChevronRight />
-            <Text color={"#00C3BA"}>{format}</Text>
-          </HStack>
+            <Text color={"#00C3BA"}>{category}</Text>
+          </Flex>
           <Stack spacing={4}>
             <Text fontSize={"3xl"} fontWeight={"600"} color={"#FF3CA2"}>
               {category}
@@ -148,38 +150,44 @@ const CurriculumDetail = () => {
             {format === "1:1" && (
               <Container minW={"container.xl"} py={8}>
                 <Stack divider={<StackDivider />} spacing={16}>
-                  {curriculums.map((dance) => (
+                  {curriculums.map((item) => (
                     <Stack>
                       <Text
                         fontSize={"2xl"}
                         fontWeight={"600"}
-                        color={"#FF3CA2"}
+                        color={
+                          item.title === "Beginner course"
+                            ? "#FFCC00"
+                            : item.title === "Intermediate course"
+                            ? "#00C3BA"
+                            : "#FF3CA2"
+                        }
                       >
-                        {dance.title}
+                        {item.title}
                       </Text>
                       <HStack spacing={16}>
                         <Stack spacing={0}>
                           <Text color={"#C0C0C0"}>Month</Text>
                           <Text fontWeight={"700"} color={"#00C3BA"}>
-                            {dance.month}
+                            {item.month}
                           </Text>
                         </Stack>
                         <Stack spacing={0}>
                           <Text color={"#C0C0C0"}>Sessions</Text>
                           <Text fontWeight={"700"} color={"#00C3BA"}>
-                            {dance.sessions}
+                            {item.sessions}
                           </Text>
                         </Stack>
                         <Stack spacing={0}>
                           <Text color={"#C0C0C0"}>Price</Text>
                           <Text fontWeight={"700"} color={"#00C3BA"}>
-                            {dance.price}
+                            {item.price}
                           </Text>
                         </Stack>
                       </HStack>
                       <Box pt={4}>
                         <Text fontSize={"lg"} whiteSpace={"pre-line"}>
-                          {dance.description}
+                          {item.description}
                         </Text>
                       </Box>
                       <Box
@@ -217,7 +225,7 @@ const CurriculumDetail = () => {
             {format === "1:6" && (
               <Container minW={"container.xl"} py={8}>
                 <Stack divider={<StackDivider />} spacing={16}>
-                  {curriculums.map((dance) => (
+                  {curriculums.map((item) => (
                     // 포멧의 타입에 맞게 해당 요소만 출력되게 하기
                     // format === "1:1"
                     <Stack>
@@ -225,38 +233,38 @@ const CurriculumDetail = () => {
                         fontSize={"2xl"}
                         fontWeight={"600"}
                         color={
-                          dance.title === "Beginner course"
+                          item.title === "Beginner course"
                             ? "#FFCC00"
-                            : dance.title === "Intermediate course"
+                            : item.title === "Intermediate course"
                             ? "#00C3BA"
                             : "#FF3CA2"
                         }
                       >
-                        {dance.title}
+                        {item.title}
                       </Text>
                       <HStack spacing={16}>
                         <Stack spacing={0}>
                           <Text color={"#C0C0C0"}>Month</Text>
                           <Text fontWeight={"700"} color={"#00C3BA"}>
-                            {dance.month}
+                            {item.month}
                           </Text>
                         </Stack>
                         <Stack spacing={0}>
                           <Text color={"#C0C0C0"}>Sessions</Text>
                           <Text fontWeight={"700"} color={"#00C3BA"}>
-                            {dance.sessions}
+                            {item.sessions}
                           </Text>
                         </Stack>
                         <Stack spacing={0}>
                           <Text color={"#C0C0C0"}>Price</Text>
                           <Text fontWeight={"700"} color={"#00C3BA"}>
-                            {dance.price}
+                            {item.price}
                           </Text>
                         </Stack>
                       </HStack>
                       <Box pt={4}>
                         <Text fontSize={"lg"} whiteSpace={"pre-line"}>
-                          {dance.description}
+                          {item.description}
                         </Text>
                       </Box>
                       <Box
@@ -293,7 +301,7 @@ const CurriculumDetail = () => {
             {format === "VOD" && (
               <Container minW={"container.xl"} py={8}>
                 <Stack divider={<StackDivider />} spacing={16}>
-                  {curriculums.map((dance) => (
+                  {curriculums.map((item) => (
                     // 포멧의 타입에 맞게 해당 요소만 출력되게 하기
                     // format === "1:1"
                     <Stack>
@@ -301,38 +309,38 @@ const CurriculumDetail = () => {
                         fontSize={"2xl"}
                         fontWeight={"600"}
                         color={
-                          dance.title === "Beginner course"
+                          item.title === "Beginner course"
                             ? "#FFCC00"
-                            : dance.title === "Intermediate course"
+                            : item.title === "Intermediate course"
                             ? "#00C3BA"
                             : "#FF3CA2"
                         }
                       >
-                        {dance.title}
+                        {item.title}
                       </Text>
                       <HStack spacing={16}>
                         <Stack spacing={0}>
                           <Text color={"#C0C0C0"}>Month</Text>
                           <Text fontWeight={"700"} color={"#00C3BA"}>
-                            {dance.month}
+                            {item.month}
                           </Text>
                         </Stack>
                         <Stack spacing={0}>
                           <Text color={"#C0C0C0"}>Sessions</Text>
                           <Text fontWeight={"700"} color={"#00C3BA"}>
-                            {dance.sessions}
+                            {item.sessions}
                           </Text>
                         </Stack>
                         <Stack spacing={0}>
                           <Text color={"#C0C0C0"}>Price</Text>
                           <Text fontWeight={"700"} color={"#00C3BA"}>
-                            {dance.price}
+                            {item.price}
                           </Text>
                         </Stack>
                       </HStack>
                       <Box pt={4}>
                         <Text fontSize={"lg"} whiteSpace={"pre-line"}>
-                          {dance.description}
+                          {item.description}
                         </Text>
                       </Box>
                       <Box
