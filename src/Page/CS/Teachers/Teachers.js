@@ -38,7 +38,7 @@ const Teachers = () => {
         });
     };
     getTeachers();
-    console.log(Teachers);
+    console.log(teachers);
   }, []);
 
   return (
@@ -83,16 +83,20 @@ const Teachers = () => {
             <TabPanel px={0}>
               {/* 전체 목록 */}
               <Stack spacing={0}>
-                <Stack py={8}>
+                <Stack>
                   <Text fontWeight={"600"} fontSize={"2xl"}>
                     Vocal Trainer
                   </Text>
-                  <SimpleGrid columns={4} spacing={4} py={4}>
-                    {teachers.map(
-                      (item) =>
-                        item.category === "Vocal" && <TeacherCard item={item} />
-                    )}
-                  </SimpleGrid>
+                  <Flex>
+                    <SimpleGrid columns={4} spacing={4} py={4}>
+                      {teachers.map(
+                        (item) =>
+                          item.category === "Vocal" && (
+                            <TeacherCard item={item} />
+                          )
+                      )}
+                    </SimpleGrid>
+                  </Flex>
                 </Stack>
                 <Stack py={8}>
                   <Text fontWeight={"600"} fontSize={"2xl"}>
@@ -107,23 +111,27 @@ const Teachers = () => {
                 </Stack>
               </Stack>
             </TabPanel>
-            <TabPanel>
+            <TabPanel px={0}>
               {/* 보컬 강사 */}
-              <SimpleGrid columns={4} spacing={4} py={4}>
-                {teachers.map(
-                  (item) =>
-                    item.category === "Vocal" && <TeacherCard item={item} />
-                )}
-              </SimpleGrid>
+              <Flex>
+                <SimpleGrid columns={4} spacing={4} py={4}>
+                  {teachers.map(
+                    (item) =>
+                      item.category === "Vocal" && <TeacherCard item={item} />
+                  )}
+                </SimpleGrid>
+              </Flex>
             </TabPanel>
-            <TabPanel>
+            <TabPanel px={0}>
               {/* 댄스 강사 */}
-              <SimpleGrid columns={4} spacing={4} py={4}>
-                {teachers.map(
-                  (item) =>
-                    item.category === "Dance" && <TeacherCard item={item} />
-                )}
-              </SimpleGrid>
+              <Flex>
+                <SimpleGrid columns={4} spacing={4} py={4}>
+                  {teachers.map(
+                    (item) =>
+                      item.category === "Dance" && <TeacherCard item={item} />
+                  )}
+                </SimpleGrid>
+              </Flex>
             </TabPanel>
           </TabPanels>
         </Tabs>
