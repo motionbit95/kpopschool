@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -17,6 +17,15 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { host_url } from "../../../App";
+import {
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+  OAuthProvider,
+  TwitterAuthProvider,
+  signInWithPopup,
+  signInWithRedirect,
+} from "firebase/auth";
+import { auth } from "../../../Firebase/Config";
 
 const SignUp = () => {
   const [step, setStep] = useState(0);
@@ -48,6 +57,14 @@ const SignUp = () => {
       });
     setStep(2);
   };
+
+  useEffect(() => {
+    auth.onIdTokenChanged((user) => {
+      if (user) {
+        console.log(user);
+      }
+    });
+  }, []);
   return (
     <Center minH={window.innerHeight}>
       <Stack w={"320px"} align={"center"}>
@@ -140,18 +157,31 @@ const EmailSignupForm = ({ setStep, navigate, formData, setFormData }) => {
       >
         <IconButton
           borderRadius={"full"}
+          onClick={() =>
+            signInWithRedirect(auth, new GoogleAuthProvider()).then((res) =>
+              console.log(res)
+            )
+          }
           icon={
             <Image src={require("../../../Asset/Icon/google.png")} w={"28px"} />
           }
         />
         <IconButton
           borderRadius={"full"}
+          onClick={() =>
+            signInWithRedirect(auth, new OAuthProvider("apple.com")).then(
+              (res) => {
+                console.log(res);
+              }
+            )
+          }
           icon={
             <Image src={require("../../../Asset/Icon/apple.png")} w={"22px"} />
           }
         />
         <IconButton
           borderRadius={"full"}
+          onClick={() => signInWithRedirect(auth, new TwitterAuthProvider())}
           icon={
             <Image
               src={require("../../../Asset/Icon/twitter.png")}
@@ -161,6 +191,11 @@ const EmailSignupForm = ({ setStep, navigate, formData, setFormData }) => {
         />
         <IconButton
           borderRadius={"full"}
+          onClick={() =>
+            signInWithRedirect(auth, new FacebookAuthProvider()).then((res) => {
+              console.log(res);
+            })
+          }
           icon={
             <Image
               src={require("../../../Asset/Icon/facebook.png")}
