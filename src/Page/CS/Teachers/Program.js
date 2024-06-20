@@ -9,13 +9,19 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
 
 const Program = () => {
   const location = useLocation();
   let { category } = location.state;
+
+  // const
+
+  // useEffect(() => {
+  //   console.log(item);
+  // });
 
   return (
     <Flex flex={1} direction={"column"}>
@@ -34,6 +40,8 @@ const Program = () => {
             <Text>Intro</Text>
             <FiChevronRight />
             <Text>{category}</Text>
+            <FiChevronRight />
+            <Text></Text>
             <FiChevronRight />
             <Text color={"#00C3BA"}></Text>
           </Flex>

@@ -43,7 +43,7 @@ const TeacherDetail = (props) => {
       window.location.hostname === "localhost" ? "http://localhost:8080" : "";
 
     const id = window.location.pathname.split("/").pop();
-    console.log(id);
+    // console.log(id);
 
     fetch(`${host_url}/teachers/get`, {
       method: "POST",
@@ -56,7 +56,7 @@ const TeacherDetail = (props) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setTeacher(res);
       })
       .catch((err) => {
@@ -67,7 +67,7 @@ const TeacherDetail = (props) => {
   useEffect(() => {
     const host_url =
       window.location.hostname === "localhost" ? "http://localhost:8080" : "";
-    console.log(host_url);
+    // console.log(host_url);
 
     const getCurriculums = async () => {
       // 필터링은 검색을 통해서 진행한다.
@@ -84,7 +84,7 @@ const TeacherDetail = (props) => {
       })
         .then((res) => res.json())
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           setCurriculums(res);
         })
         .catch((err) => {
@@ -95,7 +95,7 @@ const TeacherDetail = (props) => {
     };
 
     getCurriculums();
-    console.log(curriculums);
+    // console.log(curriculums);
   }, [teacher]);
 
   useEffect(() => {
@@ -135,7 +135,7 @@ const TeacherDetail = (props) => {
               .then((res) => res.json())
               .then((res) => {
                 // 유저 정보
-                console.log("user", res);
+                // console.log("user", res);
                 reviewData.userName = res.name;
                 reviewData.userProfile = res.profile;
               })
@@ -155,14 +155,14 @@ const TeacherDetail = (props) => {
               .then((res) => res.json())
               .then((res) => {
                 // 강의 정보
-                console.log("lesson", res);
+                // console.log("lesson", res);
                 reviewData.difficulty = res.difficulty;
                 reviewData.category = res.category.toUpperCase();
 
                 tempList.push(reviewData);
                 setReviews(tempList);
 
-                console.log("total", reviewData);
+                // console.log("total", reviewData);
               })
               .catch((err) => {
                 console.log(err);
@@ -383,7 +383,7 @@ const LessonForm = ({ curriculums, isOkay, navigate }) => {
                 onClick={() => {
                   console.log(item);
                   navigate(`/curriculum/program/${item.id}`, {
-                    state: { ...item },
+                    state: item,
                   });
                 }}
               >
