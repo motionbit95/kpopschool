@@ -10,6 +10,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { FiChevronRight } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 const Curriculum = () => {
@@ -27,6 +28,17 @@ const Curriculum = () => {
   return (
     <Flex flex={1}>
       <Container minW={"container.xl"}>
+        <Flex
+          fontWeight={"300"}
+          fontSize={"xl"}
+          color={"#4E4E4E"}
+          align={"center"}
+          justify={"flex-end"}
+        >
+          <Text>Curriculum</Text>
+          <FiChevronRight />
+          <Text color={"#00C3BA"}>Intro</Text>
+        </Flex>
         <Stack>
           <Box py={6}>
             <Text fontSize={"5xl"} fontWeight={"bold"} color={"#FF3CA2"}>
@@ -80,7 +92,7 @@ const Curriculum = () => {
                   <Image
                     transition={"all 0.3s ease-in-out"}
                     transform={isHoveredDance ? "scale(1.1)" : "scale(1)"}
-                    src={require("../../Asset/Image/Curriculum_dance.png")}
+                    src={require("../../../Asset/Image/Curriculum_dance.png")}
                   />
                 </Box>
                 <Box
@@ -93,8 +105,10 @@ const Curriculum = () => {
                 />
               </Box>
               <Text>Supports format</Text>
-              <ButtonGroup variant={"outline"} colorScheme="green">
+              <ButtonGroup variant={"outline"}>
                 <Button
+                  color={"#00C3BA"}
+                  borderColor={"#00C3BA"}
                   onClick={() => {
                     const category = "Dance";
                     const format = "1:1";
@@ -106,6 +120,8 @@ const Curriculum = () => {
                   1:1
                 </Button>
                 <Button
+                  color={"#00C3BA"}
+                  borderColor={"#00C3BA"}
                   onClick={() => {
                     const category = "Dance";
                     const format = "1:6";
@@ -117,6 +133,8 @@ const Curriculum = () => {
                   1:6
                 </Button>
                 <Button
+                  color={"#00C3BA"}
+                  borderColor={"#00C3BA"}
                   onClick={() => {
                     const category = "Dance";
                     const format = "VOD";
@@ -170,7 +188,7 @@ const Curriculum = () => {
                   <Image
                     transition={"all 0.3s ease-in-out"}
                     transform={isHoveredVocal ? "scale(1.1)" : "scale(1)"}
-                    src={require("../../Asset/Image/Curriculum_vocal.png")}
+                    src={require("../../../Asset/Image/Curriculum_vocal.png")}
                   />
                 </Box>
                 <Box
@@ -183,8 +201,10 @@ const Curriculum = () => {
                 />
               </Box>
               <Text>Supports format</Text>
-              <ButtonGroup variant={"outline"} colorScheme="green">
+              <ButtonGroup variant={"outline"}>
                 <Button
+                  color={"#00C3BA"}
+                  borderColor={"#00C3BA"}
                   onClick={() => {
                     const category = "Vocal";
                     const format = "1:1";
@@ -196,6 +216,8 @@ const Curriculum = () => {
                   1:1
                 </Button>
                 <Button
+                  color={"#00C3BA"}
+                  borderColor={"#00C3BA"}
                   onClick={() => {
                     const category = "Vocal";
                     const format = "1:6";
@@ -207,6 +229,8 @@ const Curriculum = () => {
                   1:6
                 </Button>
                 <Button
+                  color={"#00C3BA"}
+                  borderColor={"#00C3BA"}
                   onClick={() => {
                     const category = "Vocal";
                     const format = "VOD";

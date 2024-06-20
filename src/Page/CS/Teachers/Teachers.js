@@ -38,23 +38,8 @@ const Teachers = () => {
         });
     };
     getTeachers();
-    console.log(Teachers);
+    console.log(teachers);
   }, []);
-
-  const Teachers1 = [
-    {
-      id: 1,
-      name: "Lee Hwan Ho",
-      type: "Vocal Trainer",
-      Image: require("../../Asset/Image/Trainer1.png"),
-    },
-    {
-      id: 2,
-      name: "Jessie",
-      type: "Vocal Trainer",
-      Image: require("../../Asset/Image/Trainer1.png"),
-    },
-  ];
 
   return (
     <Flex flex={1}>
@@ -64,7 +49,7 @@ const Teachers = () => {
             Teachers
           </Text>
         </Box>
-        <Tabs variant={"unstyled"}>
+        <Tabs variant={"unstyled"} pb={16}>
           <TabList gap={12}>
             <Tab
               px={0}
@@ -94,51 +79,63 @@ const Teachers = () => {
               Dance Trainer
             </Tab>
           </TabList>
-          <TabPanels>
+          <TabPanels pt={8}>
             <TabPanel px={0}>
               {/* 전체 목록 */}
               <Stack spacing={0}>
-                <Stack py={8}>
+                <Stack spacing={4}>
                   <Text fontWeight={"600"} fontSize={"2xl"}>
                     Vocal Trainer
                   </Text>
-                  <SimpleGrid columns={4} spacing={4} py={4}>
-                    {teachers.map(
-                      (item) =>
-                        item.category === "Vocal" && <TeacherCard item={item} />
-                    )}
-                  </SimpleGrid>
+                  <Flex>
+                    <SimpleGrid gap={8} columns={4}>
+                      {teachers.map(
+                        (item) =>
+                          item.category === "Vocal" && (
+                            <TeacherCard item={item} />
+                          )
+                      )}
+                    </SimpleGrid>
+                  </Flex>
                 </Stack>
-                <Stack py={8}>
+                <Stack pt={16} spacing={4}>
                   <Text fontWeight={"600"} fontSize={"2xl"}>
                     Dance Trainer
                   </Text>
-                  <SimpleGrid columns={4} spacing={4} py={4}>
-                    {teachers.map(
-                      (item) =>
-                        item.category === "Dance" && <TeacherCard item={item} />
-                    )}
-                  </SimpleGrid>
+                  <Flex>
+                    <SimpleGrid gap={8} columns={4}>
+                      {teachers.map(
+                        (item) =>
+                          item.category === "Dance" && (
+                            <TeacherCard item={item} />
+                          )
+                      )}
+                    </SimpleGrid>
+                  </Flex>
                 </Stack>
               </Stack>
             </TabPanel>
-            <TabPanel>
+            <TabPanel px={0}>
               {/* 보컬 강사 */}
-              <SimpleGrid columns={4} spacing={4} py={4}>
-                {teachers.map(
-                  (item) =>
-                    item.category === "Vocal" && <TeacherCard item={item} />
-                )}
-              </SimpleGrid>
+              <Flex>
+                <SimpleGrid gap={8} columns={4}>
+                  {teachers.map(
+                    (item) =>
+                      item.category === "Vocal" && <TeacherCard item={item} />
+                  )}
+                </SimpleGrid>
+              </Flex>
             </TabPanel>
-            <TabPanel>
+            <TabPanel px={0}>
               {/* 댄스 강사 */}
-              <SimpleGrid columns={4} spacing={4} py={4}>
-                {teachers.map(
-                  (item) =>
-                    item.category === "Dance" && <TeacherCard item={item} />
-                )}
-              </SimpleGrid>
+              <Flex>
+                <SimpleGrid gap={8} columns={4}>
+                  {teachers.map(
+                    (item) =>
+                      item.category === "Dance" && <TeacherCard item={item} />
+                  )}
+                </SimpleGrid>
+              </Flex>
             </TabPanel>
           </TabPanels>
         </Tabs>
@@ -149,7 +146,7 @@ const Teachers = () => {
 
 export default Teachers;
 
-const TeacherCard = (props) => {
+export const TeacherCard = (props) => {
   return (
     <Stack spacing={1}>
       <AspectRatio
