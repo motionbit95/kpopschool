@@ -35,7 +35,8 @@ export const TeacherItem = ({ teacher }) => {
                       onClick={() => Nav(`/teachers/${teacher.id}`)}
                       size={"lg"}
                       variant={"outline"}
-                      colorScheme="green"
+                      color={"#00C3BA"}
+                      borderColor={"#00C3BA"}
                       fontWeight={"600"}
                     >
                       Apply
@@ -97,7 +98,8 @@ export const TeacherItem = ({ teacher }) => {
                       w={"full"}
                       size={"lg"}
                       variant={"outline"}
-                      colorScheme="green"
+                      color={"#00C3BA"}
+                      borderColor={"#00C3BA"}
                       fontWeight={"600"}
                       onClick={() => Nav(`/teachers/${teacher.id}`)}
                     >
@@ -125,7 +127,7 @@ export const LessonItem = () => {
           <Box w={"full"} h={"full"} borderRadius={"lg"} overflow={"hidden"}>
             <Image
               w={"full"}
-              src={require("../Asset/Image/Curriculum_dance.png")}
+              src={require("../Asset/Image/vocal.png")}
               alt={""}
             />
           </Box>
@@ -175,16 +177,16 @@ export const LessonItem = () => {
         <SimpleGrid display={"flex"} column={2} columnGap={12} pt={4}>
           <Stack justifyContent={"space-between"} fontSize={"2xl"} w={700}>
             <Text>
-              Unleash the magic of K-pop with your voice! K-pop School's vocal
-              course allows you to take your vocal skills to the next level
-              through professional vocal training.
+              Discover your own dance style at K-pop school! You can learn
+              amazing choreography and perfect it like a K-pop idol through
+              professional dance classes.
             </Text>
             <Text>
-              You can practice the latest K-pop hits with the same vocal trainer
-              who taught and coached the K-pop stars you love. Learn everything
-              it takes to become a K-pop star, including pronunciation,
-              vocalization, and emotional expression. Prepare your own stage
-              right now!
+              Prepare to stand on the stage you have always longed for with a
+              trainer who has taught K-pop stars. Dynamic dance routines,
+              stylish choreography, and energetic performances will help you
+              become the true star of the stage. Are you ready to dive into the
+              world of K-pop?
             </Text>
             <Box display={"flex"} justifyContent={"flex-end"}>
               <Button
@@ -208,7 +210,7 @@ export const LessonItem = () => {
           <Box w={"full"} h={"full"} borderRadius={"lg"} overflow={"hidden"}>
             <Image
               w={"full"}
-              src={require("../Asset/Image/Curriculum_dance.png")}
+              src={require("../Asset/Image/dance.png")}
               alt={""}
             />
           </Box>

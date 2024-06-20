@@ -19,10 +19,6 @@ const TeacherInfo = ({ teacher }) => {
   const toast = useToast();
   const [isFavorite, setIsFavorite] = useState(false);
 
-  useEffect(() => {
-    console.log(teacher);
-  });
-
   const handleClickFavorite = () => {
     console.log("handleClickFavorite");
     setIsFavorite(!isFavorite);

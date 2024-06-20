@@ -2,13 +2,9 @@ import {
   Avatar,
   Box,
   Button,
-  ButtonGroup,
   Container,
   Flex,
-  Grid,
-  GridItem,
   HStack,
-  IconButton,
   Image,
   Input,
   InputGroup,
@@ -28,17 +24,20 @@ import {
   Th,
   Thead,
   Tr,
-  useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
-import { TeacherCard } from "./Teachers";
 import TeacherInfo from "./TeacherInfo";
+import { useNavigate } from "react-router-dom";
+import { host_url } from "../../../App";
 
 const TeacherDetail = (props) => {
   const [teacher, setTeacher] = useState({});
+  const [reviews, setReviews] = useState([]);
   const [curriculums, setCurriculums] = useState([]);
   const isOkay = false;
+  const navigate = useNavigate();
+
   useEffect(() => {
     const host_url =
       window.location.hostname === "localhost" ? "http://localhost:8080" : "";
@@ -94,8 +93,88 @@ const TeacherDetail = (props) => {
           setCurriculums([]);
         });
     };
+
     getCurriculums();
     console.log(curriculums);
+  }, [teacher]);
+
+  useEffect(() => {
+    const getReviews = () => {
+      const tempList = [];
+      fetch(`${host_url}/review/search`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          conditions: [
+            { field: "teacherId", operator: "==", value: teacher.id },
+          ],
+        }),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          // setReviews(res);
+          res.forEach((r) => {
+            let reviewData = {
+              id: r.id,
+              createdAt: r.createdAt,
+              rating: r.rating,
+              comment: r.comment,
+            };
+
+            fetch(`${host_url}/users/get`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                id: r.userId,
+              }),
+            })
+              .then((res) => res.json())
+              .then((res) => {
+                // 유저 정보
+                console.log("user", res);
+                reviewData.userName = res.name;
+                reviewData.userProfile = res.profile;
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+
+            fetch(`${host_url}/curriculums/get`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                id: r.lessonId,
+              }),
+            })
+              .then((res) => res.json())
+              .then((res) => {
+                // 강의 정보
+                console.log("lesson", res);
+                reviewData.difficulty = res.difficulty;
+                reviewData.category = res.category.toUpperCase();
+
+                tempList.push(reviewData);
+                setReviews(tempList);
+
+                console.log("total", reviewData);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    getReviews();
   }, [teacher]);
 
   return (
@@ -155,69 +234,11 @@ const TeacherDetail = (props) => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <Container minW={"container.xl"} py={8}>
-              <Stack divider={<StackDivider />} spacing={16}>
-                {curriculums.map((item) => (
-                  <Stack>
-                    <Text
-                      color={
-                        item.difficulty === "Beginner"
-                          ? "#FFCC00"
-                          : item.difficulty === "Intermediate"
-                          ? "#00C3BA"
-                          : item.difficulty === "Advanced"
-                          ? "#00B2FF"
-                          : "#FF3CA2"
-                      }
-                      fontSize={"lg"}
-                    >{`${item.difficulty} course`}</Text>
-                    <Text fontSize={"2xl"} fontWeight={"600"}>
-                      {item.title}
-                    </Text>
-                    <HStack spacing={16}>
-                      <Stack spacing={0}>
-                        <Text color={"#C0C0C0"}>Month</Text>
-                        <Text fontWeight={"700"} color={"#00C3BA"}>
-                          {item.month}
-                        </Text>
-                      </Stack>
-                      <Stack spacing={0}>
-                        <Text color={"#C0C0C0"}>Sessions</Text>
-                        <Text fontWeight={"700"} color={"#00C3BA"}>
-                          {item.sessions}
-                        </Text>
-                      </Stack>
-                      <Stack spacing={0}>
-                        <Text color={"#C0C0C0"}>Price</Text>
-                        <Text fontWeight={"700"} color={"#00C3BA"}>
-                          {item.price}
-                        </Text>
-                      </Stack>
-                    </HStack>
-                    <Box pt={4}>
-                      <Text fontSize={"lg"} whiteSpace={"pre-line"}>
-                        {item.description}
-                      </Text>
-                    </Box>
-                    <Box
-                      w={"100%"}
-                      display={"flex"}
-                      justifyContent={"flex-end"}
-                    >
-                      {isOkay ? (
-                        <Button size={"lg"} bgColor={"#FF3CA2"} color={"white"}>
-                          APPLY
-                        </Button>
-                      ) : (
-                        <Button size={"lg"} bgColor={"#00B2FF"} color={"white"}>
-                          CONTINUE
-                        </Button>
-                      )}
-                    </Box>
-                  </Stack>
-                ))}
-              </Stack>
-            </Container>
+            <LessonForm
+              curriculums={curriculums}
+              isOkay={isOkay}
+              navigate={navigate}
+            />
           </TabPanel>
           <TabPanel>
             {/* 수정 필요 */}
@@ -265,37 +286,39 @@ const TeacherDetail = (props) => {
                   </Button>
                 </InputRightElement>
               </InputGroup>
-              <HStack py={12} gap={4} align={"start"}>
-                <Avatar size={"lg"} />
-                <Stack w={"full"} spacing={3}>
-                  <HStack justifyContent={"space-between"} align={"start"}>
-                    <Stack spacing={0} color={"#4E4E4E"}>
-                      <Text fontSize={"lg"}>fiatto</Text>
-                      <Text fontSize={"sm"}>Advanced course|VOCAL</Text>
-                    </Stack>
-                    <Flex gap={1}>
-                      {Array.from({ length: 5 }, (_, i) => (
-                        <Image
-                          key={i}
-                          src={
-                            i < 5 // 데이터 가져와야함
-                              ? require("../../../Asset/Icon/starFill.png")
-                              : require("../../../Asset/Icon/starDefault.png")
-                          }
-                          alt="star"
-                          boxSize="20px" // 적절한 크기로 설정
-                        />
-                      ))}
-                    </Flex>
-                  </HStack>
-                  <Text fontSize={"lg"} color={"#4E4E4E"}>
-                    The teacher was very kind and taught well. Vibration, which
-                    wasn't working well, was successful! I'm writing any
-                    reviews. They're all dummy texts. I hope they're at least
-                    150 characters long.
-                  </Text>
-                </Stack>
-              </HStack>
+              {reviews.map((review) => (
+                <HStack py={12} gap={4} align={"start"}>
+                  <Avatar size={"lg"} src={review.userProfile} />
+                  <Stack w={"full"} spacing={3}>
+                    <HStack justifyContent={"space-between"} align={"start"}>
+                      <Stack spacing={0} color={"#4E4E4E"}>
+                        <Text fontSize={"lg"}>{review.userName}</Text>
+                        <Text fontSize={"sm"}>
+                          {review.difficulty} course|{review.category}
+                        </Text>
+                      </Stack>
+
+                      <Flex gap={1}>
+                        {Array.from({ length: 5 }, (_, i) => (
+                          <Image
+                            key={i}
+                            src={
+                              i < review.rating // 데이터 가져와야함
+                                ? require("../../../Asset/Icon/starFill.png")
+                                : require("../../../Asset/Icon/starDefault.png")
+                            }
+                            alt="star"
+                            boxSize="20px" // 적절한 크기로 설정
+                          />
+                        ))}
+                      </Flex>
+                    </HStack>
+                    <Text fontSize={"lg"} color={"#4E4E4E"}>
+                      {review.comment}
+                    </Text>
+                  </Stack>
+                </HStack>
+              ))}
             </Container>
           </TabPanel>
         </TabPanels>
@@ -305,3 +328,71 @@ const TeacherDetail = (props) => {
 };
 
 export default TeacherDetail;
+
+const LessonForm = ({ curriculums, isOkay, navigate }) => {
+  return (
+    <Container minW={"container.xl"} py={8}>
+      <Stack divider={<StackDivider />} spacing={16}>
+        {curriculums.map((item) => (
+          <Stack>
+            <Text
+              color={
+                item.difficulty === "Beginner"
+                  ? "#FFCC00"
+                  : item.difficulty === "Intermediate"
+                  ? "#00C3BA"
+                  : item.difficulty === "Advanced"
+                  ? "#00B2FF"
+                  : "#FF3CA2"
+              }
+              fontSize={"lg"}
+            >{`${item.difficulty} course`}</Text>
+            <Text fontSize={"2xl"} fontWeight={"600"}>
+              {item.title}
+            </Text>
+            <HStack spacing={16}>
+              <Stack spacing={0}>
+                <Text color={"#C0C0C0"}>Month</Text>
+                <Text fontWeight={"700"} color={"#00C3BA"}>
+                  {item.month}
+                </Text>
+              </Stack>
+              <Stack spacing={0}>
+                <Text color={"#C0C0C0"}>Sessions</Text>
+                <Text fontWeight={"700"} color={"#00C3BA"}>
+                  {item.sessions}
+                </Text>
+              </Stack>
+              <Stack spacing={0}>
+                <Text color={"#C0C0C0"}>Price</Text>
+                <Text fontWeight={"700"} color={"#00C3BA"}>
+                  {`$${item.price} per session`}
+                </Text>
+              </Stack>
+            </HStack>
+            <Box pt={4}>
+              <Text fontSize={"lg"} whiteSpace={"pre-line"}>
+                {item.description}
+              </Text>
+            </Box>
+            <Box w={"100%"} display={"flex"} justifyContent={"flex-end"}>
+              <Button
+                size={"lg"}
+                bgColor={isOkay ? "#FF3CA2" : "#00B2FF"}
+                color={"white"}
+                onClick={() => {
+                  console.log(item);
+                  navigate(`/curriculum/program/${item.id}`, {
+                    state: { ...item },
+                  });
+                }}
+              >
+                {isOkay ? "APPLY" : "CONTINUE"}
+              </Button>
+            </Box>
+          </Stack>
+        ))}
+      </Stack>
+    </Container>
+  );
+};

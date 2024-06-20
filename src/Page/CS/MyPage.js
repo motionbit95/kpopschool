@@ -22,6 +22,12 @@ import InterestTrainer from "../../Component/MyLessons/InterestTrainer";
 import PaymentHistory from "../../Component/Payment/PaymentHistory";
 import AddCards from "../../Component/Payment/AddCards";
 import YourCards from "../../Component/Payment/YourCards";
+import RetainedCoupon from "../../Component/RetainedCoupon";
+import InquiryHistory from "../../Component/1vs1Inquiry/InquiryHistory";
+import MakeInquiry from "../../Component/1vs1Inquiry/MakeInquiry";
+import UserInfo from "../../Component/Setting/UserInfo";
+import PasswordChange from "../../Component/Setting/PasswordChange";
+import Information from "../../Component/Setting/Information";
 
 const MyPage = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState(0); // 버튼 이펙트 인덱스 변경
@@ -103,6 +109,7 @@ const MyPage = () => {
                 <TabPanels
                   h={"full"}
                   pl={10}
+                  pt={4}
                   borderLeft={"1px solid #E1E4E4"}
                   minH={"400px"}
                 >
@@ -147,7 +154,7 @@ const MyPage = () => {
                   <TabPanel p={0} h={"full"}>
                     <PaymentHistory />
                   </TabPanel>
-                  <TabPanel p={0} h={"full"} pl={10}>
+                  <TabPanel p={0} h={"full"} pl={10} pt={4}>
                     <Stack spacing={6}>
                       <YourCards />
                       <AddCards />
@@ -180,7 +187,7 @@ const MyPage = () => {
                   minH={"400px"}
                 >
                   <TabPanel p={0} h={"full"}>
-                    0
+                    <RetainedCoupon />
                   </TabPanel>
                 </TabPanels>
               </Tabs>
@@ -209,10 +216,10 @@ const MyPage = () => {
                   minH={"400px"}
                 >
                   <TabPanel p={0} h={"full"}>
-                    0
+                    <InquiryHistory />
                   </TabPanel>
-                  <TabPanel p={0} h={"full"}>
-                    1
+                  <TabPanel p={0} pl={10} pt={4} h={"full"}>
+                    <MakeInquiry />
                   </TabPanel>
                 </TabPanels>
               </Tabs>
@@ -237,17 +244,19 @@ const MyPage = () => {
                 </TabList>
                 <TabPanels
                   h={"full"}
+                  pl={10}
+                  pt={4}
                   borderLeft={"1px solid #E1E4E4"}
                   minH={"400px"}
                 >
                   <TabPanel p={0} h={"full"}>
-                    0
+                    <UserInfo />
                   </TabPanel>
                   <TabPanel p={0} h={"full"}>
-                    1
+                    <PasswordChange />
                   </TabPanel>
                   <TabPanel p={0} h={"full"}>
-                    2
+                    <Information />
                   </TabPanel>
                 </TabPanels>
               </Tabs>

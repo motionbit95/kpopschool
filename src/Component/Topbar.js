@@ -13,7 +13,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
 const Topbar = () => {
-  const isLogin = true;
+  const isLogin = false;
   const location = useLocation();
   const Nav = useNavigate();
   const [hoveredButton, setHoveredButton] = useState(null);
@@ -281,7 +281,12 @@ const Topbar = () => {
                   LOG OUT
                 </Button>
               ) : (
-                <Button variant={"solid"} colorScheme={"teal"}>
+                <Button
+                  variant={"solid"}
+                  color={"white"}
+                  bgColor={"#00C3BA"}
+                  onClick={() => Nav("/signin")}
+                >
                   LOG IN
                 </Button>
               )}

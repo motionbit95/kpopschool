@@ -11,10 +11,13 @@ import {
   Image,
   Input,
   Stack,
+  Switch,
   Text,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   return (
     <Center minH={window.innerHeight}>
       <Stack w={"320px"} align={"center"}>
@@ -30,7 +33,8 @@ const Login = () => {
             <Input placeholder="Email" />
             <Input placeholder="Password" />
             <HStack pb={4}>
-              <Box w={"100px"} h={"30px"} bgColor={"blue"} />
+              <Switch />
+              {/* <Box w={"100px"} h={"30px"} bgColor={"blue"} /> */}
               <Text>Remember me</Text>
             </HStack>
             <Button size={"lg"} h={"66px"}>
@@ -92,7 +96,7 @@ const Login = () => {
             <Text>Forgot Password?</Text>
             <Flex gap={4}>
               <Text>New to K-Pop SCHOOL?</Text>
-              <Text>Sign up</Text>
+              <Text onClick={() => navigate("/signup")}>Sign up</Text>
             </Flex>
           </Stack>
         </Stack>

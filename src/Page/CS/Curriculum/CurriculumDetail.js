@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Container,
   Flex,
   HStack,
@@ -22,20 +21,17 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const CurriculumDetail = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   let { category } = location.state;
   const [format, setFormat] = useState(location.state.format);
 
-  const isOkay = false;
-
   useEffect(() => {
     window.scrollTo(0, 0);
     console.log(category, format);
-  }, []);
+  }, [category, format]);
 
   const [curriculums, setCurriculums] = useState([]);
 
@@ -147,230 +143,16 @@ const CurriculumDetail = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            {format === "1:1" && (
-              <Container minW={"container.xl"} py={8}>
-                <Stack divider={<StackDivider />} spacing={16}>
-                  {curriculums.map((item) => (
-                    <Stack>
-                      <Text
-                        fontSize={"2xl"}
-                        fontWeight={"600"}
-                        color={
-                          item.title === "Beginner course"
-                            ? "#FFCC00"
-                            : item.title === "Intermediate course"
-                            ? "#00C3BA"
-                            : "#FF3CA2"
-                        }
-                      >
-                        {item.title}
-                      </Text>
-                      <HStack spacing={16}>
-                        <Stack spacing={0}>
-                          <Text color={"#C0C0C0"}>Month</Text>
-                          <Text fontWeight={"700"} color={"#00C3BA"}>
-                            {item.month}
-                          </Text>
-                        </Stack>
-                        <Stack spacing={0}>
-                          <Text color={"#C0C0C0"}>Sessions</Text>
-                          <Text fontWeight={"700"} color={"#00C3BA"}>
-                            {item.sessions}
-                          </Text>
-                        </Stack>
-                        <Stack spacing={0}>
-                          <Text color={"#C0C0C0"}>Price</Text>
-                          <Text fontWeight={"700"} color={"#00C3BA"}>
-                            {item.price}
-                          </Text>
-                        </Stack>
-                      </HStack>
-                      <Box pt={4}>
-                        <Text fontSize={"lg"} whiteSpace={"pre-line"}>
-                          {item.description}
-                        </Text>
-                      </Box>
-                      <Box
-                        w={"100%"}
-                        display={"flex"}
-                        justifyContent={"flex-end"}
-                      >
-                        {isOkay ? (
-                          <Button
-                            size={"lg"}
-                            bgColor={"#FF3CA2"}
-                            color={"white"}
-                          >
-                            APPLY
-                          </Button>
-                        ) : (
-                          <Button
-                            size={"lg"}
-                            bgColor={"#00B2FF"}
-                            color={"white"}
-                          >
-                            CONTINUE
-                          </Button>
-                        )}
-                      </Box>
-                    </Stack>
-                  ))}
-                </Stack>
-              </Container>
-            )}
+            {format === "1:1" && <Lessons curriculums={curriculums} />}
             {curriculums.length === 0 && <NotFound />}
           </TabPanel>
 
           <TabPanel>
-            {format === "1:6" && (
-              <Container minW={"container.xl"} py={8}>
-                <Stack divider={<StackDivider />} spacing={16}>
-                  {curriculums.map((item) => (
-                    // 포멧의 타입에 맞게 해당 요소만 출력되게 하기
-                    // format === "1:1"
-                    <Stack>
-                      <Text
-                        fontSize={"2xl"}
-                        fontWeight={"600"}
-                        color={
-                          item.title === "Beginner course"
-                            ? "#FFCC00"
-                            : item.title === "Intermediate course"
-                            ? "#00C3BA"
-                            : "#FF3CA2"
-                        }
-                      >
-                        {item.title}
-                      </Text>
-                      <HStack spacing={16}>
-                        <Stack spacing={0}>
-                          <Text color={"#C0C0C0"}>Month</Text>
-                          <Text fontWeight={"700"} color={"#00C3BA"}>
-                            {item.month}
-                          </Text>
-                        </Stack>
-                        <Stack spacing={0}>
-                          <Text color={"#C0C0C0"}>Sessions</Text>
-                          <Text fontWeight={"700"} color={"#00C3BA"}>
-                            {item.sessions}
-                          </Text>
-                        </Stack>
-                        <Stack spacing={0}>
-                          <Text color={"#C0C0C0"}>Price</Text>
-                          <Text fontWeight={"700"} color={"#00C3BA"}>
-                            {item.price}
-                          </Text>
-                        </Stack>
-                      </HStack>
-                      <Box pt={4}>
-                        <Text fontSize={"lg"} whiteSpace={"pre-line"}>
-                          {item.description}
-                        </Text>
-                      </Box>
-                      <Box
-                        w={"100%"}
-                        display={"flex"}
-                        justifyContent={"flex-end"}
-                      >
-                        {isOkay ? (
-                          <Button
-                            size={"lg"}
-                            bgColor={"#FF3CA2"}
-                            color={"white"}
-                          >
-                            APPLY
-                          </Button>
-                        ) : (
-                          <Button
-                            size={"lg"}
-                            bgColor={"#00B2FF"}
-                            color={"white"}
-                          >
-                            CONTINUE
-                          </Button>
-                        )}
-                      </Box>
-                    </Stack>
-                  ))}
-                </Stack>
-              </Container>
-            )}
+            {format === "1:6" && <Lessons curriculums={curriculums} />}
             {curriculums.length === 0 && <NotFound />}
           </TabPanel>
           <TabPanel>
-            {format === "VOD" && (
-              <Container minW={"container.xl"} py={8}>
-                <Stack divider={<StackDivider />} spacing={16}>
-                  {curriculums.map((item) => (
-                    // 포멧의 타입에 맞게 해당 요소만 출력되게 하기
-                    // format === "1:1"
-                    <Stack>
-                      <Text
-                        fontSize={"2xl"}
-                        fontWeight={"600"}
-                        color={
-                          item.title === "Beginner course"
-                            ? "#FFCC00"
-                            : item.title === "Intermediate course"
-                            ? "#00C3BA"
-                            : "#FF3CA2"
-                        }
-                      >
-                        {item.title}
-                      </Text>
-                      <HStack spacing={16}>
-                        <Stack spacing={0}>
-                          <Text color={"#C0C0C0"}>Month</Text>
-                          <Text fontWeight={"700"} color={"#00C3BA"}>
-                            {item.month}
-                          </Text>
-                        </Stack>
-                        <Stack spacing={0}>
-                          <Text color={"#C0C0C0"}>Sessions</Text>
-                          <Text fontWeight={"700"} color={"#00C3BA"}>
-                            {item.sessions}
-                          </Text>
-                        </Stack>
-                        <Stack spacing={0}>
-                          <Text color={"#C0C0C0"}>Price</Text>
-                          <Text fontWeight={"700"} color={"#00C3BA"}>
-                            {item.price}
-                          </Text>
-                        </Stack>
-                      </HStack>
-                      <Box pt={4}>
-                        <Text fontSize={"lg"} whiteSpace={"pre-line"}>
-                          {item.description}
-                        </Text>
-                      </Box>
-                      <Box
-                        w={"100%"}
-                        display={"flex"}
-                        justifyContent={"flex-end"}
-                      >
-                        {isOkay ? (
-                          <Button
-                            size={"lg"}
-                            bgColor={"#FF3CA2"}
-                            color={"white"}
-                          >
-                            APPLY
-                          </Button>
-                        ) : (
-                          <Button
-                            size={"lg"}
-                            bgColor={"#00B2FF"}
-                            color={"white"}
-                          >
-                            CONTINUE
-                          </Button>
-                        )}
-                      </Box>
-                    </Stack>
-                  ))}
-                </Stack>
-              </Container>
-            )}
+            {format === "VOD" && <Lessons curriculums={curriculums} />}
             {curriculums.length === 0 && <NotFound />}
           </TabPanel>
           <TabPanel>
@@ -420,6 +202,82 @@ const NotFound = () => {
           Not Found
         </Text>
       </Box>
+    </Container>
+  );
+};
+
+const Lessons = ({ curriculums }) => {
+  return (
+    <Container minW={"container.xl"} py={8}>
+      <Stack divider={<StackDivider />} spacing={16}>
+        {curriculums.map((item) => (
+          <Stack>
+            <Text
+              fontSize={"2xl"}
+              fontWeight={"600"}
+              color={
+                item.difficulty === "Beginner"
+                  ? "#FFCC00"
+                  : item.difficulty === "Intermediate"
+                  ? "#00C3BA"
+                  : item.difficulty === "Advanced"
+                  ? "#00B2FF"
+                  : "#FF3CA2"
+              }
+            >
+              {`${item.difficulty} course`}
+            </Text>
+            <HStack spacing={16}>
+              <Stack spacing={0}>
+                <Text color={"#C0C0C0"}>Month</Text>
+                <Text fontWeight={"700"} color={"#00C3BA"}>
+                  {item.month}
+                </Text>
+              </Stack>
+              <Stack spacing={0}>
+                <Text color={"#C0C0C0"}>Sessions</Text>
+                <Text fontWeight={"700"} color={"#00C3BA"}>
+                  {item.sessions}
+                </Text>
+              </Stack>
+              <Stack spacing={0}>
+                <Text color={"#C0C0C0"}>Price</Text>
+                <Text fontWeight={"700"} color={"#00C3BA"}>
+                  {`$${item.price} per session`}
+                </Text>
+              </Stack>
+            </HStack>
+            <Box pt={4}>
+              <Text fontSize={"lg"} whiteSpace={"pre-line"}>
+                {item.description}
+              </Text>
+            </Box>
+            {/* <Box
+          w={"100%"}
+          display={"flex"}
+          justifyContent={"flex-end"}
+        >
+          {isOkay ? (
+            <Button
+              size={"lg"}
+              bgColor={"#FF3CA2"}
+              color={"white"}
+            >
+              APPLY
+            </Button>
+          ) : (
+            <Button
+              size={"lg"}
+              bgColor={"#00B2FF"}
+              color={"white"}
+            >
+              CONTINUE
+            </Button>
+          )}
+        </Box> */}
+          </Stack>
+        ))}
+      </Stack>
     </Container>
   );
 };

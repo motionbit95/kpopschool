@@ -1,12 +1,12 @@
 import { Stack, Text } from "@chakra-ui/react";
 import React from "react";
 
-const CurriculumProgram = () => {
+const Information = () => {
   return (
     <Stack>
-      <Text>CurriculumProgram</Text>
+      <Text>Information</Text>
     </Stack>
   );
 };
 
-export default CurriculumProgram;
+export default Information;

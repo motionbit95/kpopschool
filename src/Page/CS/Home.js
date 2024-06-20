@@ -76,7 +76,8 @@ const Home = () => {
                 px={24}
                 py={8}
                 variant={"outline"}
-                colorScheme="red"
+                borderColor={"#FF3CA2"}
+                color={"#FF3CA2"}
                 onClick={() => scrollToSection("Lessons")}
               >
                 VIEW MORE
