@@ -6,6 +6,7 @@ import {
   Icon,
   Image,
   Stack,
+  StackDivider,
   Tab,
   TabList,
   TabPanel,
@@ -28,12 +29,14 @@ import MakeInquiry from "../../Component/1vs1Inquiry/MakeInquiry";
 import UserInfo from "../../Component/Setting/UserInfo";
 import PasswordChange from "../../Component/Setting/PasswordChange";
 import Information from "../../Component/Setting/Information";
+import Notification from "../../Component/Notification";
 
 const MyPage = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState(0); // 버튼 이펙트 인덱스 변경
   // 로케이션 state
   const location = useLocation();
   const [myPageIndex, setMyPageIndex] = useState(0);
+  const [openNotification, setOpenNotification] = useState(false);
   useEffect(() => {
     if (location.state && location.state.myPageIndex !== undefined) {
       setMyPageIndex(location.state.myPageIndex);
@@ -64,8 +67,49 @@ const MyPage = () => {
           <Text fontSize={"5xl"} fontWeight={"bold"} color={"#00C3BA"}>
             My Page
           </Text>
-          <Box boxSize={"20px"}>
-            <Image src={require("../../Asset/Icon/Notify.png")} alt={""} />
+          <Box boxSize={"20px"} position={"relative"}>
+            <Image
+              src={require("../../Asset/Icon/Notify.png")}
+              alt={""}
+              onClick={() => setOpenNotification(!openNotification)}
+            />
+            {openNotification && (
+              <Box position={"absolute"} top={12} right={"-30px"} zIndex={111}>
+                <Box
+                  position="relative"
+                  borderRadius="md"
+                  bgColor={"white"}
+                  border={"2px solid #00C3BA"}
+                  _before={{
+                    content: '""',
+                    position: "absolute",
+                    borderRadius: "md",
+                    top: "-15px",
+                    right: "20px",
+                    border: "2px solid #00C3BA",
+                    bgColor: "white",
+                    width: "32px",
+                    height: "32px",
+                    transform: "rotate(45deg)",
+                    zIndex: -1,
+                  }}
+                  _after={{
+                    content: '""',
+                    position: "absolute",
+                    borderRadius: "md",
+                    top: "-13px",
+                    right: "22px",
+                    bgColor: "white",
+                    width: "32px",
+                    height: "32px",
+                    transform: "rotate(45deg)",
+                    zIndex: 1,
+                  }}
+                >
+                  <Notification />
+                </Box>
+              </Box>
+            )}
           </Box>
         </Flex>
         <Tabs

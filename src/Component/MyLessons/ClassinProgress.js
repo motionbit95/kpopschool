@@ -31,7 +31,7 @@ const ClassinProgress = () => {
       trainer: "Jessie",
       sessions: "5/24",
       month: "6",
-      progress: "24%",
+      progress: "100%",
       state: "in Class",
     },
   ];
@@ -60,7 +60,7 @@ const ClassinProgress = () => {
             </Stack>
             <HStack spacing={8} textAlign={"center"}>
               <Flex gap={4}>
-                {item?.progress && (
+                {item?.progress === "100%" || (
                   <Stack>
                     <Text fontSize={"sm"} fontWeight={"500"} color={"#C0C0C0"}>
                       Progress
@@ -98,7 +98,7 @@ const ClassinProgress = () => {
                     {item.month}
                   </Text>
                 </Stack>
-                {item?.state && (
+                {item?.progress === "100%" || (
                   <Stack>
                     <Text fontSize={"sm"} fontWeight={"500"} color={"#C0C0C0"}>
                       STATE
@@ -113,7 +113,15 @@ const ClassinProgress = () => {
                   </Stack>
                 )}
               </Flex>
-              <Button size={"lg"}>Apply</Button>
+              <Button
+                w={"140px"}
+                size={"lg"}
+                bgColor={item.progress !== "100%" ? "#00B2FF" : "#FF3CA2"}
+                color={"white"}
+                onClick={() => console.log(item)}
+              >
+                {item.progress !== "100%" ? "CONTINUE" : "APPLY"}
+              </Button>
             </HStack>
           </HStack>
         ))}

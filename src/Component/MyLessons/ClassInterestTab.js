@@ -33,6 +33,8 @@ const ClassInterestTab = () => {
       trainer: "Mr.Lee",
       sessions: "3/12",
       month: "3",
+      progress: "24%",
+      state: "in Class",
     },
     {
       difficulty: "Advanced",
@@ -41,6 +43,8 @@ const ClassInterestTab = () => {
       trainer: "Mr.Lee",
       sessions: "5/24",
       month: "6",
+      progress: "24%",
+      state: "in Class",
     },
     {
       difficulty: "Beginner",
@@ -155,7 +159,7 @@ const TabsItem = ({ item }) => {
       </HStack>
       <HStack spacing={8} textAlign={"center"}>
         <Flex gap={4}>
-          {item?.progress && (
+          {item?.progress !== "100%" && (
             <Stack>
               <Text fontSize={"sm"} fontWeight={"500"} color={"#C0C0C0"}>
                 Progress
@@ -189,7 +193,7 @@ const TabsItem = ({ item }) => {
               {item.month}
             </Text>
           </Stack>
-          {item?.state && (
+          {item?.progress !== "100%" && (
             <Stack>
               <Text fontSize={"sm"} fontWeight={"500"} color={"#C0C0C0"}>
                 STATE
@@ -200,7 +204,14 @@ const TabsItem = ({ item }) => {
             </Stack>
           )}
         </Flex>
-        <Button size={"lg"}>Apply</Button>
+        <Button
+          size={"lg"}
+          bgColor={item.progress !== "100%" ? "#00B2FF" : "#FF3CA2"}
+          color={"white"}
+          onClick={() => console.log(item)}
+        >
+          {item.progress !== "100%" ? "CONTINUE" : "APPLY"}
+        </Button>
       </HStack>
     </HStack>
   );

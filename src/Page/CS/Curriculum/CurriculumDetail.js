@@ -22,6 +22,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
+import Timetable from "../../../Component/TimeTabel";
 
 const CurriculumDetail = () => {
   const location = useLocation();
@@ -157,28 +158,7 @@ const CurriculumDetail = () => {
           </TabPanel>
           <TabPanel>
             <Container minW={"container.xl"} py={8}>
-              <TableContainer>
-                <Table>
-                  <Thead>
-                    <Tr>
-                      <Th></Th>
-                      <Th>1period</Th>
-                      <Th>2period</Th>
-                      <Th>3period</Th>
-                      <Th>4period</Th>
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    <Tr>
-                      <Td>MON 2.19</Td>
-                      <Td></Td>
-                      <Td>item</Td>
-                      <Td></Td>
-                      <Td></Td>
-                    </Tr>
-                  </Tbody>
-                </Table>
-              </TableContainer>
+              <Timetable curriculums={curriculums} />
             </Container>
           </TabPanel>
         </TabPanels>
@@ -281,3 +261,19 @@ const Lessons = ({ curriculums }) => {
     </Container>
   );
 };
+
+// 임시 데이터
+const curriculums = [
+  {
+    title: "Basic Vocal",
+    category: "Vocal",
+    format: "1:6",
+    month: "3",
+    totalSessions: "12",
+    sessions: "2",
+    price: "80",
+    description:
+      "There's a saying that goes in half. Learn basic vocalizations and breathing techniques to sing. Basic vocalizations are learned to correct inaccurate pronunciations and increase the volume when on stage, and breathing techniques are learned to communicate emotions while singing or breathe properly. Master your assignment and get ready for the next step.",
+    difficulty: "Beginner",
+  },
+];

@@ -1,4 +1,12 @@
-import { Box, Flex, HStack, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  CircularProgress,
+  CircularProgressLabel,
+  Flex,
+  HStack,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import React from "react";
 
 const CurrentClass = () => {
@@ -27,7 +35,15 @@ const CurrentClass = () => {
                 <Text>Rose</Text>
               </Flex>
             </Stack>
-            <Box boxSize={"83px"} bgColor={"blue"} />
+            <CircularProgress size={"80px"} value={25} color="#FF3CA2">
+              <CircularProgressLabel
+                fontSize={"md"}
+                fontWeight={"600"}
+                color="#FF3CA2"
+              >
+                25%
+              </CircularProgressLabel>
+            </CircularProgress>
           </HStack>
         </Stack>
         <HStack

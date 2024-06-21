@@ -1,8 +1,16 @@
 import {
   Box,
+  Button,
   Flex,
   HStack,
   Image,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   SimpleGrid,
   Stack,
   Tab,
@@ -13,6 +21,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const InterestTrainer = () => {
   const tabLists = ["ALL", "VOCAL", "DANCE"];
@@ -98,17 +107,31 @@ const InterestTrainer = () => {
 export default InterestTrainer;
 
 const TabsItem = ({ item }) => {
+  const navigate = useNavigate();
   return (
     <Stack w={"250px"}>
-      <Box position={"relative"}>
+      <Box
+        position={"relative"}
+        onClick={() => {
+          navigate(`/teachers/${item.id}`);
+        }}
+      >
         <Image src={item.profile} />
-        <Box position={"absolute"} right={4} bottom={4} cursor={"pointer"}>
+        <Box
+          position={"absolute"}
+          right={2}
+          bottom={2}
+          cursor={"pointer"}
+          _hover={{ bgColor: "#E1E4E4", opacity: 0.8 }}
+          borderRadius={"md"}
+          p={2}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
           <Image
             src={require("../../Asset/Icon/starFill.png")}
             // src={require("../../Asset/Icon/starDefault.png")}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
           />
         </Box>
       </Box>

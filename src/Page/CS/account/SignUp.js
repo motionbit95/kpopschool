@@ -49,12 +49,12 @@ const SignUp = () => {
     setStep(2);
   };
   return (
-    <Center minH={window.innerHeight}>
-      <Stack w={"320px"} align={"center"}>
+    <Center minH={"100vh"}>
+      <Stack minw={"320px"} align={"center"}>
         <Box boxSize={"200px"}>
           <Image src={require("../../../Asset/Logo/KpopLogo.png")} />
         </Box>
-        <Box w={"full"} mt={-8}>
+        <Box w={"320px"} mt={-8}>
           <Image src={require("../../../Asset/Image/K-popBanner.png")} />
         </Box>
         {step === 0 && (
@@ -101,26 +101,38 @@ const EmailSignupForm = ({ setStep, navigate, formData, setFormData }) => {
   return (
     <Stack w={"full"}>
       <Stack spacing={3} py={4}>
-        <Text>Log in to your Account</Text>
+        <Text fontSize={"20px"} fontWeight={"600"}>
+          Create your Account
+        </Text>
         <Input
+          size={"lg"}
+          type="email"
           placeholder="Email"
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
         />
         <Input
           placeholder="Password"
           type="password"
+          size={"lg"}
           onChange={(e) =>
             setFormData({ ...formData, password: e.target.value })
           }
         />
         <Input
+          size={"lg"}
           placeholder="Confirm Password"
           type="password"
           onChange={(e) =>
             setFormData({ ...formData, confirmPassword: e.target.value })
           }
         />
-        <Button size={"lg"} h={"66px"} onClick={() => confirmPassword()}>
+        <Button
+          color={"white"}
+          fontSize={"24px"}
+          bgColor={"#00C3BA"}
+          h={"66px"}
+          onClick={() => confirmPassword()}
+        >
           SIGN UP
         </Button>
       </Stack>
@@ -131,13 +143,7 @@ const EmailSignupForm = ({ setStep, navigate, formData, setFormData }) => {
         </Text>
         <Divider />
       </HStack>
-      <ButtonGroup
-        size={"lg"}
-        w={"full"}
-        justifyContent={"center"}
-        gap={2}
-        py={4}
-      >
+      <ButtonGroup w={"full"} justifyContent={"center"} gap={2} py={4}>
         <IconButton
           borderRadius={"full"}
           icon={
@@ -170,13 +176,27 @@ const EmailSignupForm = ({ setStep, navigate, formData, setFormData }) => {
         />
       </ButtonGroup>
       <Stack textAlign={"center"} align={"center"}>
-        <Text whiteSpace={"nowrap"}>
-          By signing up, you agree to the Terms & Conditions and the Privacy
-          Policy
-        </Text>
+        <Stack w={"320px"} align={"center"}>
+          <Flex
+            color={"#00C3BA"}
+            cursor={"pointer"}
+            whiteSpace={"nowrap"}
+            gap={1}
+          >
+            By signing up, you agree to the{" "}
+            <Text textDecoration={"underline"}>Terms & Conditions</Text> and the{" "}
+            <Text textDecoration={"underline"}>Privacy Policy</Text>
+          </Flex>
+        </Stack>
         <Flex gap={4}>
-          <Text>Already have an account?</Text>
-          <Text onClick={() => navigate("/signin")}>Sign in</Text>
+          <Text fontWeight={"500"}>Already have an account?</Text>
+          <Text
+            color={"#00C3BA"}
+            cursor={"pointer"}
+            onClick={() => navigate("/signin")}
+          >
+            Sign in
+          </Text>
         </Flex>
       </Stack>
     </Stack>
@@ -193,18 +213,28 @@ const NameSignupForm = ({
   return (
     <Stack w={"full"}>
       <Stack spacing={3} py={4}>
-        <Text>Log in to your Account</Text>
+        <Text fontSize={"20px"} fontWeight={"600"}>
+          Log in to your Account
+        </Text>
         <Input
+          size={"lg"}
           placeholder="First Name"
           onChange={(e) =>
             setFormData({ ...formData, firstName: e.target.value })
           }
         />
         <Input
+          size={"lg"}
           placeholder="Last Name"
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
         />
-        <Button size={"lg"} h={"66px"} onClick={() => sendEmail()}>
+        <Button
+          color={"white"}
+          fontSize={"24px"}
+          bgColor={"#00C3BA"}
+          h={"66px"}
+          onClick={() => sendEmail()}
+        >
           CONTINUE
         </Button>
       </Stack>
@@ -220,6 +250,7 @@ const ConfirmForm = ({
   sendEmail,
 }) => {
   const [validCode, setValidCode] = useState("");
+  const [errEnter, setErrEnter] = useState(false);
 
   const confirmValidCode = () => {
     console.log(formData.email, validCode);
@@ -256,6 +287,7 @@ const ConfirmForm = ({
               navigate("/signin");
             } else {
               // 해당 부분 정책 확인 필요
+              setErrEnter(true);
               console.log("회원가입 실패");
             }
           });
@@ -267,29 +299,94 @@ const ConfirmForm = ({
 
   return (
     <Stack w={"full"}>
-      <Stack spacing={3} py={4}>
-        <Text>Log in to your Account</Text>
-        <Flex gap={4}>
-          <Text>Type in the code we sent to email adress</Text>
-          <Text>Edit Email</Text>
-        </Flex>
-        <HStack>
-          <PinInput onChange={(e) => setValidCode(e)}>
-            <PinInputField />
-            <PinInputField />
-            <PinInputField />
-            <PinInputField />
-            <PinInputField />
-          </PinInput>
-        </HStack>
-        <PinInput />
-        <Flex gap={4}>
+      <Stack spacing={8} py={4}>
+        <Stack spacing={2}>
+          <Text textAlign={"center"} fontSize={"xl"} fontWeight={"600"}>
+            Confirm your Email
+          </Text>
+          <Stack w={"320px"} align={"center"}>
+            <Flex
+              gap={4}
+              fontSize={"lg"}
+              fontWeight={"500"}
+              color={"#4E4E4E"}
+              whiteSpace={"nowrap"}
+            >
+              <Text>Type in the code we sent to email adress</Text>
+              <Text cursor={"pointer"} color={"#C0C0C0"}>
+                Edit Email
+              </Text>
+            </Flex>
+          </Stack>
+        </Stack>
+        <Stack spacing={4}>
+          <HStack justify={"center"}>
+            <HStack
+              p={3}
+              border={"1px solid"}
+              borderColor={errEnter ? "#FF3CA2" : "#E1E4E4"}
+              borderRadius={"md"}
+            >
+              <PinInput
+                onChange={(e) => {
+                  setValidCode(e);
+                  setErrEnter(false);
+                }}
+                variant={"flushed"}
+                focusBorderColor={"#00C3BA"}
+                placeholder=""
+              >
+                <PinInputField
+                  color={errEnter ? "#FF3CA2" : "black"}
+                  fontSize={"24px"}
+                  fontWeight={"700"}
+                />
+                <PinInputField
+                  color={errEnter ? "#FF3CA2" : "black"}
+                  fontSize={"24px"}
+                  fontWeight={"700"}
+                />
+                <PinInputField
+                  color={errEnter ? "#FF3CA2" : "black"}
+                  fontSize={"24px"}
+                  fontWeight={"700"}
+                />
+                <PinInputField
+                  color={errEnter ? "#FF3CA2" : "black"}
+                  fontSize={"24px"}
+                  fontWeight={"700"}
+                />
+                <PinInputField
+                  color={errEnter ? "#FF3CA2" : "black"}
+                  fontSize={"24px"}
+                  fontWeight={"700"}
+                />
+              </PinInput>
+            </HStack>
+          </HStack>
+          {errEnter && (
+            <Text color={"#FF3CA2"} fontSize={"24px"} textAlign={"center"}>
+              Code does not match
+            </Text>
+          )}
+        </Stack>
+        <Flex gap={4} fontSize={"lg"} fontWeight={"500"} justify={"center"}>
           <Text>Didn't receive the code?</Text>
-          <Text color={"blue"} onClick={() => sendEmail()}>
+          <Text
+            cursor={"pointer"}
+            color={"#FF3CA2"}
+            onClick={() => sendEmail()}
+          >
             Send Again
           </Text>
         </Flex>
-        <Button size={"lg"} h={"66px"} onClick={() => confirmValidCode()}>
+        <Button
+          color={"white"}
+          fontSize={"24px"}
+          bgColor={"#00C3BA"}
+          h={"66px"}
+          onClick={() => confirmValidCode()}
+        >
           SIGN UP
         </Button>
       </Stack>

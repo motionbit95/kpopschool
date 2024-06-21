@@ -18,33 +18,40 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
+
   return (
-    <Center minH={window.innerHeight}>
-      <Stack w={"320px"} align={"center"}>
+    <Center minH={"100vh"}>
+      <Stack minw={"320px"} align={"center"}>
         <Box boxSize={"200px"}>
           <Image src={require("../../../Asset/Logo/KpopLogo.png")} />
         </Box>
-        <Box w={"full"} mt={-8}>
+        <Box w={"320px"} mt={-8}>
           <Image src={require("../../../Asset/Image/K-popBanner.png")} />
         </Box>
         <Stack w={"full"}>
           <Stack spacing={3} py={4}>
-            <Text>Log in to your Account</Text>
-            <Input placeholder="Email" />
-            <Input placeholder="Password" />
+            <Text fontSize={"20px"} fontWeight={"600"}>
+              Log in to your Account
+            </Text>
+            <Input placeholder="Email" size={"lg"} />
+            <Input placeholder="Password" size={"lg"} />
             <HStack pb={4}>
-              <Switch />
-              {/* <Box w={"100px"} h={"30px"} bgColor={"blue"} /> */}
+              <Switch colorScheme="cyan" />
               <Text>Remember me</Text>
             </HStack>
-            <Button size={"lg"} h={"66px"}>
+            <Button
+              color={"white"}
+              bgColor={"#00C3BA"}
+              fontSize={"24px"}
+              h={"66px"}
+            >
               SIGN IN
             </Button>
           </Stack>
           <HStack px={8}>
             <Divider />
             <Text textStyle="sm" whiteSpace="nowrap" color="fg.muted">
-              or sign up with
+              or sign in with
             </Text>
             <Divider />
           </HStack>
@@ -93,10 +100,18 @@ const Login = () => {
             />
           </ButtonGroup>
           <Stack textAlign={"center"} align={"center"}>
-            <Text>Forgot Password?</Text>
+            <Text color={"#00C3BA"} cursor={"pointer"}>
+              Forgot Password?
+            </Text>
             <Flex gap={4}>
-              <Text>New to K-Pop SCHOOL?</Text>
-              <Text onClick={() => navigate("/signup")}>Sign up</Text>
+              <Text fontWeight={"500"}>New to K-Pop SCHOOL?</Text>
+              <Text
+                color={"#00C3BA"}
+                cursor={"pointer"}
+                onClick={() => navigate("/signup")}
+              >
+                Sign up
+              </Text>
             </Flex>
           </Stack>
         </Stack>
