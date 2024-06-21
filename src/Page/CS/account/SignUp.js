@@ -303,7 +303,7 @@ const ConfirmForm = ({
       .then((data) => {
         console.log(data);
         // 회원가입
-        fetch(`${host_url}/users/signup`, {
+        fetch(`${host_url}/users/addAuth`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -315,7 +315,7 @@ const ConfirmForm = ({
             password: formData.password,
           }),
         })
-          .then((res) => res.text())
+          .then((res) => res.json())
           .then((data) => {
             console.log(data);
             if (data.code === "success") {
@@ -323,7 +323,7 @@ const ConfirmForm = ({
             } else {
               // 해당 부분 정책 확인 필요
               setErrEnter(true);
-              console.log("회원가입 실패");
+              console.log(data);
             }
           });
       })

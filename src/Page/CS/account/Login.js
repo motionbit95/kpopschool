@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -15,10 +15,45 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { auth } from "../../../Firebase/Config";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = () => {
   const navigate = useNavigate();
 
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const signInUser = async (data) => {
+    let response = { code: "error", message: "error" };
+    await signInWithEmailAndPassword(auth, data.email, data.password)
+      .then(async (userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        // ...
+
+        response.code = "success";
+        response.message = "login success";
+      })
+      .catch(async (error) => {
+        response.code = "error";
+        response.message = error.message;
+      });
+
+    return response;
+  };
+
+  const handleClick = () => {
+    signInUser(formData).then((res) => {
+      if (res.code === "success") {
+        navigate("/");
+      } else {
+        alert(res.message);
+      }
+    });
+  };
   return (
     <Center minH={"100vh"}>
       <Stack minw={"320px"} align={"center"}>
@@ -33,8 +68,21 @@ const Login = () => {
             <Text fontSize={"20px"} fontWeight={"600"}>
               Log in to your Account
             </Text>
-            <Input placeholder="Email" size={"lg"} />
-            <Input placeholder="Password" size={"lg"} />
+            <Input
+              placeholder="Email"
+              size={"lg"}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+            />
+            <Input
+              type="password"
+              size={"lg"}
+              placeholder="Password"
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
+            />
             <HStack pb={4}>
               <Switch colorScheme="cyan" />
               <Text>Remember me</Text>
@@ -44,6 +92,7 @@ const Login = () => {
               bgColor={"#00C3BA"}
               fontSize={"24px"}
               h={"66px"}
+              onClick={handleClick}
             >
               SIGN IN
             </Button>

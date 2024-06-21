@@ -11,9 +11,11 @@ import {
 } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import { signOut } from "firebase/auth";
+import { auth } from "../Firebase/Config";
 
 const Topbar = () => {
-  const isLogin = false;
+  const [isLogin, setIsLogin] = useState(false);
   const location = useLocation();
   const Nav = useNavigate();
   const [hoveredButton, setHoveredButton] = useState(null);
@@ -24,10 +26,24 @@ const Topbar = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setIsLogin(true);
+      }
+    });
   }, [location]);
 
   const handleMouseleave = () => {
     setHoveredButton(null);
+  };
+
+  const handleLogout = () => {
+    if (isLogin) {
+      signOut(auth).then(() => {
+        Nav("/signin");
+      });
+    }
   };
 
   return (
@@ -277,7 +293,12 @@ const Topbar = () => {
                 )}
               </Stack>
               {isLogin ? (
-                <Button variant={"solid"} bgColor={"#E1E4E4"} color={"white"}>
+                <Button
+                  variant={"solid"}
+                  bgColor={"#E1E4E4"}
+                  color={"white"}
+                  onClick={handleLogout}
+                >
                   LOG OUT
                 </Button>
               ) : (
