@@ -12,7 +12,9 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
-import { auth } from "../Firebase/Config";
+import { auth, db } from "../Firebase/Config";
+import { getCheckoutUrl, getIsPayment } from "../Firebase/StripePayment";
+import { collection, onSnapshot } from "firebase/firestore";
 
 const Topbar = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -45,6 +47,38 @@ const Topbar = () => {
       });
     }
   };
+
+  /************** 하단 부분을 결제창으로 이동시키기 **************/
+  const handleTest = async () => {
+    if (isLogin) {
+      // const user = auth.currentUser;
+      // 테스트 product ID : price_1PV3ZUGcRvPNh5Hm56ZrKdfe
+      const productId = "price_1PV3ZUGcRvPNh5Hm56ZrKdfe";
+      let checkoutUrl = await getCheckoutUrl(productId);
+      console.log(checkoutUrl);
+      window.location.href = checkoutUrl;
+    }
+  };
+
+  useEffect(() => {
+    // 결제 성공 여부 확인
+    const getIsPaied = async () => {
+      let isPaied = false;
+      // 테스트 product ID : price_1PV3ZUGcRvPNh5Hm56ZrKdfe
+      isPaied = await getIsPayment("TEST_ID");
+      console.log(isPaied);
+      if (isPaied) {
+        Nav("/payment/result");
+      }
+
+      return;
+    };
+    if (isLogin) {
+      getIsPaied();
+    }
+  }, [isLogin]);
+
+  /*******************************************************/
 
   return (
     <Stack spacing={0} mb={48}>
@@ -311,6 +345,7 @@ const Topbar = () => {
                   LOG IN
                 </Button>
               )}
+              <Button onClick={handleTest}>TEST</Button>
             </ButtonGroup>
           </HStack>
         </Container>

@@ -15,6 +15,7 @@ import SignOut from "./Page/CS/account/SignOut";
 import { useEffect, useState } from "react";
 import Program from "./Page/CS/Teachers/Program";
 import Payment from "./Page/CS/Payment";
+import PaymentResult from "./Page/CS/PaymentResult";
 
 export const host_url =
   window.location.hostname === "localhost" ? "http://localhost:8080" : "";
@@ -64,6 +65,7 @@ function App() {
               <Route path="/signin" element={<Login />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/signout" element={<SignOut />} />
+              <Route path="/payment/result" element={<PaymentResult />} />
             </Routes>
             {showTopbarFooter && <Footer />}
           </>
