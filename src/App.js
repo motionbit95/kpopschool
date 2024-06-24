@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import Program from "./Page/CS/Teachers/Program";
 import Payment from "./Page/CS/Payment";
 import PaymentResult from "./Page/CS/PaymentResult";
+import CurriculumList from "./Page/CS/Curriculum/CurriculumList";
 
 export const host_url =
   window.location.hostname === "localhost" ? "http://localhost:8080" : "";
@@ -59,6 +60,7 @@ function App() {
               <Route path="/payment" element={<Payment />} />
               <Route path="/curriculum" element={<Curriculum />} />
               <Route path="/curriculum/*" element={<CurriculumDetail />} />
+              <Route path="/curriculum/list" element={<CurriculumList />} />
               <Route path="/community" element={<Cummunity />} />
               <Route path="/mypage" element={<MyPage />} />
 
