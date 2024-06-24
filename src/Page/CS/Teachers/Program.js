@@ -1,5 +1,7 @@
 import {
+  Avatar,
   Box,
+  Button,
   ButtonGroup,
   Container,
   Flex,
@@ -20,14 +22,15 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Program = () => {
   const location = useLocation();
   const { state } = location;
-  const item = state;
+  const { item, teacher } = state;
   const toast = useToast();
   const [isFavorite, setIsFavorite] = useState(false);
+  const navigate = useNavigate();
 
   const handleClickFavorite = () => {
     console.log("handleClickFavorite");
@@ -79,12 +82,41 @@ const Program = () => {
             <Text color={"#00C3BA"}></Text>
           </Flex>
           {/* 강의 정보 */}
-          <Stack>
-            <HStack spacing={4}>
-              <Box w={"400px"} borderRadius={"md"} overflow={"hidden"}>
-                <Image src={item.image} />
-              </Box>
-              <Stack flex={1}>
+          <HStack spacing={4}>
+            <Stack gap={4}>
+              <Box
+                w={"440px"}
+                h={"300px"}
+                borderRadius={"md"}
+                overflow={"hidden"}
+                bgImage={`url(${item.image})`}
+                bgSize={"cover"}
+                bgPosition={"center"}
+              />
+              <HStack>
+                <Avatar />
+                <Stack>
+                  <Text>Trainer</Text>
+                  <Text>{teacher.name}</Text>
+                  <Flex gap={1}>
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <Image
+                        key={i}
+                        src={
+                          i < teacher.rating // 데이터 가져와야함
+                            ? require("../../../Asset/Icon/starFill.png")
+                            : require("../../../Asset/Icon/starDefault.png")
+                        }
+                        alt="star"
+                        boxSize="20px" // 적절한 크기로 설정
+                      />
+                    ))}
+                  </Flex>
+                </Stack>
+              </HStack>
+            </Stack>
+            <Stack justify={"flex-start"}>
+              <Stack spacing={1} h={"300px"}>
                 <HStack justify={"space-between"}>
                   <Text fontSize={"3xl"} fontWeight={"600"}>
                     {item.title}
@@ -176,8 +208,42 @@ const Program = () => {
                   </Grid>
                 </Stack>
               </Stack>
-            </HStack>
-          </Stack>
+              <HStack justify={"space-between"}>
+                <HStack spacing={8}>
+                  <Stack>
+                    <Text>Month</Text>
+                    <Text>{item.month}</Text>
+                  </Stack>
+                  <Stack>
+                    <Text>Sessions</Text>
+                    <Text>
+                      {item.sessions}/{item.totalSessions}
+                    </Text>
+                  </Stack>
+                  <Stack>
+                    <Text>Price</Text>
+                    <Text>{`$${item.price} per session`}</Text>
+                  </Stack>
+                  <Stack>
+                    <Text>GMT</Text>
+                    <Text></Text>
+                  </Stack>
+                </HStack>
+                <Button
+                  onClick={() =>
+                    navigate(`/payment`, {
+                      state: {
+                        item: item,
+                        teacher: teacher,
+                      },
+                    })
+                  }
+                >
+                  CONTINUE
+                </Button>
+              </HStack>
+            </Stack>
+          </HStack>
         </Stack>
       </Container>
       {/* 강의 정보 */}

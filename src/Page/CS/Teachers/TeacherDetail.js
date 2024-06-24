@@ -236,6 +236,7 @@ const TeacherDetail = (props) => {
           <TabPanel>
             <LessonForm
               curriculums={curriculums}
+              teacher={teacher}
               isOkay={isOkay}
               navigate={navigate}
             />
@@ -329,7 +330,7 @@ const TeacherDetail = (props) => {
 
 export default TeacherDetail;
 
-const LessonForm = ({ curriculums, isOkay, navigate }) => {
+const LessonForm = ({ curriculums, teacher, isOkay, navigate }) => {
   return (
     <Container minW={"container.xl"} py={8}>
       <Stack divider={<StackDivider />} spacing={16}>
@@ -381,9 +382,9 @@ const LessonForm = ({ curriculums, isOkay, navigate }) => {
                 bgColor={isOkay ? "#FF3CA2" : "#00B2FF"}
                 color={"white"}
                 onClick={() => {
-                  console.log(item);
+                  console.log(item, teacher);
                   navigate(`/curriculum/program/${item.id}`, {
-                    state: item,
+                    state: { item, teacher },
                   });
                 }}
               >

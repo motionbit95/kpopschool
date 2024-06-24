@@ -264,16 +264,110 @@ const Lessons = ({ curriculums }) => {
 
 // 임시 데이터
 const curriculums = [
+  // 1:1 Vocal 임시
   {
-    title: "Basic Vocal",
     category: "Vocal",
-    format: "1:6",
+    format: "1:1",
     month: "3",
     totalSessions: "12",
-    sessions: "2",
-    price: "80",
-    description:
-      "There's a saying that goes in half. Learn basic vocalizations and breathing techniques to sing. Basic vocalizations are learned to correct inaccurate pronunciations and increase the volume when on stage, and breathing techniques are learned to communicate emotions while singing or breathe properly. Master your assignment and get ready for the next step.",
+    description: `- Basic Vocal and Breathing Practices: This course provides an introduction to breathing techniques and basic vocal techniques.
+    - Understanding Pitch and Rhythm: Basic Music Theory.
+    - Simple K-pop song practice: Perfect for beginners to practice their songs.
+    - Basic pronunciation practice: develop correct pronunciation and a sense of rhythm.
+    - Learn basic stage manners: basic posture and expressions on stage 
+    - Beginner Course Reviews and Ratings`,
     difficulty: "Beginner",
+  },
+  {
+    category: "Vocal",
+    format: "1:1",
+    month: "3",
+    totalSessions: "12",
+    description: `- Advanced vocal skills: Developing different vocal techniques and tones
+      - K-pop song style analysis: Analysis of K-pop songs of various genres
+      - Strengthening musical expression: emotional expression and song interpretation skills
+      - Improve stage performance: practice movement and expression on stage
+      - Intermediate Song Practice and Recording: Practice and Record Songs to Improve Your Skills
+      - Intermediate Course Reviews and Ratings`,
+    difficulty: "Intermediate",
+  },
+  {
+    category: "Vocal",
+    format: "1:1",
+    month: "3",
+    totalSessions: "12",
+    description: `- Professional Voice Development: Developing and refining your individual voice
+      - Advanced stage presentation skills: Enhance your expressive power and presence on stage.
+      - Individual song interpretation and production: Song interpretation suited to individual style
+      - Real Stage Experience: Practice performing on a real stage
+      - Understanding the Music Industry: Understanding and Networking in the Music Industry
+      - Advanced Course Reviews and Ratings`,
+    difficulty: "Advanced",
+  },
+  {
+    category: "Vocal",
+    format: "1:1",
+    month: "3",
+    totalSessions: "12",
+    description: `- Perfecting Your Skills as a Professional Artist: Hone the skills you need to be a professional artist
+      - Building Your Personal Artist Image: Building Your Personal Brand and Image
+      - In-depth stage experience and performance: Professional level stage experience
+      - Writing and Directing Your Own Song: Techniques for writing and directing your own song
+      - Positioning yourself as a professional within the music industry: Exploring roles and opportunities within the music industry.
+      - Pro Course Reviews and Ratings`,
+    difficulty: "Professional",
+  },
+  // 1:1 Dance 임시
+  {
+    category: "Dance",
+    format: "1:1",
+    month: "3",
+    totalSessions: "12",
+    description: `- Basic dance moves and rhythm: learning basic steps and sense of rhythm
+    - K-pop Choreography Basics: Learn Simple K-pop Choreography
+    - Improve basic strength and flexibility: Exercises for strength and flexibility
+    - Building Dance Expression and Confidence: Practice to Improve Expression and Confidence
+    - Beginner Choreography Practice and Perfection: Simple Choreography Practice and Perfection
+    - Beginner Course Reviews and Ratings`,
+    difficulty: "Beginner",
+  },
+  {
+    category: "Dance",
+    format: "1:1",
+    month: "3",
+    totalSessions: "12",
+    description: `- Choreography styles from different genres: Learn choreography from different genres
+    - Develop individual dance style: dance practice tailored to your personal style
+    - Improve Your Dance Technique: Practice Intermediate Dance Skills and Movements
+    - Stage Performance Skills: Enhancing Expressive Ability on Stage
+    - Intermediate Choreography Practice and Perfection: Practice and Perfection of Challenging Choreography
+    - Intermediate Course Reviews and Ratings`,
+    difficulty: "Intermediate",
+  },
+  {
+    category: "Dance",
+    format: "1:1",
+    month: "3",
+    totalSessions: "12",
+    description: `- Professional Dance Skills: Advanced dance skills and techniques.
+    - Create unique choreography: Create choreography that reflects your personal style
+    - Teamwork and Collaborative Dance: Group Choreography and Collaborative Dance Practices
+    - Stage expression and charisma: Practice expressing charisma on stage
+    - Advanced Choreography Practice and Perfection: Practice complex and challenging choreography.
+    - Advanced Course Reviews and Ratings`,
+    difficulty: "Advanced",
+  },
+  {
+    category: "Dance",
+    format: "1:1",
+    month: "3",
+    totalSessions: "12",
+    description: `- Perfecting your skills as a professional dancer: Hone your skills as a professional dancer
+    - Create and direct original choreography: Create choreography tailored to your personal brand.
+    - Professional stage performance: actual stage experience and performance practice
+    - Understanding and Networking the Dance Industry: Understanding the dance industry and building connections
+    - Career Planning as a Professional Dancer: Setting Career Goals in Dance
+    - Pro Course Reviews and Ratings`,
+    difficulty: "Professional",
   },
 ];
