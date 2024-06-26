@@ -17,6 +17,7 @@ import Program from "./Page/CS/Teachers/Program";
 import Payment from "./Page/CS/Payment";
 import PaymentResult from "./Page/CS/PaymentResult";
 import CurriculumList from "./Page/CS/Curriculum/CurriculumList";
+import Test from "./Page/AD/AdminLogin/Test";
 
 export const host_url =
   window.location.hostname === "localhost" ? "http://localhost:8080" : "";
@@ -68,6 +69,8 @@ function App() {
               <Route path="/signup" element={<SignUp />} />
               <Route path="/signout" element={<SignOut />} />
               <Route path="/payment/result" element={<PaymentResult />} />
+
+              <Route path="/test" element={<Test />} />
             </Routes>
             {showTopbarFooter && <Footer />}
           </>
