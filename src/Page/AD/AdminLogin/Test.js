@@ -2,6 +2,7 @@ import React from "react";
 
 import { ZoomMtg } from "@zoom/meetingsdk";
 import { Button, Heading, Stack, VStack } from "@chakra-ui/react";
+import ToastEditor from "../../../Component/ToastEditor";
 
 ZoomMtg.preLoadWasm();
 ZoomMtg.prepareWebSDK();
@@ -77,6 +78,7 @@ function Test() {
     <VStack p={16}>
       <Heading>Zoom Meeting SDK Sample React</Heading>
       <Button onClick={getSignature}>Join Meeting</Button>
+      <ToastEditor />
     </VStack>
   );
 }
