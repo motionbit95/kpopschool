@@ -18,6 +18,8 @@ import Payment from "./Page/CS/Payment";
 import PaymentResult from "./Page/CS/PaymentResult";
 import CurriculumList from "./Page/CS/Curriculum/CurriculumList";
 import Test from "./Page/AD/AdminLogin/Test";
+import AdminLogin from "./Page/AD/AdminLogin";
+import Main from "./Page/AD/Dashboard/Main";
 
 export const host_url =
   window.location.hostname === "localhost" ? "http://localhost:8080" : "";
@@ -44,7 +46,8 @@ function App() {
           <>
             <Routes>
               {/* 임시 */}
-              {/* <Route path="/admin" element={<Main />} /> */}
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin" element={<Main />} />
             </Routes>
           </>
         </>

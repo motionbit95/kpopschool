@@ -65,7 +65,7 @@ const Topbar = () => {
     const getIsPaied = async () => {
       let isPaied = false;
       // 테스트 product ID : price_1PV3ZUGcRvPNh5Hm56ZrKdfe
-      isPaied = await getIsPayment("TEST_ID");
+      isPaied = await getIsPayment("test");
       console.log(isPaied);
       if (isPaied) {
         Nav("/payment/result");
