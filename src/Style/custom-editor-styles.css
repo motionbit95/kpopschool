@@ -1,0 +1,23 @@
+/* custom-editor-styles.css */
+.toastui-editor-contents pre {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+  }
+  
+  .toastui-editor-contents pre span.cm-string {
+    color: #e31a1c;
+  }
+  
+  .toastui-editor-contents pre span.cm-keyword {
+    color: #0000ff;
+  }
+  
+  .toastui-editor-contents pre span.cm-variable {
+    color: #000;
+  }
+  

@@ -1,11 +1,11 @@
 import React from "react";
 
-import { ZoomMtg } from "@zoom/meetingsdk";
+// import { ZoomMtg } from "@zoom/meetingsdk";
 import { Button, Heading, Stack, VStack } from "@chakra-ui/react";
 import ToastEditor from "../../../Component/ToastEditor";
 
-ZoomMtg.preLoadWasm();
-ZoomMtg.prepareWebSDK();
+// ZoomMtg.preLoadWasm();
+// ZoomMtg.prepareWebSDK();
 
 function Test() {
   var authEndpoint = "http://localhost:8080/zoom/generate-signature";
@@ -44,34 +44,34 @@ function Test() {
   function startMeeting(signature) {
     document.getElementById("zmmtg-root").style.display = "block";
 
-    ZoomMtg.init({
-      leaveUrl: leaveUrl,
-      patchJsMedia: true,
-      leaveOnPageUnload: true,
-      success: (success) => {
-        console.log(success);
+    // ZoomMtg.init({
+    //   leaveUrl: leaveUrl,
+    //   patchJsMedia: true,
+    //   leaveOnPageUnload: true,
+    //   success: (success) => {
+    //     console.log(success);
 
-        ZoomMtg.join({
-          signature: signature,
-          sdkKey: sdkKey,
-          meetingNumber: meetingNumber,
-          passWord: passWord,
-          userName: userName,
-          userEmail: userEmail,
-          tk: registrantToken,
-          zak: zakToken,
-          success: (success) => {
-            console.log(success);
-          },
-          error: (error) => {
-            console.log(error);
-          },
-        });
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+    //     ZoomMtg.join({
+    //       signature: signature,
+    //       sdkKey: sdkKey,
+    //       meetingNumber: meetingNumber,
+    //       passWord: passWord,
+    //       userName: userName,
+    //       userEmail: userEmail,
+    //       tk: registrantToken,
+    //       zak: zakToken,
+    //       success: (success) => {
+    //         console.log(success);
+    //       },
+    //       error: (error) => {
+    //         console.log(error);
+    //       },
+    //     });
+    //   },
+    //   error: (error) => {
+    //     console.log(error);
+    //   },
+    // });
   }
 
   return (

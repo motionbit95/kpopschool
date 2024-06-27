@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-const Coupon = () => {
+const Coupon = (props) => {
   return (
     <Flex w={"100%"} h={"100%"}>
       <Stack
@@ -32,7 +32,12 @@ const Coupon = () => {
               Coupon List
             </Text>
             <Box>
-              <Button>CREATE</Button>
+              <Button
+                mt={-10}
+                onClick={() => props.setIsdetail({ view: "Coupon Issuance" })}
+              >
+                CREATE
+              </Button>
             </Box>
           </HStack>
           <Stack>

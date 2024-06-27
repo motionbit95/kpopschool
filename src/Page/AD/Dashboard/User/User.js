@@ -15,13 +15,26 @@ import {
   Text,
   Tr,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const User = (props) => {
   const ITEMS_PER_PAGE = 10;
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(userData.length / ITEMS_PER_PAGE);
+  const [userData] = useState(props?.userData || []);
+
+  const [currentData, setCurrentData] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
+  const toDate = (timestamp) => {
+    return new Date(timestamp._seconds * 1000);
+  };
+
+  useEffect(() => {
+    setTotalPages(Math.ceil(userData.length / ITEMS_PER_PAGE));
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    setCurrentData(userData.slice(startIndex, endIndex));
+  }, [userData, currentPage]);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -39,20 +52,17 @@ const User = (props) => {
     setCurrentPage(page);
   };
 
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentData = userData.slice(startIndex, endIndex);
-
   return (
     <Flex w={"100%"} h={"100%"}>
-      <Stack w={"full"} justify={"space-between"}>
-        <Stack p={16}>
+      <Stack w={"full"} justify={"space-between"} px={16} pt={16} pb={32}>
+        <Stack>
           <HStack justify={"space-between"}>
             <Text fontSize={"20px"} fontWeight={"600"}>
               User List
             </Text>
             <Input w={"300px"} />
           </HStack>
+
           <TableContainer>
             <Table>
               <Tbody>
@@ -64,19 +74,30 @@ const User = (props) => {
                   <Td textAlign={"center"}>Email</Td>
                   <Td textAlign={"center"}>Registration Date</Td>
                 </Tr>
-                {currentData.map((data) => (
+                {currentData.map((data, index) => (
                   <Tr
+                    cursor={"pointer"}
                     onClick={() => {
                       console.log(data);
-                      props.setIsdetail("User Profile");
+                      props.setIsdetail({ view: "User Profile", data: data });
                     }}
                   >
-                    <Td textAlign={"center"}>{`${data.no}.`}</Td>
-                    <Td textAlign={"center"}>{data.trainer}</Td>
-                    <Td textAlign={"center"}>{data.name}</Td>
-                    <Td textAlign={"center"}>{data.id}</Td>
+                    <Td textAlign={"center"}>{`${index + 1}.`}</Td>
+                    <Td textAlign={"center"}>{data.isTeacher ? "O" : "-"}</Td>
+                    <Td
+                      textAlign={"center"}
+                    >{`${data.name} ${data.firstName}`}</Td>
+                    <Td textAlign={"center"}>{data.snsId}</Td>
                     <Td textAlign={"center"}>{data.email}</Td>
-                    <Td textAlign={"center"}>{data.regDate}</Td>
+                    <Td textAlign={"center"}>
+                      {toDate(data.createdAt)
+                        .toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "2-digit",
+                          day: "2-digit",
+                        })
+                        .replace(/(\d+)\/(\d+)\/(\d+)/, "$1-$2-$3")}
+                    </Td>
                   </Tr>
                 ))}
               </Tbody>
@@ -84,13 +105,7 @@ const User = (props) => {
           </TableContainer>
         </Stack>
         {/* {userData.length > ITEMS_PER_PAGE && ( */}
-        <Flex
-          mt={4}
-          px={16}
-          pb={16}
-          justifyContent="center"
-          alignItems="center"
-        >
+        <Flex mt={4} justifyContent="center" alignItems="center">
           <IconButton
             icon={<ChevronLeftIcon fontSize={"30px"} />}
             onClick={handlePrevPage}
@@ -127,94 +142,3 @@ const User = (props) => {
 };
 
 export default User;
-
-const userData = [
-  {
-    no: 1,
-    trainer: "O",
-    name: "이름",
-    id: "아이디",
-    email: "이메일",
-    regDate: "2022.01.01",
-  },
-  {
-    no: 2,
-    trainer: "O",
-    name: "이름",
-    id: "아이디",
-    email: "이메일",
-    regDate: "2022.01.01",
-  },
-  {
-    no: 3,
-    trainer: "O",
-    name: "이름",
-    id: "아이디",
-    email: "이메일",
-    regDate: "2022.01.01",
-  },
-  {
-    no: 4,
-    trainer: "O",
-    name: "이름",
-    id: "아이디",
-    email: "이메일",
-    regDate: "2022.01.01",
-  },
-  {
-    no: 5,
-    trainer: "O",
-    name: "이름",
-    id: "아이디",
-    email: "이메일",
-    regDate: "2022.01.01",
-  },
-  {
-    no: 6,
-    trainer: "O",
-    name: "이름",
-    id: "아이디",
-    email: "이메일",
-    regDate: "2022.01.01",
-  },
-  {
-    no: 7,
-    trainer: "O",
-    name: "이름",
-    id: "아이디",
-    email: "이메일",
-    regDate: "2022.01.01",
-  },
-  {
-    no: 8,
-    trainer: "O",
-    name: "이름",
-    id: "아이디",
-    email: "이메일",
-    regDate: "2022.01.01",
-  },
-  {
-    no: 9,
-    trainer: "O",
-    name: "이름",
-    id: "아이디",
-    email: "이메일",
-    regDate: "2022.01.01",
-  },
-  {
-    no: 10,
-    trainer: "O",
-    name: "이름",
-    id: "아이디",
-    email: "이메일",
-    regDate: "2022.01.01",
-  },
-  {
-    no: 11,
-    trainer: "O",
-    name: "이름",
-    id: "아이디",
-    email: "이메일",
-    regDate: "2022.01.01",
-  },
-];

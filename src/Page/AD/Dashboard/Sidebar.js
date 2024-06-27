@@ -7,9 +7,20 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+export const getTab = () => {
+  return window.location.pathname.split("/").pop() === "admin"
+    ? "HOME"
+    : window.location.pathname.split("/").pop();
+};
 
 const Sidebar = (props) => {
+  const [sideTab, setSideTab] = useState("HOME");
+  useEffect(() => {
+    setSideTab(getTab());
+  }, [window.location.pathname]);
   return (
     <Stack
       minH={"100vh"}
@@ -25,47 +36,47 @@ const Sidebar = (props) => {
         <SelectedButton
           Tabname={"HOME"}
           setSideTab={props.handleSideTab}
-          sideTab={props.sideTab}
+          sideTab={sideTab}
         />
         <SelectedButton
           Tabname={"User"}
           setSideTab={props.handleSideTab}
-          sideTab={props.sideTab}
+          sideTab={sideTab}
         />
         <SelectedButton
           Tabname={"Trainer"}
           setSideTab={props.handleSideTab}
-          sideTab={props.sideTab}
+          sideTab={sideTab}
         />
         <SelectedButton
           Tabname={"Class"}
           setSideTab={props.handleSideTab}
-          sideTab={props.sideTab}
+          sideTab={sideTab}
         />
         <SelectedButton
           Tabname={"Payment"}
           setSideTab={props.handleSideTab}
-          sideTab={props.sideTab}
+          sideTab={sideTab}
         />
         <SelectedButton
           Tabname={"Coupon"}
           setSideTab={props.handleSideTab}
-          sideTab={props.sideTab}
+          sideTab={sideTab}
         />
         <SelectedButton
           Tabname={"Inquiry"}
           setSideTab={props.handleSideTab}
-          sideTab={props.sideTab}
+          sideTab={sideTab}
         />
         <SelectedButton
           Tabname={"Policy"}
           setSideTab={props.handleSideTab}
-          sideTab={props.sideTab}
+          sideTab={sideTab}
         />
         <SelectedButton
           Tabname={"FAQ"}
           setSideTab={props.handleSideTab}
-          sideTab={props.sideTab}
+          sideTab={sideTab}
         />
       </Stack>
     </Stack>
@@ -75,6 +86,7 @@ const Sidebar = (props) => {
 export default Sidebar;
 
 const SelectedButton = ({ Tabname, sideTab, setSideTab }) => {
+  const navigate = useNavigate();
   return (
     <Flex spacing={0} position={"relative"} w={"full"}>
       <Button
@@ -84,7 +96,10 @@ const SelectedButton = ({ Tabname, sideTab, setSideTab }) => {
         fontWeight={"700"}
         fontSize={"xl"}
         color={sideTab === Tabname ? "#FF3CA2" : "black"}
-        onClick={() => setSideTab(Tabname)}
+        onClick={() => {
+          setSideTab(Tabname);
+          navigate(`/admin/${Tabname}`);
+        }}
         _hover={"none"}
         _focus={"none"}
         _active={"none"}

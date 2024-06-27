@@ -72,7 +72,18 @@ const Inquiry = () => {
                     <Td textAlign={"center"}>{data.tag}</Td>
                     <Td textAlign={"center"}>{data.title}</Td>
                     <Td textAlign={"center"}>{data.date}</Td>
-                    <Td textAlign={"center"}>{data.state}</Td>
+                    <Td
+                      textAlign={"center"}
+                      color={
+                        data.state === "completed"
+                          ? "#FF3CA2"
+                          : data.state === "Waiting for"
+                          ? "#FFCC00"
+                          : "black"
+                      }
+                    >
+                      {data.state}
+                    </Td>
                   </Tr>
                 ))}
               </Tbody>
@@ -124,7 +135,7 @@ const InquiryData = [
     tag: "payment",
     title: "dumy",
     date: "12-05-2024",
-    state: "completed",
+    state: "Waiting for",
   },
   {
     no: 2,

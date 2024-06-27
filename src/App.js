@@ -47,7 +47,7 @@ function App() {
             <Routes>
               {/* 임시 */}
               <Route path="/admin/login" element={<AdminLogin />} />
-              <Route path="/admin" element={<Main />} />
+              <Route path="/admin/*" element={<Main />} />
             </Routes>
           </>
         </>

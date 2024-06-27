@@ -8,6 +8,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React from "react";
+import ToastEditor from "../../../Component/ToastEditor";
 
 const FAQ = () => {
   return (
@@ -26,6 +27,11 @@ const FAQ = () => {
               <Button>SAVE</Button>
             </Box>
           </HStack>
+          <ToastEditor
+            onChange={(value) => {
+              console.log(value);
+            }}
+          />
         </Stack>
       </Stack>
     </Flex>

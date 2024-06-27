@@ -6,7 +6,7 @@ import DashboardTopbar from "../../../Component/DashboardTopbar";
 
 const Main = () => {
   const [sideTab, setSideTab] = useState("HOME");
-  const [isdetail, setIsdetail] = useState("");
+  const [isdetail, setIsdetail] = useState({ view: "", data: "" });
 
   const handleSideTab = (tab) => {
     setSideTab(tab);
@@ -20,12 +20,13 @@ const Main = () => {
         setSideTab={setSideTab}
         handleSideTab={handleSideTab}
       />
-      <Box w={"full"} h={"full"}>
-        <DashboardTopbar sideTab={sideTab} isdetail={isdetail} />
+      <Box w={"full"} h={"full"} position={"relative"}>
+        <DashboardTopbar sideTab={sideTab} isdetail={isdetail.view} />
         <Dashboard
           sideTab={sideTab}
           setIsdetail={setIsdetail}
-          isdetail={isdetail}
+          isdetail={isdetail.view}
+          data={isdetail.data}
         />
       </Box>
     </Flex>

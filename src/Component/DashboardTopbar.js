@@ -4,15 +4,22 @@ import { FiChevronRight } from "react-icons/fi";
 
 const DashboardTopbar = (props) => {
   return (
-    <HStack justify={"space-between"} p={16}>
+    <HStack
+      justify={"space-between"}
+      p={16}
+      position={"sticky"}
+      top={0}
+      bg={"white"}
+      zIndex={111}
+    >
       <HStack>
         <Text>Dashboard</Text>
         <FiChevronRight color="#00C3BA" />
-        <Text>{props.sideTab}</Text>
+        <Text fontWeight={props.isdetail ? "400" : "600"}>{props.sideTab}</Text>
         {props.isdetail && (
           <>
             <FiChevronRight color="#00C3BA" />
-            <Text>{props.isdetail}</Text>
+            <Text fontWeight={"600"}>{props.isdetail}</Text>
           </>
         )}
       </HStack>

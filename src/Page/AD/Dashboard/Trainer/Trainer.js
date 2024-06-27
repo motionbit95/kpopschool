@@ -16,11 +16,17 @@ import {
   Text,
   Tr,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Trainer = (props) => {
   const ITEMS_PER_PAGE = 10;
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [userData, setUserData] = useState([]);
+
+  useEffect(() => {
+    setUserData(props.userData);
+  }, [props.userData]);
 
   const totalPages = Math.ceil(userData.length / ITEMS_PER_PAGE);
 
@@ -46,8 +52,8 @@ const Trainer = (props) => {
 
   return (
     <Flex w={"100%"} h={"100%"}>
-      <Stack w={"full"} h={"full"} justify={"space-between"}>
-        <Stack p={16}>
+      <Stack w={"full"} px={16} pt={16} pb={32}>
+        <Stack>
           <HStack justify={"space-between"}>
             <Text fontSize={"20px"} fontWeight={"600"}>
               Trainer List
@@ -69,7 +75,7 @@ const Trainer = (props) => {
                   <Tr
                     onClick={() => {
                       console.log(data);
-                      props.setIsdetail("Trainer Profile");
+                      props.setIsdetail({ view: "Trainer Profile" });
                     }}
                   >
                     <Td textAlign={"center"}>{`${data.no}.`}</Td>
@@ -100,13 +106,7 @@ const Trainer = (props) => {
           </TableContainer>
         </Stack>
         {/* {userData.length > ITEMS_PER_PAGE && ( */}
-        <Flex
-          mt={4}
-          px={16}
-          pb={16}
-          justifyContent="center"
-          alignItems="center"
-        >
+        <Flex mt={4} justifyContent="center" alignItems="center">
           <IconButton
             icon={<ChevronLeftIcon fontSize={"30px"} />}
             onClick={handlePrevPage}
@@ -151,14 +151,3 @@ const Trainer = (props) => {
 };
 
 export default Trainer;
-
-const userData = [
-  {
-    no: 1,
-    name: "이름",
-    id: "아이디",
-    email: "이메일",
-    regDate: "2022.01.01",
-    rating: "4",
-  },
-];
