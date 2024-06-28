@@ -47,7 +47,7 @@ const UserDetail = (props) => {
   const currentData = PaymentData.slice(startIndex, endIndex);
 
   useEffect(() => {
-    console.log(props.data);
+    console.log(props.data, props.itemNumber);
   }, []);
 
   return (
@@ -66,17 +66,25 @@ const UserDetail = (props) => {
               User Profile
             </Text>
             <Box>
-              <Button onClick={() => props.setIsdetail(false)}>
+              <Button
+                variant={"outline"}
+                borderColor={"#00C3BA"}
+                color={"#00C3BA"}
+                onClick={() => props.setIsdetail(false)}
+              >
                 Back to List
               </Button>
             </Box>
           </HStack>
           <Stack>
-            <Text>User code No.</Text>
+            <HStack>
+              <Text>User code No.</Text>
+              <Text>{props.itemNumber}</Text>
+            </HStack>
             <HStack justify={"space-between"} spacing={8}>
               <HStack spacing={4} w={"40%"}>
                 <Box boxSize={"160px"} borderRadius={"md"} bgColor={"gray.200"}>
-                  <Image />
+                  <Image src={props.data.profile} />
                 </Box>
                 <Stack spacing={4}>
                   <Text fontSize={"lg"} fontWeight={"500"}>
@@ -87,7 +95,7 @@ const UserDetail = (props) => {
                       <Text w={"70px"} color={"#4E4E4E"}>
                         ID
                       </Text>
-                      <Text>hi</Text>
+                      <Text></Text>
                     </HStack>
                     <HStack>
                       <Text w={"70px"} color={"#4E4E4E"}>
@@ -126,20 +134,20 @@ const UserDetail = (props) => {
               >
                 <HStack gap={4}>
                   <Text color={"#4E4E4E"}>Birthday</Text>
-                  <Text>DD/MM/YY</Text>
+                  {/* <Text>DD/MM/YY</Text> */}
                 </HStack>
                 <HStack gap={4}>
                   <Text color={"#4E4E4E"}>Other class experience</Text>
-                  <Text>At all</Text>
+                  {/* <Text>At all</Text> */}
                 </HStack>
                 <Stack>
                   <Text color={"#4E4E4E"}>
                     K-pop genre or artist you are interested in
                   </Text>
-                  <Text>
+                  {/* <Text>
                     i love electronic dance genre like shinee, BTS, Seventeen.
                     also Black Pink’s chocela stages are so amazing to aprove me
-                  </Text>
+                  </Text> */}
                 </Stack>
               </Stack>
             </HStack>

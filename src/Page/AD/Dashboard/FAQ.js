@@ -6,7 +6,6 @@ import {
   HStack,
   Input,
   Stack,
-  StackDivider,
   Text,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
@@ -28,11 +27,26 @@ const FAQ = () => {
       sectionName: `Section ${newSectionId}`,
     };
     setSections([...sections, newSection]);
+    setFormData([...formData, { id: newSectionId, question: "", answer: "" }]);
   };
 
   const removeSection = (id) => {
     const updatedSections = sections.filter((section) => section.id !== id);
     setSections(updatedSections);
+    const updatedFormData = formData.filter((data) => data.id !== id);
+    setFormData(updatedFormData);
+  };
+
+  const [formData, setFormData] = useState([
+    {
+      id: 1,
+      question: "",
+      answer: "",
+    },
+  ]);
+
+  const handleSubmit = () => {
+    console.log(formData);
   };
 
   return (
@@ -43,7 +57,7 @@ const FAQ = () => {
             FAQ List
           </Text>
           <Box>
-            <Button color={"white"} bgColor={"#00C3BA"}>
+            <Button color={"white"} bgColor={"#00C3BA"} onClick={handleSubmit}>
               SAVE
             </Button>
           </Box>
@@ -53,6 +67,8 @@ const FAQ = () => {
             <FAQForm
               key={section.id}
               section={section}
+              formData={formData}
+              setFormData={setFormData}
               onRemove={() => removeSection(section.id)}
             />
           ))}
@@ -69,26 +85,41 @@ const FAQ = () => {
 
 export default FAQ;
 
-const FAQForm = ({ section, onRemove }) => {
+const FAQForm = ({ section, onRemove, formData, setFormData }) => {
+  const handleInputChange = (e) => {
+    const updatedFormData = formData.map((data) =>
+      data.id === section.id ? { ...data, question: e.target.value } : data
+    );
+    setFormData(updatedFormData);
+  };
+
+  const handleEditorChange = (html) => {
+    const updatedFormData = formData.map((data) =>
+      data.id === section.id ? { ...data, answer: html } : data
+    );
+    setFormData(updatedFormData);
+  };
+
+  const currentData = formData.find((data) => data.id === section.id);
+
   return (
     <Stack spacing={4}>
       <HStack>
         <Text>{section.sectionName}</Text>
         <Text fontWeight={"700"}>Question</Text>
       </HStack>
-      <Input placeholder={`Enter question for ${section.sectionName}`} />
+      <Input
+        value={currentData?.question || ""}
+        onChange={handleInputChange}
+        placeholder={`Enter question for ${section.sectionName}`}
+      />
       <HStack>
         <Text>{section.sectionName}</Text>
         <Text fontWeight={"700"}>Answer</Text>
       </HStack>
-      <ToastEditor
-        onChange={(value) => {
-          console.log(value);
-        }}
-      />
-      {/* 삭제 버튼 임시 */}
+      <ToastEditor onChange={handleEditorChange} />
       {/* <Stack align={"end"}>
-        <Button onClick={onRemove}>{section.sectionName} Remove</Button>
+        <Button onClick={onRemove}>Remove</Button>
       </Stack> */}
     </Stack>
   );

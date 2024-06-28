@@ -6,13 +6,14 @@ import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-sy
 import "tui-color-picker/dist/tui-color-picker.css";
 import "../Style/custom-editor-styles.css";
 
-const ToastEditor = () => {
+const ToastEditor = ({ onChange }) => {
   const editorRef = useRef();
 
   const handleChange = () => {
     const editorInstance = editorRef.current.getInstance();
     const html = editorInstance.getHTML();
     console.log(html);
+    onChange(html);
   };
 
   return (

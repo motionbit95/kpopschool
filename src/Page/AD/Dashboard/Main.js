@@ -6,7 +6,11 @@ import DashboardTopbar from "../../../Component/DashboardTopbar";
 
 const Main = () => {
   const [sideTab, setSideTab] = useState("HOME");
-  const [isdetail, setIsdetail] = useState({ view: "", data: "" });
+  const [isdetail, setIsdetail] = useState({
+    view: "",
+    data: "",
+    itemNumber: 0,
+  });
 
   const handleSideTab = (tab) => {
     setSideTab(tab);
@@ -27,6 +31,7 @@ const Main = () => {
           setIsdetail={setIsdetail}
           isdetail={isdetail.view}
           data={isdetail.data}
+          itemNumber={isdetail.itemNumber}
         />
       </Box>
     </Flex>

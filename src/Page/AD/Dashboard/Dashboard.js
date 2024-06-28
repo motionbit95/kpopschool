@@ -51,7 +51,11 @@ const Dashboard = (props) => {
             <User setIsdetail={props.setIsdetail} userData={userList} />
           )}
           {props.isdetail && (
-            <UserDetail setIsdetail={props.setIsdetail} data={props.data} />
+            <UserDetail
+              setIsdetail={props.setIsdetail}
+              data={props.data}
+              itemNumber={props.itemNumber}
+            />
           )}
         </>
       )}
@@ -60,7 +64,13 @@ const Dashboard = (props) => {
           {!props.isdetail && (
             <Trainer setIsdetail={props.setIsdetail} userData={userList} />
           )}
-          {props.isdetail && <TrainerDetail />}
+          {props.isdetail && (
+            <TrainerDetail
+              setIsdetail={props.setIsdetail}
+              data={props.data}
+              itemNumber={props.itemNumber}
+            />
+          )}
         </>
       )}
       {sideTab === "Class" && <Class />}

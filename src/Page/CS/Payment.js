@@ -12,7 +12,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Payment = () => {
   const location = useLocation();
@@ -25,6 +25,55 @@ const Payment = () => {
   useEffect(() => {
     console.log(item, teacher);
   }, [item, teacher]);
+  // const Nav = useNavigate();
+
+  // const [isLogin, setIsLogin] = useState(false);
+  {
+    /*useEffect(() => {
+    window.scrollTo(0, 0);
+
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setIsLogin(true);
+      }
+    });
+  }, [location]); */
+  }
+
+  /************** 하단 부분을 결제창으로 이동시키기 **************/
+  {
+    /*
+    const handleTest = async () => {
+    if (isLogin) {
+      // const user = auth.currentUser;
+      // 테스트 product ID : price_1PV3ZUGcRvPNh5Hm56ZrKdfe
+      const productId = "price_1PV3ZUGcRvPNh5Hm56ZrKdfe";
+      let checkoutUrl = await getCheckoutUrl(productId);
+      console.log(checkoutUrl);
+      window.location.href = checkoutUrl;
+    }
+  };
+  
+  useEffect(() => {
+    // 결제 성공 여부 확인
+    const getIsPaied = async () => {
+      let isPaied = false;
+      // 테스트 product ID : price_1PV3ZUGcRvPNh5Hm56ZrKdfe
+      isPaied = await getIsPayment("");
+      console.log(isPaied);
+      if (isPaied) {
+        Nav("/payment/result");
+      }
+
+      return;
+    };
+    if (isLogin) {
+      getIsPaied();
+    }
+  }, [isLogin]);
+  */
+  }
+  /*******************************************************/
   return (
     <Flex flex={1} direction={"column"} color={"#4E4E4E"}>
       <Container minW={"container.xl"}>
@@ -223,6 +272,7 @@ const Payment = () => {
             </HStack>
             <Stack p={4} alignContent={"center"} justifyContent={"center"}>
               <Button>PLACE ORDER</Button>
+              {/* <Button onClick={handleTest}>Test</Button> */}
             </Stack>
           </Stack>
         </HStack>

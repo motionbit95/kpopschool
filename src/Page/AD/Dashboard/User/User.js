@@ -7,7 +7,6 @@ import {
   IconButton,
   Input,
   Stack,
-  StackDivider,
   Table,
   TableContainer,
   Tbody,
@@ -52,6 +51,15 @@ const User = (props) => {
     setCurrentPage(page);
   };
 
+  const handleDetailClick = (data, itemNumber) => {
+    console.log(data, itemNumber);
+    props.setIsdetail({
+      view: "User Profile",
+      data: data,
+      itemNumber: itemNumber,
+    });
+  };
+
   return (
     <Flex w={"100%"} h={"100%"}>
       <Stack w={"full"} justify={"space-between"} px={16} pt={16} pb={32}>
@@ -74,32 +82,33 @@ const User = (props) => {
                   <Td textAlign={"center"}>Email</Td>
                   <Td textAlign={"center"}>Registration Date</Td>
                 </Tr>
-                {currentData.map((data, index) => (
-                  <Tr
-                    cursor={"pointer"}
-                    onClick={() => {
-                      console.log(data);
-                      props.setIsdetail({ view: "User Profile", data: data });
-                    }}
-                  >
-                    <Td textAlign={"center"}>{`${index + 1}.`}</Td>
-                    <Td textAlign={"center"}>{data.isTeacher ? "O" : "-"}</Td>
-                    <Td
-                      textAlign={"center"}
-                    >{`${data.name} ${data.firstName}`}</Td>
-                    <Td textAlign={"center"}>{data.snsId}</Td>
-                    <Td textAlign={"center"}>{data.email}</Td>
-                    <Td textAlign={"center"}>
-                      {toDate(data.createdAt)
-                        .toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "2-digit",
-                          day: "2-digit",
-                        })
-                        .replace(/(\d+)\/(\d+)\/(\d+)/, "$1-$2-$3")}
-                    </Td>
-                  </Tr>
-                ))}
+                {currentData.map((data, index) => {
+                  const itemNumber =
+                    (currentPage - 1) * ITEMS_PER_PAGE + index + 1;
+                  return (
+                    <Tr
+                      cursor={"pointer"}
+                      onClick={() => handleDetailClick(data, itemNumber)}
+                    >
+                      <Td textAlign={"center"}>{itemNumber}</Td>
+                      <Td textAlign={"center"}>{data.isTeacher ? "O" : "-"}</Td>
+                      <Td
+                        textAlign={"center"}
+                      >{`${data.name} ${data.firstName}`}</Td>
+                      <Td textAlign={"center"}>{data.snsId}</Td>
+                      <Td textAlign={"center"}>{data.email}</Td>
+                      <Td textAlign={"center"}>
+                        {toDate(data.createdAt)
+                          .toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "2-digit",
+                            day: "2-digit",
+                          })
+                          .replace(/(\d+)\/(\d+)\/(\d+)/, "$1-$2-$3")}
+                      </Td>
+                    </Tr>
+                  );
+                })}
               </Tbody>
             </Table>
           </TableContainer>
