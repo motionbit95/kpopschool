@@ -16,12 +16,37 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { host_url } from "../../../../App";
 
 const UserDetail = (props) => {
   const ITEMS_PER_PAGE = 10;
   const [currentPage, setCurrentPage] = useState(1);
+  const [inquirys, setInquiries] = useState({});
+  useEffect(() => {
+    const getInquiry = async () => {
+      fetch(`${host_url}/inquiry/search`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          conditions: [],
+        }),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          setInquiries(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
 
-  const totalPages = Math.ceil(PaymentData.length / ITEMS_PER_PAGE);
+    getInquiry();
+    console.log(inquirys);
+  }, []);
+
   const toDate = (timestamp) => {
     return new Date(timestamp._seconds * 1000);
   };
@@ -45,10 +70,9 @@ const UserDetail = (props) => {
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
   const currentData = PaymentData.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(PaymentData.length / ITEMS_PER_PAGE);
 
-  useEffect(() => {
-    console.log(props.data, props.itemNumber);
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <Flex w={"100%"} h={"100%"}>
@@ -298,10 +322,10 @@ const UserDetail = (props) => {
                   <Table>
                     <Tbody>
                       <Tr fontWeight={"500"} color={"#00C3BA"}>
-                        <Td textAlign={"center"}>Tag</Td>
-                        <Td textAlign={"center"}>Title</Td>
+                        <Td textAlign={"center"}>Division</Td>
+                        <Td textAlign={"center"}>Detail</Td>
                         <Td textAlign={"center"}>Date</Td>
-                        <Td textAlign={"center"}>State</Td>
+                        <Td textAlign={"center"}>Rating</Td>
                       </Tr>
                       {currentData.map((data) => (
                         <Tr>
@@ -362,6 +386,10 @@ const UserDetail = (props) => {
 
 export default UserDetail;
 
+const PaymentModal = () => {
+  return <div></div>;
+};
+
 const PaymentData = [
   {
     course: "Professional",
@@ -372,5 +400,23 @@ const PaymentData = [
     payment: "credit",
     date: "08:36 21-07-2024",
     receipt: true,
+  },
+];
+
+const InquiryData = [
+  {
+    tag: "Class",
+    title: "video quality",
+    date: "21-07-2024",
+    state: "Waiting for",
+  },
+];
+
+const ReviewData = [
+  {
+    devision: "Vocal",
+    detail: "Trainer Name",
+    date: "21-07-2024",
+    rating: "5",
   },
 ];

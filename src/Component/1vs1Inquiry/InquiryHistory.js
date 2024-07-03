@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -11,13 +11,37 @@ import {
   Text,
   Tr,
 } from "@chakra-ui/react";
+import { host_url } from "../../App";
 
 const InquiryHistory = () => {
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
+  const [inquirys, setInquiries] = useState({});
+  const headers = ["Tag", "Title", "Date", "State"];
+  const toDate = (timestamp) => {
+    return new Date(timestamp._seconds * 1000);
+  };
 
   const handleClick = (index) => {
     setSelectedRowIndex(selectedRowIndex === index ? null : index);
   };
+
+  useEffect(() => {
+    const getInquiry = async () => {
+      fetch(`${host_url}/inquiry/list`)
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          setInquiries(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    getInquiry();
+    console.log(inquirys);
+  }, []);
+
   return (
     <Stack color={"#4E4E4E"}>
       <TableContainer>
@@ -44,20 +68,29 @@ const InquiryHistory = () => {
                 </Td>
               ))}
             </Tr>
-            {data.map((item, index) => (
+            {inquirys.map((item, index) => (
               <>
                 <Tr onClick={() => handleClick(index)}>
                   <Td textAlign={"center"}>{item.tag}</Td>
                   <Td textAlign={"center"}>{item.title}</Td>
-                  <Td textAlign={"center"}>{item.date}</Td>
+                  <Td textAlign={"center"}>
+                    {toDate(item.createdAt)
+                      .toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                      })
+                      .replace(/(\d+)\/(\d+)\/(\d+)/, "$1-$2-$3")}
+                  </Td>
                   <Td textAlign={"center"}>{item.state}</Td>
                 </Tr>
-                {selectedRowIndex === index && item.inquiry && (
+                {selectedRowIndex === index && item.details && (
                   <Tr>
                     <Td colSpan={4} textAlign={"start"}>
                       <Stack spacing={8}>
-                        <Text whiteSpace={"pre-line"}>{item.inquiry}</Text>
-                        <Stack
+                        <Text whiteSpace={"pre-line"}>{item.details}</Text>
+                        {/* 응대 부분 */}
+                        {/* <Stack
                           bgColor={"rgba(241, 241, 241, 1)"}
                           p={6}
                           borderRadius={"md"}
@@ -70,7 +103,7 @@ const InquiryHistory = () => {
                           <Text whiteSpace={"pre-line"}>
                             {item.inquiry_request}
                           </Text>
-                        </Stack>
+                        </Stack> */}
                       </Stack>
                     </Td>
                   </Tr>
@@ -85,37 +118,3 @@ const InquiryHistory = () => {
 };
 
 export default InquiryHistory;
-
-const headers = ["Tag", "Title", "Date", "State"];
-
-const data = [
-  {
-    tag: "class",
-    title: "video quailty",
-    date: "20-07-2024",
-    state: "Waiting for",
-    inquiry:
-      "I accidentally paid for another teacher's course.\nPlease refund that portion.\nI paid for Mr. Lee's Advanced Course.",
-    manager: "Manager",
-    inquiry_request:
-      "hello. When I checked the student's payment history, I found that the payment was made on July 19th.\nWe have provided a refund for Mr. Lee's Advanced Course Emotion Song, but the payment date may be delayed by 2-3 days due to the credit card company's requirements for refunds.",
-  },
-  {
-    tag: "payment",
-    title: "wrong paid",
-    date: "19-07-2024",
-    state: "completed",
-  },
-  {
-    tag: "ETC",
-    title: "restore deleted coupon",
-    date: "06-04-2024",
-    state: "completed",
-  },
-  {
-    tag: "ETC",
-    title: "dumy",
-    date: "03-03-2024",
-    state: "completed",
-  },
-];
