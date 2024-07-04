@@ -23,6 +23,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import React, { useEffect, useMemo, useState } from "react";
+import { host_url } from "../../../../App";
 
 const Trainer = (props) => {
   const toDate = (timestamp) => {
@@ -198,12 +199,9 @@ const Trainer = (props) => {
 export default Trainer;
 
 const AddTrainerModal = (props) => {
-  const userData = props.userData;
-
+  const [userData, setUserData] = useState(props.userData);
   const ITEMS_PER_PAGE = 10;
-
   const [currentPage, setCurrentPage] = useState(1);
-
   const totalPages = Math.ceil(userData.length / ITEMS_PER_PAGE);
 
   const handlePageClick = (pageNumber) => {
@@ -230,6 +228,29 @@ const AddTrainerModal = (props) => {
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
+  // 이거 맞나?
+  // useEffect(() => {
+  //   const AddUser = async () => {
+  //     fetch(`${host_url}/users/add`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         isTeacher: true,
+  //       }),
+  //     })
+  //       .then((res) => res.json())
+  //       .then((res) => {
+  //         console.log(res);
+  //         setUserData(res);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   };
+  //   AddUser();
+  // }, []);
 
   return (
     <>

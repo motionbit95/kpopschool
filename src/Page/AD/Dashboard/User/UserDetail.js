@@ -7,7 +7,14 @@ import {
   HStack,
   IconButton,
   Image,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
   Stack,
+  StackDivider,
   Table,
   TableContainer,
   Tbody,
@@ -72,7 +79,14 @@ const UserDetail = (props) => {
   const currentData = PaymentData.slice(startIndex, endIndex);
   const totalPages = Math.ceil(PaymentData.length / ITEMS_PER_PAGE);
 
-  useEffect(() => {}, []);
+  const [openPayment, setOpenPayment] = useState(false);
+  const [openinquiry, setOpeninquiry] = useState(false);
+  const handleOpenPayment = () => {
+    setOpenPayment(!openPayment);
+  };
+  const handleOpeninquiry = () => {
+    setOpeninquiry(!openinquiry);
+  };
 
   return (
     <Flex w={"100%"} h={"100%"}>
@@ -198,7 +212,7 @@ const UserDetail = (props) => {
                     <Td textAlign={"center"}>receipt</Td>
                   </Tr>
                   {currentData.map((data) => (
-                    <Tr>
+                    <Tr cursor={"pointer"} onClick={handleOpenPayment}>
                       <Td textAlign={"center"}>{`${data.course} course`}</Td>
                       <Td textAlign={"center"}>{data.devision}</Td>
                       <Td textAlign={"center"}>{data.trainer}</Td>
@@ -216,6 +230,14 @@ const UserDetail = (props) => {
                 </Tbody>
               </Table>
             </TableContainer>
+            {openPayment && (
+              <PaymentModal
+                isOpen={handleOpenPayment}
+                onClose={handleOpenPayment}
+                userData={props.data}
+                PaymentData={PaymentData}
+              />
+            )}
           </Stack>
           <Flex mt={4} justifyContent="center" alignItems="center">
             <IconButton
@@ -267,7 +289,7 @@ const UserDetail = (props) => {
                         <Td textAlign={"center"}>State</Td>
                       </Tr>
                       {currentData.map((data) => (
-                        <Tr>
+                        <Tr cursor={"pointer"} onClick={handleOpeninquiry}>
                           <Td
                             textAlign={"center"}
                           >{`${data.course} course`}</Td>
@@ -374,7 +396,12 @@ const UserDetail = (props) => {
             </Stack>
           </HStack>
           <Box display={"flex"} justifyContent={"end"}>
-            <Button borderRadius={"xl"} color={"white"} bgColor={"#FF3CA2"}>
+            <Button
+              borderRadius={"xl"}
+              color={"white"}
+              bgColor={"#FF3CA2"}
+              onClick={() => alert("Delete User Button")}
+            >
               Delete Member
             </Button>
           </Box>
@@ -386,11 +413,126 @@ const UserDetail = (props) => {
 
 export default UserDetail;
 
-const PaymentModal = () => {
-  return <div></div>;
+const PaymentModal = (props) => {
+  const userData = props.userData;
+  const PaymentData = props.PaymentData;
+  return (
+    <>
+      <Modal size={"3xl"} isOpen={props.isOpen} onClose={props.onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalHeader></ModalHeader>
+          <ModalBody p={0}>
+            <Stack divider={<StackDivider borderColor="#00C3BA" />}>
+              <Stack spacing={4} py={4} px={8}>
+                <Stack>
+                  <HStack fontWeight={"500"}>
+                    <Text>Order Number</Text>
+                    <Text>202407215136</Text>
+                  </HStack>
+                  <HStack>
+                    <Text color={"#4E4E4E"}>Order Date</Text>
+                    <Text>21-07-2024</Text>
+                  </HStack>
+                  <HStack>
+                    <Text color={"#4E4E4E"}>Payment method</Text>
+                    <Text>Credit</Text>
+                  </HStack>
+                </Stack>
+                <Stack>
+                  <Text fontWeight={"500"}>Order information</Text>
+                  <Text color={"#4E4E4E"}>{userData.name}</Text>
+                  <Text color={"#4E4E4E"}>{userData.email}</Text>
+                  <Text color={"#4E4E4E"}>{userData.snsId}</Text>
+                </Stack>
+              </Stack>
+              <Stack py={4} px={8}>
+                <Text>Order details</Text>
+                {PaymentData.map((data) => (
+                  <HStack
+                    borderY={"1px solid #E1E4E4"}
+                    py={4}
+                    px={2}
+                    justify={"space-between"}
+                  >
+                    <Text color={"#4E4E4E"}>{`${data.course} course`}</Text>
+                    <Text color={"#4E4E4E"}>{data.devision}</Text>
+                    <Text color={"#4E4E4E"}>{data.trainer}</Text>
+                    <Text color={"#4E4E4E"}>{`${data.month} month`}</Text>
+                    <Text color={"#FF3CA2"}>{`$${data.price}`}</Text>
+                  </HStack>
+                ))}
+                <HStack>
+                  <Text color={"#4E4E4E"}>Order state</Text>
+                  <Text>Order completed</Text>
+                </HStack>
+                <HStack>
+                  <Text color={"#4E4E4E"}>Quantity</Text>
+                  <Text>1 class</Text>
+                </HStack>
+              </Stack>
+            </Stack>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
+
+const inquiryModal = (props) => {
+  return (
+    <>
+      <Modal size={"3xl"} isOpen={props.isOpen} onClose={props.onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalHeader></ModalHeader>
+          <ModalBody p={0}>
+            <Stack>
+              <Stack py={4} px={8}>
+                {PaymentData.map((data) => (
+                  <HStack
+                    borderY={"1px solid #E1E4E4"}
+                    py={4}
+                    px={2}
+                    justify={"space-between"}
+                  >
+                    <Text color={"#4E4E4E"}>{`${data.course} course`}</Text>
+                    <Text color={"#4E4E4E"}>{data.devision}</Text>
+                    <Text color={"#4E4E4E"}>{data.trainer}</Text>
+                    <Text color={"#4E4E4E"}>{`${data.month} month`}</Text>
+                    <Text color={"#FF3CA2"}>{`$${data.price}`}</Text>
+                  </HStack>
+                ))}
+                <HStack>
+                  <Text color={"#4E4E4E"}>Order state</Text>
+                  <Text>Order completed</Text>
+                </HStack>
+                <HStack>
+                  <Text color={"#4E4E4E"}>Quantity</Text>
+                  <Text>1 class</Text>
+                </HStack>
+              </Stack>
+            </Stack>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
+  );
 };
 
 const PaymentData = [
+  {
+    course: "Professional",
+    devision: "Vocal",
+    trainer: "Trainer Name",
+    month: "3",
+    price: "99",
+    payment: "credit",
+    date: "08:36 21-07-2024",
+    receipt: true,
+  },
   {
     course: "Professional",
     devision: "Vocal",
