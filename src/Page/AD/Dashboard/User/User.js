@@ -78,7 +78,7 @@ const User = (props) => {
                   <Td textAlign={"center"}>No.</Td>
                   <Td textAlign={"center"}>Trainer</Td>
                   <Td textAlign={"center"}>Name</Td>
-                  <Td textAlign={"center"}>ID</Td>
+                  {/* <Td textAlign={"center"}>ID</Td> */}
                   <Td textAlign={"center"}>Email</Td>
                   <Td textAlign={"center"}>Registration Date</Td>
                 </Tr>
@@ -95,7 +95,7 @@ const User = (props) => {
                       <Td
                         textAlign={"center"}
                       >{`${data.name} ${data.firstName}`}</Td>
-                      <Td textAlign={"center"}>{data.snsId}</Td>
+                      {/* <Td textAlign={"center"}>{data.snsId}</Td> */}
                       <Td textAlign={"center"}>{data.email}</Td>
                       <Td textAlign={"center"}>
                         {toDate(data.createdAt)

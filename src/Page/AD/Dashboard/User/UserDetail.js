@@ -444,7 +444,7 @@ const PaymentModal = (props) => {
                   <Text fontWeight={"500"}>Order information</Text>
                   <Text color={"#4E4E4E"}>{userData.name}</Text>
                   <Text color={"#4E4E4E"}>{userData.email}</Text>
-                  <Text color={"#4E4E4E"}>{userData.snsId}</Text>
+                  {/* <Text color={"#4E4E4E"}>{userData.snsId}</Text> */}
                 </Stack>
               </Stack>
               <Stack py={4} px={8}>

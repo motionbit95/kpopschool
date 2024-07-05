@@ -35,10 +35,41 @@ const Trainer = (props) => {
   const [userData, setUserData] = useState([]);
   const [popupOpen, setPopupOpen] = useState(false);
 
+  const filteredData = useMemo(
+    () => userData.filter((data) => data.isTeacher),
+    [userData]
+  );
+
+  const [teachers, setTeachers] = useState([]);
+
   useEffect(() => {
     setUserData(props.userData);
-    console.log(filteredData);
   }, [props.userData]);
+
+  useEffect(() => {
+    console.log(filteredData);
+    let teachers = [];
+    filteredData.forEach((data) => {
+      console.log(data.id);
+      fetch(`${host_url}/teachers/get`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: data.id }),
+      })
+        .then(async (res) => await res.json())
+        .then(async (res) => {
+          teachers.push({ ...data, ...res });
+          if (teachers.length === filteredData.length) {
+            setTeachers(teachers);
+          }
+        })
+        .catch(async (err) => {
+          console.log(err);
+        });
+    });
+  }, [filteredData]);
 
   const handleDetailClick = (data, itemNumber) => {
     console.log(data, itemNumber);
@@ -48,11 +79,6 @@ const Trainer = (props) => {
       itemNumber: itemNumber,
     });
   };
-
-  const filteredData = useMemo(
-    () => userData.filter((data) => data.isTeacher),
-    [userData]
-  );
   const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
 
   const handleNextPage = () => {
@@ -91,12 +117,12 @@ const Trainer = (props) => {
                 <Tr fontWeight={"500"} color={"#00C3BA"}>
                   <Td textAlign={"center"}>No.</Td>
                   <Td textAlign={"center"}>Name</Td>
-                  <Td textAlign={"center"}>ID</Td>
+                  {/* <Td textAlign={"center"}>ID</Td> */}
                   <Td textAlign={"center"}>Email</Td>
                   <Td textAlign={"center"}>Registration Date</Td>
                   <Td textAlign={"center"}>Rating</Td>
                 </Tr>
-                {currentData.map((data, index) => {
+                {teachers.map((data, index) => {
                   const itemNumber =
                     (currentPage - 1) * ITEMS_PER_PAGE + index + 1;
 
@@ -107,7 +133,7 @@ const Trainer = (props) => {
                     >
                       <Td textAlign={"center"}>{itemNumber}</Td>
                       <Td textAlign={"center"}>{data.name}</Td>
-                      <Td textAlign={"center"}></Td>
+                      {/* <Td textAlign={"center"}></Td> */}
                       <Td textAlign={"center"}>{data.email}</Td>
                       <Td textAlign={"center"}>
                         {toDate(data.createdAt)

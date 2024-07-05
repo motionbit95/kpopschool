@@ -174,7 +174,7 @@ const Payment = () => {
                     <Tr fontWeight={"500"} color={"#00C3BA"}>
                       <Td textAlign={"center"}>No.</Td>
                       <Td textAlign={"center"}>Name</Td>
-                      <Td textAlign={"center"}>ID</Td>
+                      {/* <Td textAlign={"center"}>ID</Td> */}
                       <Td textAlign={"center"}>Division</Td>
                       <Td textAlign={"center"}>Course</Td>
                       <Td textAlign={"center"}>Class</Td>

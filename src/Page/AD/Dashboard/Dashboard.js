@@ -65,7 +65,7 @@ const Dashboard = (props) => {
             <Trainer setIsdetail={props.setIsdetail} userData={userList} />
           )}
           {props.isdetail && (
-            <TrainerDetail
+            <TrainerDetailㅌ
               setIsdetail={props.setIsdetail}
               data={props.data}
               itemNumber={props.itemNumber}
