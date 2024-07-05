@@ -109,7 +109,7 @@ const PolicyForm = ({ section, onRemove, formData, setFormData }) => {
         <Text fontWeight={"700"}>Title</Text>
       </HStack>
       <Input
-        value={currentData?.title || ""}
+        defa={currentData?.title || ""}
         onChange={handleInputChange}
         placeholder={`Enter title for ${section.sectionName}`}
       />
@@ -117,7 +117,10 @@ const PolicyForm = ({ section, onRemove, formData, setFormData }) => {
         <Text>{section.sectionName}</Text>
         <Text fontWeight={"700"}>Contents</Text>
       </HStack>
-      <ToastEditor onChange={handleEditorChange} />
+      <ToastEditor
+        onChange={handleEditorChange}
+        initialValue={currentData?.contents || " "}
+      />
       <Stack align={"end"}>
         <Button onClick={onRemove}>Remove</Button>
       </Stack>
