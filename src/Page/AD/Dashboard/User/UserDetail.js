@@ -28,7 +28,7 @@ import { host_url } from "../../../../App";
 const UserDetail = (props) => {
   const ITEMS_PER_PAGE = 10;
   const [currentPage, setCurrentPage] = useState(1);
-  const [inquirys, setInquiries] = useState({});
+  const [inquirys, setInquiries] = useState([]);
   useEffect(() => {
     const getInquiry = async () => {
       fetch(`${host_url}/inquiry/search`, {
@@ -271,7 +271,7 @@ const UserDetail = (props) => {
           </Flex>
         </Stack>
         <Stack>
-          <HStack spacing={16} justify={"space-between"}>
+          <HStack spacing={16} justify={"space-between"} align={"start"}>
             <Stack w={"50%"}>
               <Stack>
                 <HStack justify={"space-between"}>
@@ -288,14 +288,20 @@ const UserDetail = (props) => {
                         <Td textAlign={"center"}>Date</Td>
                         <Td textAlign={"center"}>State</Td>
                       </Tr>
-                      {currentData.map((data) => (
+                      {inquirys.map((data) => (
                         <Tr cursor={"pointer"} onClick={handleOpeninquiry}>
-                          <Td
-                            textAlign={"center"}
-                          >{`${data.course} course`}</Td>
-                          <Td textAlign={"center"}>{data.devision}</Td>
-                          <Td textAlign={"center"}>{data.trainer}</Td>
-                          <Td textAlign={"center"}>{`${data.month} month`}</Td>
+                          <Td textAlign={"center"}>{data.tag}</Td>
+                          <Td textAlign={"center"}>{data.title}</Td>
+                          <Td textAlign={"center"}>
+                            {toDate(data.createdAt)
+                              .toLocaleDateString("en-US", {
+                                year: "numeric",
+                                month: "2-digit",
+                                day: "2-digit",
+                              })
+                              .replace(/(\d+)\/(\d+)\/(\d+)/, "$1-$2-$3")}
+                          </Td>
+                          <Td textAlign={"center"}>{data.state}</Td>
                         </Tr>
                       ))}
                     </Tbody>
@@ -349,14 +355,32 @@ const UserDetail = (props) => {
                         <Td textAlign={"center"}>Date</Td>
                         <Td textAlign={"center"}>Rating</Td>
                       </Tr>
-                      {currentData.map((data) => (
+                      {ReviewData.map((data) => (
                         <Tr>
-                          <Td
-                            textAlign={"center"}
-                          >{`${data.course} course`}</Td>
                           <Td textAlign={"center"}>{data.devision}</Td>
-                          <Td textAlign={"center"}>{data.trainer}</Td>
-                          <Td textAlign={"center"}>{`${data.month} month`}</Td>
+                          <Td textAlign={"center"}>{data.detail}</Td>
+                          <Td textAlign={"center"}>{data.date}</Td>
+                          <Td textAlign={"center"}>
+                            <Flex
+                              gap={1}
+                              w={"100%"}
+                              align={"center"}
+                              justify={"center"}
+                            >
+                              {Array.from({ length: 5 }, (_, i) => (
+                                <Image
+                                  key={i}
+                                  src={
+                                    i < data.rating
+                                      ? require("../../../../Asset/Icon/starFill.png")
+                                      : require("../../../../Asset/Icon/starDefault.png")
+                                  }
+                                  alt="star"
+                                  boxSize="18px" // 적절한 크기로 설정
+                                />
+                              ))}
+                            </Flex>
+                          </Td>
                         </Tr>
                       ))}
                     </Tbody>
@@ -533,16 +557,6 @@ const PaymentData = [
     date: "08:36 21-07-2024",
     receipt: true,
   },
-  {
-    course: "Professional",
-    devision: "Vocal",
-    trainer: "Trainer Name",
-    month: "3",
-    price: "99",
-    payment: "credit",
-    date: "08:36 21-07-2024",
-    receipt: true,
-  },
 ];
 
 const InquiryData = [
@@ -556,8 +570,8 @@ const InquiryData = [
 
 const ReviewData = [
   {
-    devision: "Vocal",
-    detail: "Trainer Name",
+    devision: "Trainer",
+    detail: "I can feel that trainer is working ...",
     date: "21-07-2024",
     rating: "5",
   },

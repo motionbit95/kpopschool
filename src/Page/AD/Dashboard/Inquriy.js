@@ -6,6 +6,12 @@ import {
   HStack,
   IconButton,
   Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
   Stack,
   StackDivider,
   Table,
@@ -39,6 +45,13 @@ const Inquiry = () => {
     setCurrentPage(page);
   };
 
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [inquirydata, setInquirydata] = useState([]);
+  const handleOpeninquiry = (data) => {
+    setPopupOpen(true);
+    setInquirydata(data);
+  };
+
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
   const currentData = InquiryData.slice(startIndex, endIndex);
@@ -67,7 +80,7 @@ const Inquiry = () => {
                   <Td textAlign={"center"}>State</Td>
                 </Tr>
                 {currentData.map((data) => (
-                  <Tr>
+                  <Tr onClick={() => handleOpeninquiry(data)}>
                     <Td textAlign={"center"}>{`${data.no}.`}</Td>
                     <Td textAlign={"center"}>{data.tag}</Td>
                     <Td textAlign={"center"}>{data.title}</Td>
@@ -89,6 +102,11 @@ const Inquiry = () => {
               </Tbody>
             </Table>
           </TableContainer>
+          <InquiryModal
+            isOpen={popupOpen}
+            onClose={() => setPopupOpen(false)}
+            data={inquirydata}
+          />
           {/* {InquiryData.length > ITEMS_PER_PAGE && ( */}
           <Flex mt={4} justifyContent="center" alignItems="center">
             <IconButton
@@ -128,6 +146,50 @@ const Inquiry = () => {
 };
 
 export default Inquiry;
+
+const InquiryModal = (props) => {
+  const data = props.data;
+  return (
+    <Modal size={"3xl"} isOpen={props.isOpen} onClose={props.onClose}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader></ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <Stack>
+            <HStack
+              borderY={"1px solid #E1E4E4"}
+              py={4}
+              px={2}
+              justify={"space-between"}
+            >
+              <Text color={"#4E4E4E"}>Jane Deo</Text>
+              <Text color={"#4E4E4E"}>Jane_DOoee</Text>
+              <Text color={"#4E4E4E"}>21-07-2024</Text>
+              <Text color={"#4E4E4E"}>email</Text>
+            </HStack>
+            <Stack>
+              <HStack>
+                <Text>Tag</Text>
+                <Text>{data.tag}</Text>
+              </HStack>
+              <HStack>
+                <Text>Title</Text>
+                <Text>{data.title}</Text>
+              </HStack>
+            </Stack>
+            <Stack>
+              <Text>I accidentally paid for another teacher's course.</Text>
+              <Text>Please refund that portion.</Text>
+              <Text>I paid for Mr. Lee's Advanced Course.</Text>
+            </Stack>
+            <Stack p={6} borderRadius={"md"} bgColor={"#E1E4E4"}></Stack>
+          </Stack>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
+  );
+};
 
 const InquiryData = [
   {

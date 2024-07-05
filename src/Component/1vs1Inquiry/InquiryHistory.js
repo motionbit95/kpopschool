@@ -15,7 +15,7 @@ import { host_url } from "../../App";
 
 const InquiryHistory = () => {
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
-  const [inquirys, setInquiries] = useState({});
+  const [inquirys, setInquiries] = useState([]);
   const headers = ["Tag", "Title", "Date", "State"];
   const toDate = (timestamp) => {
     return new Date(timestamp._seconds * 1000);
