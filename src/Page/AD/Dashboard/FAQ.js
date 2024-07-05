@@ -8,46 +8,104 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ToastEditor from "../../../Component/ToastEditor";
 import { FiPlus } from "react-icons/fi";
+import { host_url } from "../../../App";
 
 const FAQ = () => {
-  const [sections, setSections] = useState([
-    {
-      id: 1,
-      sectionName: "Section 1",
-    },
-  ]);
+  const [formData, setFormData] = useState([]);
 
   const addSection = () => {
-    const newSectionId = sections.length + 1;
-    const newSection = {
-      id: newSectionId,
-      sectionName: `Section ${newSectionId}`,
-    };
-    setSections([...sections, newSection]);
-    setFormData([...formData, { id: newSectionId, question: "", answer: "" }]);
+    setFormData([
+      ...formData,
+      {
+        question: "",
+        answer: "",
+        index: formData.length,
+      },
+    ]);
   };
 
-  const removeSection = (id) => {
-    const updatedSections = sections.filter((section) => section.id !== id);
-    setSections(updatedSections);
-    const updatedFormData = formData.filter((data) => data.id !== id);
+  const updateSection = (idx, updatedData) => {
+    const updatedFormData = formData.map((data, i) =>
+      i === idx ? { ...data, ...updatedData } : data
+    );
     setFormData(updatedFormData);
   };
 
-  const [formData, setFormData] = useState([
-    {
-      id: 1,
-      question: "",
-      answer: "",
-    },
-  ]);
+  const removeSection = (id) => {
+    if (window.confirm("Are you sure you want to delete this section?")) {
+      fetch(`${host_url}/faq/delete`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: id }),
+      })
+        .then((res) => res.text())
+        .then((res) => {
+          console.log(res);
+          if (res === "success") {
+            window.location.reload();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   const handleSubmit = () => {
     console.log(formData);
+    // 리스트 업데이트하기
+    formData.map((data) => {
+      fetch(`${host_url}/faq/update`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.text())
+        .then((res) => {
+          console.log(res);
+          if (res === "none") {
+            // 생성
+            fetch(`${host_url}/faq/add`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            })
+              .then((res) => res.text())
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
   };
+
+  useEffect(() => {
+    // faq 리스트 받아오기
+    fetch(`${host_url}/faq/list`)
+      .then((res) => res.json())
+      .then((res) => {
+        setFormData(res);
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <Flex w={"100%"} h={"100%"}>
@@ -63,12 +121,12 @@ const FAQ = () => {
           </Box>
         </HStack>
         <Stack spacing={4}>
-          {sections.map((section) => (
+          {formData.map((section, index) => (
             <FAQForm
-              key={section.id}
-              section={section}
-              formData={formData}
-              setFormData={setFormData}
+              key={index}
+              section={index}
+              formData={section}
+              updateSection={(data) => updateSection(index, data)}
               onRemove={() => removeSection(section.id)}
             />
           ))}
@@ -85,42 +143,42 @@ const FAQ = () => {
 
 export default FAQ;
 
-const FAQForm = ({ section, onRemove, formData, setFormData }) => {
+const FAQForm = ({ section, onRemove, formData, updateSection }) => {
   const handleInputChange = (e) => {
-    const updatedFormData = formData.map((data) =>
-      data.id === section.id ? { ...data, question: e.target.value } : data
-    );
-    setFormData(updatedFormData);
+    // 질문을 업데이트 합니다.
+    updateSection({ ...formData, question: e.target.value });
   };
 
   const handleEditorChange = (html) => {
-    const updatedFormData = formData.map((data) =>
-      data.id === section.id ? { ...data, answer: html } : data
-    );
-    setFormData(updatedFormData);
+    // 응답을 업데이트 합니다.
+    updateSection({ ...formData, answer: html });
   };
-
-  const currentData = formData.find((data) => data.id === section.id);
 
   return (
     <Stack spacing={4}>
       <HStack>
-        <Text>{section.sectionName}</Text>
+        <Text>{`section ${section + 1}`}</Text>
         <Text fontWeight={"700"}>Question</Text>
       </HStack>
-      <Input
-        value={currentData?.question || ""}
-        onChange={handleInputChange}
-        placeholder={`Enter question for ${section.sectionName}`}
-      />
       <HStack>
-        <Text>{section.sectionName}</Text>
+        <Input
+          // value={formData?.question || ""}
+          defaultValue={formData?.question || ""}
+          onChange={handleInputChange}
+          placeholder={`Enter question for section ${section + 1}`}
+        />
+        <Stack align={"end"}>
+          <Button onClick={onRemove}>REMOVE</Button>
+        </Stack>
+      </HStack>
+      <HStack>
+        <Text>{`section ${section + 1}`}</Text>
         <Text fontWeight={"700"}>Answer</Text>
       </HStack>
-      <ToastEditor onChange={handleEditorChange} />
-      {/* <Stack align={"end"}>
-        <Button onClick={onRemove}>Remove</Button>
-      </Stack> */}
+      <ToastEditor
+        onChange={handleEditorChange}
+        initialValue={formData?.answer || " "}
+      />
     </Stack>
   );
 };

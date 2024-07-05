@@ -6,7 +6,7 @@ import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-sy
 import "tui-color-picker/dist/tui-color-picker.css";
 import "../Style/custom-editor-styles.css";
 
-const ToastEditor = ({ onChange }) => {
+const ToastEditor = ({ onChange, ...props }) => {
   const editorRef = useRef();
 
   const handleChange = () => {
@@ -18,14 +18,16 @@ const ToastEditor = ({ onChange }) => {
 
   return (
     <Editor
+      {...props}
       ref={editorRef}
-      initialValue=" "
       previewStyle="vertical"
       height="600px"
       initialEditType="wysiwyg"
+      initalValue={props.initialValue || " "}
       useCommandShortcut={true}
       onChange={handleChange}
       plugins={[colorSyntax]}
+      hideModeSwitch={true}
     />
   );
 };
