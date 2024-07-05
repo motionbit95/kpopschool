@@ -6,6 +6,7 @@ import {
   Image,
   Stack,
   Text,
+  Textarea,
 } from "@chakra-ui/react";
 import React from "react";
 
@@ -106,9 +107,13 @@ const TrainerDetail = (props) => {
             </HStack>
             <Stack>
               <Text>About Career</Text>
-              <Stack p={6} border={"1px solid #E1E4E4"} borderRadius={"md"}>
-                <Text>{props.data.career}</Text>
-              </Stack>
+              <Textarea
+                resize={"none"}
+                h={"200px"}
+                p={6}
+                fontSize={"lg"}
+                defaultValue={props.data.career}
+              />
             </Stack>
           </Stack>
         </Stack>
