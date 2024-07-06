@@ -133,7 +133,7 @@ const Payment = () => {
                 <Text fontSize={"lg"} fontWeight={"500"}>
                   Income by Course
                 </Text>
-                <Box w={"185px"} h={"140px"} bgColor={"gray.100"}></Box>
+                {/* <Box w={"185px"} h={"140px"} bgColor={"gray.100"}></Box> */}
               </Stack>
               <Stack
                 h={"full"}
