@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import TeacherInfo from "./Teachers/TeacherInfo";
 import { LessonItem, TeacherItem } from "../../Component/HomeDetail";
 import ImageCarousel from "../../Component/ImageCarousel";
+import { host_url } from "../../App";
 
 const Home = () => {
   const [teacher, setTeacher] = useState([]);
@@ -45,6 +46,22 @@ const Home = () => {
     };
     getTeacher();
     console.log(teacher);
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+
+    const getHomeData = async () => {
+      fetch(`${host_url}/home/list`)
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getHomeData();
   }, []);
 
   return (

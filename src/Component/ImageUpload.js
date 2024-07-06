@@ -1,10 +1,10 @@
 import { Box, Button, Center, IconButton, Image } from "@chakra-ui/react";
-import React, { useRef, useState } from "react";
-import { FiPlus } from "react-icons/fi";
+import React, { useEffect, useRef, useState } from "react";
+import { IoAddCircle } from "react-icons/io5";
 
 const ImageUpload = ({ ...props }) => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState(props.defaultValue);
   const [uploading, setUploading] = useState(false);
   const imageRef = useRef();
 
@@ -46,8 +46,16 @@ const ImageUpload = ({ ...props }) => {
     }
   };
 
+  useEffect(() => {
+    setImageUrl(props.defaultValue);
+  }, [props.defaultValue]);
+
   return (
-    <Center height={"full"}>
+    <Center
+      height={"full"}
+      alignItems={"flex-start"}
+      justifyContent={"flex-end"}
+    >
       <input
         type="file"
         onChange={handleFileChange}
@@ -55,9 +63,9 @@ const ImageUpload = ({ ...props }) => {
         style={{ display: "none" }}
       />
       {!imageUrl && (
-        <FiPlus
-          color="#8c8c8c"
-          style={{ width: "100px", height: "100px" }}
+        <IoAddCircle
+          color="#00C3BA"
+          style={{ width: "36px", height: "36px" }}
           onClick={() => imageRef.current.click()}
         />
       )}
@@ -65,7 +73,8 @@ const ImageUpload = ({ ...props }) => {
         <Image
           src={imageUrl}
           alt="Uploaded"
-          style={{ width: "100%" }}
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          borderRadius={"md"}
           onClick={() => imageRef.current.click()}
         />
       )}
