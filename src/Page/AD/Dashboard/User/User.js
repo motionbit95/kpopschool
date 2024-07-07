@@ -1,4 +1,8 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  SearchIcon,
+} from "@chakra-ui/icons";
 import {
   Button,
   ButtonGroup,
@@ -6,6 +10,8 @@ import {
   HStack,
   IconButton,
   Input,
+  InputGroup,
+  InputRightElement,
   Stack,
   Table,
   TableContainer,
@@ -15,18 +21,25 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { host_url } from "../../../../App";
 
 const User = (props) => {
   const ITEMS_PER_PAGE = 10;
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [userData] = useState(props?.userData || []);
+  const [userData, setUserData] = useState(props?.userData || []);
 
   const [currentData, setCurrentData] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
+
+  const [keyword, setKeyword] = useState("");
   const toDate = (timestamp) => {
     return new Date(timestamp._seconds * 1000);
   };
+
+  useEffect(() => {
+    setUserData(props?.userData || []);
+  }, [props?.userData]);
 
   useEffect(() => {
     setTotalPages(Math.ceil(userData.length / ITEMS_PER_PAGE));
@@ -60,6 +73,21 @@ const User = (props) => {
     });
   };
 
+  const searchData = () => {
+    if (keyword === "") {
+      setUserData(props?.userData);
+    } else {
+      // filteredData를 변경하지 않고 복사해서 사용
+      let temp = props?.userData.filter((data) => {
+        return (
+          data.name.toLowerCase().includes(keyword.toLowerCase()) ||
+          data.email.toLowerCase().includes(keyword.toLowerCase())
+        );
+      });
+      setUserData(temp);
+    }
+  };
+
   return (
     <Flex w={"100%"} h={"100%"}>
       <Stack w={"full"} justify={"space-between"} px={16} pt={16} pb={32}>
@@ -68,7 +96,23 @@ const User = (props) => {
             <Text fontSize={"20px"} fontWeight={"600"}>
               User List
             </Text>
-            <Input w={"300px"} />
+            <InputGroup maxW={"300px"}>
+              <Input
+                placeholder="Search"
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+              />
+              <InputRightElement>
+                <IconButton
+                  aria-label="search"
+                  size={"sm"}
+                  icon={<SearchIcon />}
+                  onClick={() => {
+                    searchData();
+                  }}
+                />
+              </InputRightElement>
+            </InputGroup>
           </HStack>
 
           <TableContainer>

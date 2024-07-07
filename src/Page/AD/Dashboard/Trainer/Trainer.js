@@ -1,4 +1,8 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  SearchIcon,
+} from "@chakra-ui/icons";
 import {
   Button,
   ButtonGroup,
@@ -8,6 +12,8 @@ import {
   IconButton,
   Image,
   Input,
+  InputGroup,
+  InputRightElement,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -36,18 +42,22 @@ const Trainer = (props) => {
   const [popupOpen, setPopupOpen] = useState(false);
 
   const filteredData = useMemo(
-    () => userData.filter((data) => data.isTeacher),
-    [userData]
+    () => props.userData.filter((data) => data.isTeacher),
+    [props.userData]
   );
+
+  const [exceptData, setExceptData] = useState([]);
 
   const [teachers, setTeachers] = useState([]);
 
   useEffect(() => {
     setUserData(props.userData);
+    setExceptData(props.userData.filter((data) => !data.isTeacher));
   }, [props.userData]);
 
   useEffect(() => {
-    console.log(filteredData);
+    // console.log(filteredData);
+    // console.log("exceptData", exceptData);
     let teachers = [];
     filteredData.forEach((data) => {
       console.log(data.id);
@@ -101,6 +111,23 @@ const Trainer = (props) => {
   const endIndex = startIndex + ITEMS_PER_PAGE;
   const currentData = filteredData.slice(startIndex, endIndex);
 
+  const [keyword, setKeyword] = useState("");
+
+  const searchData = () => {
+    if (keyword === "") {
+      setUserData(filteredData);
+    } else {
+      // filteredData를 변경하지 않고 복사해서 사용
+      let temp = filteredData.filter((data) => {
+        return (
+          data.name.toLowerCase().includes(keyword.toLowerCase()) ||
+          data.email.toLowerCase().includes(keyword.toLowerCase())
+        );
+      });
+      setTeachers(temp);
+    }
+  };
+
   return (
     <Flex w={"100%"} h={"100%"}>
       <Stack w={"full"} px={16} pt={16} pb={32}>
@@ -109,7 +136,23 @@ const Trainer = (props) => {
             <Text fontSize={"20px"} fontWeight={"600"}>
               Trainer List
             </Text>
-            <Input w={"300px"} />
+            <InputGroup maxW={"300px"}>
+              <Input
+                placeholder="Search"
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+              />
+              <InputRightElement>
+                <IconButton
+                  aria-label="search"
+                  size={"sm"}
+                  icon={<SearchIcon />}
+                  onClick={() => {
+                    searchData();
+                  }}
+                />
+              </InputRightElement>
+            </InputGroup>
           </HStack>
           <TableContainer>
             <Table>
@@ -216,7 +259,7 @@ const Trainer = (props) => {
       <AddTrainerModal
         isOpen={popupOpen}
         onClose={() => setPopupOpen(false)}
-        userData={props.userData}
+        userData={exceptData}
       />
     </Flex>
   );
@@ -229,6 +272,15 @@ const AddTrainerModal = (props) => {
   const ITEMS_PER_PAGE = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(userData.length / ITEMS_PER_PAGE);
+  const [selectedItem, setSelectedItem] = useState([]);
+
+  useEffect(() => {
+    console.log(selectedItem);
+  }, [selectedItem]);
+
+  useEffect(() => {
+    setUserData(props.userData);
+  }, [props.userData]);
 
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -254,6 +306,51 @@ const AddTrainerModal = (props) => {
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
+
+  const addTeacher = () => {
+    selectedItem.forEach((id) => {
+      fetch(`${host_url}/users/update`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          isTeacher: true,
+          id: id,
+        }),
+      })
+        .then((res) => res.text())
+        .then((res) => {
+          console.log(res);
+          props.onClose();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      fetch(`${host_url}/teachers/add`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: id,
+          name: userData.find((user) => user.id === id).name,
+          category: "",
+          career: "",
+          review: 0,
+        }),
+      })
+        .then((res) => res.text())
+        .then((res) => {
+          console.log(res);
+          props.onClose();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  };
   // 이거 맞나?
   // useEffect(() => {
   //   const AddUser = async () => {
@@ -294,7 +391,16 @@ const AddTrainerModal = (props) => {
                     <Tr fontWeight={"500"} color={"#00C3BA"}>
                       <Td textAlign={"center"}>No.</Td>
                       <Td align="center">
-                        <Checkbox />
+                        <Checkbox
+                          colorScheme="teal"
+                          onChange={() => {
+                            if (selectedItem.length === userData.length) {
+                              setSelectedItem([]);
+                            } else {
+                              setSelectedItem(userData.map((data) => data.id));
+                            }
+                          }}
+                        />
                       </Td>
                       <Td textAlign={"center"}>Name</Td>
                       {/* <Td textAlign={"center"}>ID</Td> */}
@@ -308,7 +414,19 @@ const AddTrainerModal = (props) => {
                         <Tr cursor={"pointer"}>
                           <Td textAlign={"center"}>{itemNumber}</Td>
                           <Td align="center">
-                            <Checkbox />
+                            <Checkbox
+                              isChecked={selectedItem.includes(data.id)}
+                              colorScheme="teal"
+                              onChange={() => {
+                                if (selectedItem.includes(data.id)) {
+                                  setSelectedItem(
+                                    selectedItem.filter((id) => id !== data.id)
+                                  );
+                                } else {
+                                  setSelectedItem([...selectedItem, data.id]);
+                                }
+                              }}
+                            />
                           </Td>
                           <Td textAlign={"center"}>{data.name}</Td>
                           {/* <Td textAlign={"center"}>{data.snsId}</Td> */}
@@ -359,7 +477,7 @@ const AddTrainerModal = (props) => {
                 />
               </Flex>
               <Stack align={"center"} mt={4}>
-                <Button>ADD</Button>
+                <Button onClick={() => addTeacher()}>ADD</Button>
               </Stack>
             </Stack>
           </ModalBody>

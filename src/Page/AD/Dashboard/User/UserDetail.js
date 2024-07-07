@@ -129,12 +129,12 @@ const UserDetail = (props) => {
                     {`${props.data.name} ${props.data.firstName}`}
                   </Text>
                   <Stack>
-                    <HStack>
+                    {/* <HStack>
                       <Text w={"70px"} color={"#4E4E4E"}>
                         ID
                       </Text>
                       <Text></Text>
-                    </HStack>
+                    </HStack> */}
                     <HStack>
                       <Text w={"70px"} color={"#4E4E4E"}>
                         Email

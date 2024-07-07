@@ -8,11 +8,34 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
+import { host_url } from "../../../../App";
+import ImageUpload from "../../../../Component/ImageUpload";
 
 const TrainerDetail = (props) => {
+  const [career, setCareer] = useState("");
   const toDate = (timestamp) => {
     return new Date(timestamp._seconds * 1000);
+  };
+
+  const updateTeacher = (id) => {
+    fetch(`${host_url}/teachers/update`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: id,
+        career: career,
+      }),
+    })
+      .then((res) => res.text())
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <Flex w={"100%"} h={"100%"}>
@@ -38,7 +61,11 @@ const TrainerDetail = (props) => {
               >
                 Back to List
               </Button>
-              <Button color={"white"} bgColor={"#00C3BA"}>
+              <Button
+                color={"white"}
+                bgColor={"#00C3BA"}
+                onClick={() => updateTeacher(props.data.id)}
+              >
                 SAVE
               </Button>
             </HStack>
@@ -49,20 +76,29 @@ const TrainerDetail = (props) => {
               <Text>{props.itemNumber}</Text>
             </HStack>
             <HStack spacing={4} w={"40%"}>
-              <Box boxSize={"160px"} borderRadius={"md"} bgColor={"gray.200"}>
-                <Image src={props.data.profile} />
+              <Box
+                height={"100%"}
+                aspectRatio={"1"}
+                borderRadius={"md"}
+                bgColor={"gray.200"}
+              >
+                {/* <Image src={props.data.profile} /> */}
+                <ImageUpload
+                  defaultValue={props.data.profile}
+                  setImageUrl={(e) => console.log(e)}
+                />
               </Box>
               <Stack spacing={4}>
                 <Text fontSize={"lg"} fontWeight={"500"}>
                   {`${props.data.name} ${props.data.firstName}`}
                 </Text>
                 <Stack>
-                  <HStack>
+                  {/* <HStack>
                     <Text w={"70px"} color={"#4E4E4E"}>
                       ID
                     </Text>
                     <Text></Text>
-                  </HStack>
+                  </HStack> */}
                   <HStack>
                     <Text w={"70px"} color={"#4E4E4E"}>
                       Email
@@ -113,6 +149,7 @@ const TrainerDetail = (props) => {
                 p={6}
                 fontSize={"lg"}
                 defaultValue={props.data.career}
+                onChange={(e) => setCareer(e.target.value)}
               />
             </Stack>
           </Stack>
