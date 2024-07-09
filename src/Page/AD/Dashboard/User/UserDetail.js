@@ -24,12 +24,15 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { host_url } from "../../../../App";
+import ConfirmBox from "../../../../Component/ConfirmBox";
+import MessageBox from "../../../../Component/MessageBox";
 
 const UserDetail = (props) => {
   const ITEMS_PER_PAGE = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const [inquirys, setInquiries] = useState([]);
   const [reviewList, setReviewList] = useState([]);
+  const [userDeleteStep, setUserDeleteStep] = useState(0);
   useEffect(() => {
     const getInquiry = async () => {
       fetch(`${host_url}/inquiry/search`, {
@@ -127,6 +130,36 @@ const UserDetail = (props) => {
 
   return (
     <Flex w={"100%"} h={"100%"}>
+      <ConfirmBox
+        isOpen={userDeleteStep === 1}
+        onClose={() => {}}
+        onConfirm={() => {
+          console.log("삭제되었습니다.");
+          setUserDeleteStep(2);
+          // 유저 삭제
+          fetch(`${host_url}/users/deleteAuth/${props.data.id}`)
+            .then((res) => res.json())
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }}
+      >
+        <Text>Do you really want to </Text>
+        <Text color={"#FF3CA2"}>delete information?</Text>
+      </ConfirmBox>
+      <MessageBox
+        isOpen={userDeleteStep === 2}
+        onClose={() => {
+          setUserDeleteStep(0);
+          window.location.reload();
+        }}
+      >
+        <Text>Member information has been</Text>
+        <Text color={"#FF3CA2"}>deleted</Text>
+      </MessageBox>
       <Stack
         px={16}
         pt={16}
@@ -470,10 +503,9 @@ const UserDetail = (props) => {
           </HStack>
           <Box display={"flex"} justifyContent={"end"}>
             <Button
-              borderRadius={"xl"}
               color={"white"}
               bgColor={"#FF3CA2"}
-              onClick={() => alert("Delete User Button")}
+              onClick={() => setUserDeleteStep(1)}
             >
               Delete Member
             </Button>
