@@ -4,6 +4,8 @@ import {
   Button,
   ButtonGroup,
   Flex,
+  Grid,
+  GridItem,
   HStack,
   IconButton,
   Image,
@@ -11,6 +13,7 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   ModalOverlay,
   Stack,
@@ -117,12 +120,16 @@ const UserDetail = (props) => {
   const totalPages = Math.ceil(PaymentData.length / ITEMS_PER_PAGE);
 
   const [openPayment, setOpenPayment] = useState(false);
-  const [openinquiry, setOpeninquiry] = useState(false);
+  const [openInquiry, setOpenInquiry] = useState(false);
+  const [openReview, setOpenReview] = useState(false);
   const handleOpenPayment = () => {
     setOpenPayment(!openPayment);
   };
-  const handleOpeninquiry = () => {
-    setOpeninquiry(!openinquiry);
+  const handleOpenInquiry = () => {
+    setOpenInquiry(!openInquiry);
+  };
+  const handleOpenReview = () => {
+    setOpenReview(!openReview);
   };
 
   return (
@@ -323,7 +330,7 @@ const UserDetail = (props) => {
                         <Td textAlign={"center"}>State</Td>
                       </Tr>
                       {inquirys.map((data) => (
-                        <Tr cursor={"pointer"} onClick={handleOpeninquiry}>
+                        <Tr cursor={"pointer"} onClick={handleOpenInquiry}>
                           <Td textAlign={"center"}>{data.tag}</Td>
                           <Td textAlign={"center"}>{data.title}</Td>
                           <Td textAlign={"center"}>
@@ -341,6 +348,13 @@ const UserDetail = (props) => {
                     </Tbody>
                   </Table>
                 </TableContainer>
+                {openInquiry && (
+                  <InquiryModal
+                    isOpen={handleOpenInquiry}
+                    onClose={handleOpenInquiry}
+                    // inquiryData={inquiryData}
+                  />
+                )}
               </Stack>
               <Flex mt={4} justifyContent="center" alignItems="center">
                 <IconButton
@@ -390,7 +404,7 @@ const UserDetail = (props) => {
                         <Td textAlign={"center"}>Rating</Td>
                       </Tr>
                       {reviewList.map((data) => (
-                        <Tr>
+                        <Tr cursor={"pointer"} onClick={handleOpenReview}>
                           <Td textAlign={"center"}>{data.division}</Td>
                           <Td
                             textAlign={"center"}
@@ -435,6 +449,13 @@ const UserDetail = (props) => {
                     </Tbody>
                   </Table>
                 </TableContainer>
+                {openReview && (
+                  <ReviewModal
+                    isOpen={handleOpenReview}
+                    onClose={handleOpenReview}
+                    // ReviewUserData
+                  />
+                )}
               </Stack>
               <Flex mt={4} justifyContent="center" alignItems="center">
                 <IconButton
@@ -553,7 +574,28 @@ const PaymentModal = (props) => {
   );
 };
 
-const inquiryModal = (props) => {
+const InquiryModal = (props) => {
+  return (
+    <>
+      <Modal size={"3xl"} isOpen={props.isOpen} onClose={props.onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalHeader></ModalHeader>
+          <ModalBody p={0}>
+            <Text>Inquiry 상세</Text>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
+
+const ReviewModal = (props) => {
+  const userData = props.userData;
+  const toDate = (timestamp) => {
+    return new Date(timestamp._seconds * 1000);
+  };
   return (
     <>
       <Modal size={"3xl"} isOpen={props.isOpen} onClose={props.onClose}>
@@ -563,32 +605,61 @@ const inquiryModal = (props) => {
           <ModalHeader></ModalHeader>
           <ModalBody p={0}>
             <Stack>
-              <Stack py={4} px={8}>
-                {PaymentData.map((data) => (
-                  <HStack
-                    borderY={"1px solid #E1E4E4"}
-                    py={4}
-                    px={2}
-                    justify={"space-between"}
-                  >
-                    <Text color={"#4E4E4E"}>{`${data.course} course`}</Text>
-                    <Text color={"#4E4E4E"}>{data.devision}</Text>
-                    <Text color={"#4E4E4E"}>{data.trainer}</Text>
-                    <Text color={"#4E4E4E"}>{`${data.month} month`}</Text>
-                    <Text color={"#FF3CA2"}>{`$${data.price}`}</Text>
-                  </HStack>
-                ))}
-                <HStack>
-                  <Text color={"#4E4E4E"}>Order state</Text>
-                  <Text>Order completed</Text>
-                </HStack>
-                <HStack>
-                  <Text color={"#4E4E4E"}>Quantity</Text>
-                  <Text>1 class</Text>
-                </HStack>
+              <HStack
+                p={4}
+                borderY={"1px solid #E1E4E4"}
+                justify={"space-between"}
+                fontSize={"15px"}
+              >
+                <Text fontWeight={"500"}>{userData.name}</Text>
+                <Text>{userData.snsId}</Text>
+                <Text>
+                  {toDate(userData.createdAt)
+                    .toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                    })
+                    .replace(/(\d+)\/(\d+)\/(\d+)/, "$1-$2-$3")}
+                </Text>
+                <Text>{userData.email}</Text>
+              </HStack>
+              <Stack p={4} spacing={4}>
+                <Grid templateColumns="repeat(2, 1fr)">
+                  <GridItem>Division</GridItem>
+                  <GridItem>Trainer</GridItem>
+                  <GridItem>Rating</GridItem>
+                  <GridItem>
+                    <Flex gap={1} align={"center"} justify={"center"}>
+                      {Array.from({ length: 5 }, (_, i) => (
+                        <Image
+                          key={i}
+                          src={
+                            i < 5
+                              ? require("../../../../Asset/Icon/starFill.png")
+                              : require("../../../../Asset/Icon/starDefault.png")
+                          }
+                          alt="star"
+                          boxSize="18px" // 적절한 크기로 설정
+                        />
+                      ))}
+                    </Flex>
+                  </GridItem>
+                </Grid>
+                <Text>
+                  I can feel that trainer is working very hard to prepare for
+                  class. After taking the prepared course step by step, you can
+                  see that your skills have improved. I highly recommend
+                  downloading the videos that are uploaded after class!
+                </Text>
               </Stack>
             </Stack>
           </ModalBody>
+          <ModalFooter>
+            <Button color={"white"} bg={"#FF3CA2"}>
+              Delete
+            </Button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </>
