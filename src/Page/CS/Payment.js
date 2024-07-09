@@ -13,8 +13,11 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { auth } from "../../Firebase/Config";
+import { getCheckoutUrl } from "../../Firebase/StripePayment";
 
 const Payment = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const { state } = location;
   const { item, teacher } = state;
@@ -25,25 +28,17 @@ const Payment = () => {
   useEffect(() => {
     console.log(item, teacher);
   }, [item, teacher]);
-  // const Nav = useNavigate();
 
-  // const [isLogin, setIsLogin] = useState(false);
-  {
-    /*useEffect(() => {
-    window.scrollTo(0, 0);
+  const [isLogin, setIsLogin] = useState(false);
 
+  useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         setIsLogin(true);
       }
     });
-  }, [location]); */
-  }
-
-  /************** 하단 부분을 결제창으로 이동시키기 **************/
-  {
-    /*
-    const handleTest = async () => {
+  }, []);
+  const handleTest = async () => {
     if (isLogin) {
       // const user = auth.currentUser;
       // 테스트 product ID : price_1PV3ZUGcRvPNh5Hm56ZrKdfe
@@ -51,29 +46,11 @@ const Payment = () => {
       let checkoutUrl = await getCheckoutUrl(productId);
       console.log(checkoutUrl);
       window.location.href = checkoutUrl;
+    } else {
+      navigate("/signin");
     }
   };
-  
-  useEffect(() => {
-    // 결제 성공 여부 확인
-    const getIsPaied = async () => {
-      let isPaied = false;
-      // 테스트 product ID : price_1PV3ZUGcRvPNh5Hm56ZrKdfe
-      isPaied = await getIsPayment("");
-      console.log(isPaied);
-      if (isPaied) {
-        Nav("/payment/result");
-      }
 
-      return;
-    };
-    if (isLogin) {
-      getIsPaied();
-    }
-  }, [isLogin]);
-  */
-  }
-  /*******************************************************/
   return (
     <Flex flex={1} direction={"column"} color={"#4E4E4E"}>
       <Container minW={"container.xl"}>
@@ -92,7 +69,7 @@ const Payment = () => {
               <Text fontSize={"3xl"} fontWeight={"600"}>
                 Order details
               </Text>
-              <HStack>
+              <HStack spacing={4}>
                 <Box
                   w={"259px"}
                   h={"176px"}
@@ -119,10 +96,10 @@ const Payment = () => {
                     <Text w={"60px"}>Divison</Text>
                     <Text>{item.category}</Text>
                   </HStack>
-                  <HStack>
+                  {/* <HStack>
                     <Text w={"60px"}>GMT</Text>
                     <Text></Text>
-                  </HStack>
+                  </HStack> */}
                 </Stack>
               </HStack>
               <Text
@@ -162,14 +139,10 @@ const Payment = () => {
                     onClick={() => setOpenCoupon(!openCoupon)}
                   />
                 </HStack>
-                {openCoupon && (
-                  <Stack>
-                    <Text>쿠폰 리스트</Text>
-                  </Stack>
-                )}
+                {openCoupon && <Stack>{/* <Text>쿠폰 리스트</Text> */}</Stack>}
               </Stack>
               <HStack justify={"end"}>
-                <Radio />
+                <Radio colorScheme="teal" />
                 <Text>Always apply the maximum discount</Text>
               </HStack>
             </Stack>
@@ -189,18 +162,14 @@ const Payment = () => {
                 borderRadius={"xl"}
               >
                 <HStack justify={"space-between"}>
-                  <Text>VISA</Text>
+                  <Text>Stripe</Text>
                   <ChevronRightIcon
                     color={"#00C3BA"}
                     boxSize={"20px"}
                     onClick={() => setOpenPayment(!openPayment)}
                   />
                 </HStack>
-                {openPayment && (
-                  <Stack>
-                    <Text>카드 리스트</Text>
-                  </Stack>
-                )}
+                {openPayment && <Stack>{/* <Text>카드 리스트</Text> */}</Stack>}
               </Stack>
               <Stack borderTop={"1px solid #E1E4E4"} py={4}>
                 <HStack justify={"space-between"} align={"start"}>
@@ -267,12 +236,24 @@ const Payment = () => {
             </HStack>
             <hr />
             <HStack justify={"space-between"}>
-              <Text>Total</Text>
-              <Text>{`$${item.price}`}</Text>
+              <Text fontSize={"2xl"} fontWeight={"700"} color={"#FF3CA2"}>
+                Total
+              </Text>
+              <Text
+                fontSize={"2xl"}
+                fontWeight={"700"}
+                color={"#FF3CA2"}
+              >{`$${item.price}`}</Text>
             </HStack>
             <Stack p={4} alignContent={"center"} justifyContent={"center"}>
-              <Button>PLACE ORDER</Button>
-              {/* <Button onClick={handleTest}>Test</Button> */}
+              <Button
+                size={"lg"}
+                color={"white"}
+                bgColor={"#FFCC00"}
+                onClick={handleTest}
+              >
+                PLACE ORDER
+              </Button>
             </Stack>
           </Stack>
         </HStack>

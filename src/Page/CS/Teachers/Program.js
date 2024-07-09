@@ -10,6 +10,9 @@ import {
   HStack,
   IconButton,
   Image,
+  Input,
+  InputGroup,
+  InputRightElement,
   Stack,
   Tab,
   TabList,
@@ -22,7 +25,8 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { host_url } from "../../../App";
 
 const Program = () => {
   const location = useLocation();
@@ -31,6 +35,81 @@ const Program = () => {
   const toast = useToast();
   const [isFavorite, setIsFavorite] = useState(false);
   const navigate = useNavigate();
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    const tempList = [];
+    console.log(item);
+    fetch(`${host_url}/review/search`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        conditions: [{ field: "lessonId", operator: "==", value: item.id }],
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        // setReviews(res);
+        res.forEach((r) => {
+          let reviewData = {
+            id: r.id,
+            createdAt: r.createdAt,
+            rating: r.rating,
+            comment: r.comment,
+          };
+
+          fetch(`${host_url}/users/get`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: r.userId,
+            }),
+          })
+            .then((res) => res.json())
+            .then((res) => {
+              // 유저 정보
+              // console.log("user", res);
+              reviewData.userName = res.name;
+              reviewData.userProfile = res.profile;
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+
+          fetch(`${host_url}/curriculums/get`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: r.lessonId,
+            }),
+          })
+            .then((res) => res.json())
+            .then((res) => {
+              // 강의 정보
+              // console.log("lesson", res);
+              reviewData.difficulty = res.difficulty;
+              reviewData.category = res.category.toUpperCase();
+
+              tempList.push(reviewData);
+              setReviews(tempList);
+
+              // console.log("total", reviewData);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [item]);
 
   const handleClickFavorite = () => {
     console.log("handleClickFavorite");
@@ -93,9 +172,12 @@ const Program = () => {
                 bgSize={"cover"}
                 bgPosition={"center"}
               />
-              <HStack>
-                <Avatar />
-                <Stack>
+              <HStack spacing={4}>
+                <Avatar
+                  size={"lg"}
+                  src={teacher.profile ? teacher.profile : null}
+                />
+                <Stack spacing={0}>
                   <Text>Trainer</Text>
                   <Text>{teacher.name}</Text>
                   <Flex gap={1}>
@@ -224,10 +306,10 @@ const Program = () => {
                     <Text>Price</Text>
                     <Text>{`$${item.price} per session`}</Text>
                   </Stack>
-                  <Stack>
+                  {/* <Stack>
                     <Text>GMT</Text>
                     <Text></Text>
-                  </Stack>
+                  </Stack> */}
                 </HStack>
                 <Button
                   onClick={() =>
@@ -267,9 +349,89 @@ const Program = () => {
           </Tab>
         </TabList>
         <TabPanels>
-          <TabPanel></TabPanel>
           <TabPanel>
-            <Container minW={"container.xl"} py={8}></Container>
+            <Stack>
+              {item.classes.map((value, index) => (
+                <HStack border={"1px solid #E1E4E4"} borderRadius={"md"} p={4}>
+                  {value.file.length > 0 && (
+                    <Image
+                      src={require("../../../Asset/Image/video.png")}
+                      alt={value.title}
+                    />
+                  )}
+                  <Stack>
+                    <Text fontSize={"22px"} fontWeight={"600"}>
+                      {index + 1}. {value.title}
+                    </Text>
+                    <Text fontSize={"15px"} color="#8c8c8c">
+                      {value.details}
+                    </Text>
+                    {value.link.length > 0 && (
+                      <Link
+                        style={{ color: "#8c8c8c", fontSize: "12px" }}
+                        onClick={() => window.open(value.link)}
+                      >
+                        🔗 {value.link}
+                      </Link>
+                    )}
+                  </Stack>
+                </HStack>
+              ))}
+            </Stack>
+          </TabPanel>
+          <TabPanel>
+            <Container minW={"container.xl"} py={8}>
+              <InputGroup h={"60px"} alignItems={"center"}>
+                <Input
+                  h={"full"}
+                  fontSize={"lg"}
+                  placeholder="You can use it after logging in. Please leave a review after taking the course"
+                />
+                <InputRightElement h={"full"} mr={8}>
+                  <Button
+                    px={8}
+                    size={"sm"}
+                    color={"white"}
+                    bgColor={"#00C3BA"}
+                  >
+                    GO
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+              {reviews.map((review) => (
+                <HStack py={12} gap={4} align={"start"}>
+                  <Avatar size={"lg"} src={review.userProfile} />
+                  <Stack w={"full"} spacing={3}>
+                    <HStack justifyContent={"space-between"} align={"start"}>
+                      <Stack spacing={0} color={"#4E4E4E"}>
+                        <Text fontSize={"lg"}>{review.userName}</Text>
+                        <Text fontSize={"sm"}>
+                          {review.difficulty} course|{review.category}
+                        </Text>
+                      </Stack>
+
+                      <Flex gap={1}>
+                        {Array.from({ length: 5 }, (_, i) => (
+                          <Image
+                            key={i}
+                            src={
+                              i < review.rating // 데이터 가져와야함
+                                ? require("../../../Asset/Icon/starFill.png")
+                                : require("../../../Asset/Icon/starDefault.png")
+                            }
+                            alt="star"
+                            boxSize="20px" // 적절한 크기로 설정
+                          />
+                        ))}
+                      </Flex>
+                    </HStack>
+                    <Text fontSize={"lg"} color={"#4E4E4E"}>
+                      {review.comment}
+                    </Text>
+                  </Stack>
+                </HStack>
+              ))}
+            </Container>
           </TabPanel>
         </TabPanels>
       </Tabs>

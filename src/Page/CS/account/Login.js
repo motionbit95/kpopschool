@@ -27,6 +27,7 @@ const Login = () => {
   });
 
   const signInUser = async (data) => {
+    console.log(data);
     let response = { code: "error", message: "error" };
     await signInWithEmailAndPassword(auth, data.email, data.password)
       .then(async (userCredential) => {
