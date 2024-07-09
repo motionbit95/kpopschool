@@ -26,6 +26,7 @@ import React, { useEffect, useState } from "react";
 import { FiMinus } from "react-icons/fi";
 import { host_url } from "../../../App";
 import ImageUpload from "../../../Component/ImageUpload";
+import MessageBox from "../../../Component/MessageBox";
 
 const Home = () => {
   const [main, setMain] = useState({});
@@ -35,6 +36,10 @@ const Home = () => {
   const [lessonType, setLessonType] = useState({});
   const [vocal_course, setVocal_course] = useState(null);
   const [dance_course, setDance_course] = useState(null);
+
+  const [openModal, setOpenModal] = useState({
+    save: false,
+  });
   useEffect(() => {
     const getHomeData = async () => {
       fetch(`${host_url}/home/get/main`)
@@ -105,137 +110,144 @@ const Home = () => {
   }, []);
 
   const handleSubmit = async () => {
-    if (window.confirm("Are you sure?")) {
-      await fetch(`${host_url}/home/update`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: "main",
-          ...main,
-        }),
+    await fetch(`${host_url}/home/update`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: "main",
+        ...main,
+      }),
+    })
+      .then((res) => res.text())
+      .then((res) => {
+        console.log(res);
       })
-        .then((res) => res.text())
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      .catch((err) => {
+        console.log(err);
+      });
 
-      await fetch(`${host_url}/home/update`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: "matching",
-          ...matching,
-        }),
+    await fetch(`${host_url}/home/update`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: "matching",
+        ...matching,
+      }),
+    })
+      .then((res) => res.text())
+      .then((res) => {
+        console.log(res);
       })
-        .then((res) => res.text())
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      .catch((err) => {
+        console.log(err);
+      });
 
-      await fetch(`${host_url}/home/update`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: "lessons",
-          ...lessons,
-        }),
+    await fetch(`${host_url}/home/update`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: "lessons",
+        ...lessons,
+      }),
+    })
+      .then((res) => res.text())
+      .then((res) => {
+        console.log(res);
       })
-        .then((res) => res.text())
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      .catch((err) => {
+        console.log(err);
+      });
 
-      await fetch(`${host_url}/home/update`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: "course",
-          ...course,
-        }),
+    await fetch(`${host_url}/home/update`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: "course",
+        ...course,
+      }),
+    })
+      .then((res) => res.text())
+      .then((res) => {
+        console.log(res);
       })
-        .then((res) => res.text())
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      .catch((err) => {
+        console.log(err);
+      });
 
-      await fetch(`${host_url}/home/update`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: "lessonType",
-          ...lessonType,
-        }),
+    await fetch(`${host_url}/home/update`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: "lessonType",
+        ...lessonType,
+      }),
+    })
+      .then((res) => res.text())
+      .then((res) => {
+        console.log(res);
       })
-        .then((res) => res.text())
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      .catch((err) => {
+        console.log(err);
+      });
 
-      await fetch(`${host_url}/home/update`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: "vocal_course",
-          ...vocal_course,
-        }),
+    await fetch(`${host_url}/home/update`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: "vocal_course",
+        ...vocal_course,
+      }),
+    })
+      .then((res) => res.text())
+      .then((res) => {
+        console.log(res);
       })
-        .then((res) => res.text())
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      .catch((err) => {
+        console.log(err);
+      });
 
-      await fetch(`${host_url}/home/update`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: "dance_course",
-          ...dance_course,
-        }),
+    await fetch(`${host_url}/home/update`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: "dance_course",
+        ...dance_course,
+      }),
+    })
+      .then((res) => res.text())
+      .then((res) => {
+        console.log(res);
       })
-        .then((res) => res.text())
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+      .catch((err) => {
+        console.log(err);
+      });
+
+    setOpenModal({ save: true });
   };
 
   return (
     <Flex w={"100%"} h={"100%"}>
+      <MessageBox
+        isOpen={openModal.save}
+        onClose={() => setOpenModal({ save: false })}
+      >
+        <Text>Your information</Text>
+        <Text color={"#00C3BA"}>has been saved</Text>
+      </MessageBox>
       <Stack
         w={"full"}
         pb={16}

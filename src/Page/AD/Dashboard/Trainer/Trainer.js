@@ -336,6 +336,7 @@ const AddTrainerModal = (props) => {
         },
         body: JSON.stringify({
           id: id,
+          profile: userData.find((user) => user.id === id).profile,
           name: userData.find((user) => user.id === id).name,
           category: "",
           career: "",

@@ -39,7 +39,7 @@ const MyPage = () => {
   const location = useLocation();
   const [myPageIndex, setMyPageIndex] = useState(0);
   const [openNotification, setOpenNotification] = useState(false);
-  const [userType, setUserType] = useState(1);
+  const [userType, setUserType] = useState(0);
   useEffect(() => {
     if (location.state && location.state.myPageIndex !== undefined) {
       setMyPageIndex(location.state.myPageIndex);
