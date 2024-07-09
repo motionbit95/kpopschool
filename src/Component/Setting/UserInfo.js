@@ -15,7 +15,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 const UserInfo = (props) => {
   const { userInfo, onChange, onSave } = props;
@@ -23,10 +23,6 @@ const UserInfo = (props) => {
   const [imageUrl, setImageUrl] = useState(props.userInfo.profile);
   const [uploading, setUploading] = useState(false);
   const imageRef = useRef();
-
-  useEffect(() => {
-    setImageUrl(userInfo.profile);
-  }, [userInfo.profile]);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];

@@ -29,6 +29,7 @@ const UserDetail = (props) => {
   const ITEMS_PER_PAGE = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const [inquirys, setInquiries] = useState([]);
+  const [reviewList, setReviewList] = useState([]);
   useEffect(() => {
     const getInquiry = async () => {
       fetch(`${host_url}/inquiry/search`, {
@@ -37,7 +38,13 @@ const UserDetail = (props) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          conditions: [],
+          conditions: [
+            {
+              field: "uid",
+              operator: "==",
+              value: props.data.id,
+            },
+          ],
         }),
       })
         .then((res) => res.json())
@@ -52,6 +59,36 @@ const UserDetail = (props) => {
 
     getInquiry();
     console.log(inquirys);
+  }, []);
+
+  useEffect(() => {
+    const getReview = async () => {
+      fetch(`${host_url}/review/search`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          conditions: [
+            {
+              field: "userId",
+              operator: "==",
+              value: props.data.id,
+            },
+          ],
+        }),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log("review", res);
+          setReviewList(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    getReview();
   }, []);
 
   const toDate = (timestamp) => {
@@ -117,7 +154,7 @@ const UserDetail = (props) => {
           <Stack>
             <HStack>
               <Text>User code No.</Text>
-              <Text>{props.itemNumber}</Text>
+              <Text>{props.data.id}</Text>
             </HStack>
             <HStack justify={"space-between"} spacing={8}>
               <HStack spacing={4} w={"40%"}>
@@ -171,21 +208,18 @@ const UserDetail = (props) => {
                 borderRadius={"md"}
               >
                 <HStack gap={4}>
-                  <Text color={"#4E4E4E"}>Birthday</Text>
-                  {/* <Text>DD/MM/YY</Text> */}
+                  <Text color={"gray.500"}>Birthday</Text>
+                  <Text>{props.data.birthday}</Text>
                 </HStack>
                 <HStack gap={4}>
-                  <Text color={"#4E4E4E"}>Other class experience</Text>
-                  {/* <Text>At all</Text> */}
+                  <Text color={"gray.500"}>Other class experience</Text>
+                  <Text>{props.data.experience}</Text>
                 </HStack>
                 <Stack>
-                  <Text color={"#4E4E4E"}>
+                  <Text color={"gray.500"}>
                     K-pop genre or artist you are interested in
                   </Text>
-                  {/* <Text>
-                    i love electronic dance genre like shinee, BTS, Seventeen.
-                    also Black Pink’s chocela stages are so amazing to aprove me
-                  </Text> */}
+                  <Text>{props.data.interest}</Text>
                 </Stack>
               </Stack>
             </HStack>
@@ -270,7 +304,7 @@ const UserDetail = (props) => {
             />
           </Flex>
         </Stack>
-        <Stack>
+        <Stack spacing={16}>
           <HStack spacing={16} justify={"space-between"} align={"start"}>
             <Stack w={"50%"}>
               <Stack>
@@ -355,11 +389,26 @@ const UserDetail = (props) => {
                         <Td textAlign={"center"}>Date</Td>
                         <Td textAlign={"center"}>Rating</Td>
                       </Tr>
-                      {ReviewData.map((data) => (
+                      {reviewList.map((data) => (
                         <Tr>
-                          <Td textAlign={"center"}>{data.devision}</Td>
-                          <Td textAlign={"center"}>{data.detail}</Td>
-                          <Td textAlign={"center"}>{data.date}</Td>
+                          <Td textAlign={"center"}>{data.division}</Td>
+                          <Td
+                            textAlign={"center"}
+                            maxW={"250px"}
+                            overflow={"hidden"}
+                            textOverflow={"ellipsis"}
+                          >
+                            {data.comment}
+                          </Td>
+                          <Td textAlign={"center"}>
+                            {toDate(data.createdAt)
+                              .toLocaleDateString("en-US", {
+                                year: "numeric",
+                                month: "2-digit",
+                                day: "2-digit",
+                              })
+                              .replace(/(\d+)\/(\d+)\/(\d+)/, "$1-$2-$3")}
+                          </Td>
                           <Td textAlign={"center"}>
                             <Flex
                               gap={1}
