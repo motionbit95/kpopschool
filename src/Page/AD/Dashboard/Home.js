@@ -33,6 +33,8 @@ const Home = () => {
   const [lessons, setLessons] = useState({});
   const [course, setCourse] = useState({});
   const [lessonType, setLessonType] = useState({});
+  const [vocal_course, setVocal_course] = useState(null);
+  const [dance_course, setDance_course] = useState(null);
   useEffect(() => {
     const getHomeData = async () => {
       fetch(`${host_url}/home/get/main`)
@@ -75,6 +77,24 @@ const Home = () => {
         .then((res) => res.json())
         .then((res) => {
           setLessonType(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      fetch(`${host_url}/home/get/vocal_course`)
+        .then((res) => res.json())
+        .then((res) => {
+          setVocal_course(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      fetch(`${host_url}/home/get/dance_course`)
+        .then((res) => res.json())
+        .then((res) => {
+          setDance_course(res);
         })
         .catch((err) => {
           console.log(err);
@@ -166,6 +186,42 @@ const Home = () => {
         body: JSON.stringify({
           id: "lessonType",
           ...lessonType,
+        }),
+      })
+        .then((res) => res.text())
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      await fetch(`${host_url}/home/update`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: "vocal_course",
+          ...vocal_course,
+        }),
+      })
+        .then((res) => res.text())
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      await fetch(`${host_url}/home/update`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: "dance_course",
+          ...dance_course,
         }),
       })
         .then((res) => res.text())
@@ -486,10 +542,10 @@ const Home = () => {
             </TabList>
             <TabPanels>
               <TabPanel px={0}>
-                <VocalTab />
+                <CourseTab course={vocal_course} onChange={setVocal_course} />
               </TabPanel>
               <TabPanel px={0}>
-                <DanceTab />
+                <CourseTab course={dance_course} onChange={setDance_course} />
               </TabPanel>
             </TabPanels>
           </Tabs>
@@ -663,449 +719,986 @@ const LinkTo = () => {
   );
 };
 
-const VocalTab = () => {
+const CourseTab = ({ course = null, ...props }) => {
   return (
-    <Stack spacing={6}>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 1</Text>
-          <Text fontWeight={"700"}>1:1</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Beginner Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 2</Text>
-          <Text fontWeight={"700"}>1:1</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Intermediate Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 3</Text>
-          <Text fontWeight={"700"}>1:1</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Advanced Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 4</Text>
-          <Text fontWeight={"700"}>1:1</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Professional Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 1</Text>
-          <Text fontWeight={"700"}>1:6</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Beginner Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 2</Text>
-          <Text fontWeight={"700"}>1:6</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Intermediate Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 3</Text>
-          <Text fontWeight={"700"}>1:6</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Advanced Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 4</Text>
-          <Text fontWeight={"700"}>1:6</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Professional Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 1</Text>
-          <Text fontWeight={"700"}>VOD</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Beginner Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 2</Text>
-          <Text fontWeight={"700"}>VOD</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Intermediate Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 3</Text>
-          <Text fontWeight={"700"}>VOD</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Advanced Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 4</Text>
-          <Text fontWeight={"700"}>VOD</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Professional Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-    </Stack>
-  );
-};
-
-const DanceTab = () => {
-  return (
-    <Stack spacing={6}>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 1</Text>
-          <Text fontWeight={"700"}>1:1</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Beginner Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 2</Text>
-          <Text fontWeight={"700"}>1:1</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Intermediate Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 3</Text>
-          <Text fontWeight={"700"}>1:1</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Advanced Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 4</Text>
-          <Text fontWeight={"700"}>1:1</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Professional Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 1</Text>
-          <Text fontWeight={"700"}>1:6</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Beginner Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 2</Text>
-          <Text fontWeight={"700"}>1:6</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Intermediate Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 3</Text>
-          <Text fontWeight={"700"}>1:6</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Advanced Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 4</Text>
-          <Text fontWeight={"700"}>1:6</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Professional Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 1</Text>
-          <Text fontWeight={"700"}>VOD</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Beginner Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 2</Text>
-          <Text fontWeight={"700"}>VOD</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Intermediate Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 3</Text>
-          <Text fontWeight={"700"}>VOD</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Advanced Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-      <Stack spacing={3}>
-        <HStack fontSize={"lg"} spacing={8}>
-          <Text>section 4</Text>
-          <Text fontWeight={"700"}>VOD</Text>
-        </HStack>
-        <Input borderRadius={"lg"} placeholder="Professional Course" />
-        <HStack spacing={6}>
-          <HStack spacing={3}>
-            <Text>Month</Text>
-            <Input w={"50px"} />
-          </HStack>
-          <HStack spacing={3}>
-            <Text>Session</Text>
-            <Input w={"50px"} />
-          </HStack>
-        </HStack>
-        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
-      </Stack>
-    </Stack>
+    <>
+      {course && (
+        <Stack spacing={6}>
+          <Stack spacing={3}>
+            <HStack fontSize={"lg"} spacing={8}>
+              <Text>section 1</Text>
+              <Text fontWeight={"700"}>1:1</Text>
+            </HStack>
+            <Input
+              borderRadius={"lg"}
+              placeholder="title"
+              defaultValue={course.one.section1.title}
+              onChange={(e) =>
+                props.onChange({
+                  ...course,
+                  one: {
+                    ...course.one,
+                    section1: { ...course.one.section1, title: e.target.value },
+                  },
+                })
+              }
+            />
+            <HStack spacing={6}>
+              <HStack spacing={3}>
+                <Text>Month</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.one.section1.month}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      one: {
+                        ...course.one,
+                        section1: {
+                          ...course.one.section1,
+                          month: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+              <HStack spacing={3}>
+                <Text>Session</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.one.section1.session}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      one: {
+                        ...course.one,
+                        section1: {
+                          ...course.one.section1,
+                          session: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+            </HStack>
+            <Textarea
+              resize={"none"}
+              borderRadius={"lg"}
+              h={"160px"}
+              placeholder="description"
+              defaultValue={course.one.section1.description}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  one: {
+                    ...course.one,
+                    section1: {
+                      ...course.one.section1,
+                      description: e.target.value,
+                    },
+                  },
+                });
+              }}
+            />
+          </Stack>
+          <Stack spacing={3}>
+            <HStack fontSize={"lg"} spacing={8}>
+              <Text>section 2</Text>
+              <Text fontWeight={"700"}>1:1</Text>
+            </HStack>
+            <Input
+              borderRadius={"lg"}
+              placeholder="title"
+              defaultValue={course.one.section2.title}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  one: {
+                    ...course.one,
+                    section2: { ...course.one.section2, title: e.target.value },
+                  },
+                });
+              }}
+            />
+            <HStack spacing={6}>
+              <HStack spacing={3}>
+                <Text>Month</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.one.section2.month}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      one: {
+                        ...course.one,
+                        section2: {
+                          ...course.one.section2,
+                          month: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+              <HStack spacing={3}>
+                <Text>Session</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.one.section2.session}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      one: {
+                        ...course.one,
+                        section2: {
+                          ...course.one.section2,
+                          session: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+            </HStack>
+            <Textarea
+              resize={"none"}
+              borderRadius={"lg"}
+              h={"160px"}
+              placeholder="description"
+              defaultValue={course.one.section2.description}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  one: {
+                    ...course.one,
+                    section2: {
+                      ...course.one.section2,
+                      description: e.target.value,
+                    },
+                  },
+                });
+              }}
+            />
+          </Stack>
+          <Stack spacing={3}>
+            <HStack fontSize={"lg"} spacing={8}>
+              <Text>section 3</Text>
+              <Text fontWeight={"700"}>1:1</Text>
+            </HStack>
+            <Input
+              borderRadius={"lg"}
+              placeholder="title"
+              defaultValue={course.one.section3.title}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  one: {
+                    ...course.one,
+                    section3: { ...course.one.section3, title: e.target.value },
+                  },
+                });
+              }}
+            />
+            <HStack spacing={6}>
+              <HStack spacing={3}>
+                <Text>Month</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.one.section3.month}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      one: {
+                        ...course.one,
+                        section3: {
+                          ...course.one.section3,
+                          month: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+              <HStack spacing={3}>
+                <Text>Session</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.one.section3.session}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      one: {
+                        ...course.one,
+                        section3: {
+                          ...course.one.section3,
+                          session: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+            </HStack>
+            <Textarea
+              resize={"none"}
+              borderRadius={"lg"}
+              h={"160px"}
+              placeholder="description"
+              defaultValue={course.one.section3.description}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  one: {
+                    ...course.one,
+                    section3: {
+                      ...course.one.section3,
+                      description: e.target.value,
+                    },
+                  },
+                });
+              }}
+            />
+          </Stack>
+          <Stack spacing={3}>
+            <HStack fontSize={"lg"} spacing={8}>
+              <Text>section 4</Text>
+              <Text fontWeight={"700"}>1:1</Text>
+            </HStack>
+            <Input
+              borderRadius={"lg"}
+              placeholder="title"
+              defaultValue={course.one.section4.title}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  one: {
+                    ...course.one,
+                    section4: { ...course.one.section4, title: e.target.value },
+                  },
+                });
+              }}
+            />
+            <HStack spacing={6}>
+              <HStack spacing={3}>
+                <Text>Month</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.one.section4.month}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      one: {
+                        ...course.one,
+                        section4: {
+                          ...course.one.section4,
+                          month: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+              <HStack spacing={3}>
+                <Text>Session</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.one.section4.session}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      one: {
+                        ...course.one,
+                        section4: {
+                          ...course.one.section4,
+                          session: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+            </HStack>
+            <Textarea
+              resize={"none"}
+              borderRadius={"lg"}
+              h={"160px"}
+              placeholder="description"
+              defaultValue={course.one.section4.description}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  one: {
+                    ...course.one,
+                    section4: {
+                      ...course.one.section4,
+                      description: e.target.value,
+                    },
+                  },
+                });
+              }}
+            />
+          </Stack>
+          <Stack spacing={3}>
+            <HStack fontSize={"lg"} spacing={8}>
+              <Text>section 1</Text>
+              <Text fontWeight={"700"}>1:6</Text>
+            </HStack>
+            <Input
+              borderRadius={"lg"}
+              placeholder="title"
+              defaultValue={course.six.section1.title}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  six: {
+                    ...course.six,
+                    section1: { ...course.six.section1, title: e.target.value },
+                  },
+                });
+              }}
+            />
+            <HStack spacing={6}>
+              <HStack spacing={3}>
+                <Text>Month</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.six.section1.month}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      six: {
+                        ...course.six,
+                        section1: {
+                          ...course.six.section1,
+                          month: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+              <HStack spacing={3}>
+                <Text>Session</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.six.section1.session}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      six: {
+                        ...course.six,
+                        section1: {
+                          ...course.six.section1,
+                          session: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+            </HStack>
+            <Textarea
+              resize={"none"}
+              borderRadius={"lg"}
+              h={"160px"}
+              placeholder="description"
+              defaultValue={course.six.section1.description}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  six: {
+                    ...course.six,
+                    section1: {
+                      ...course.six.section1,
+                      description: e.target.value,
+                    },
+                  },
+                });
+              }}
+            />
+          </Stack>
+          <Stack spacing={3}>
+            <HStack fontSize={"lg"} spacing={8}>
+              <Text>section 2</Text>
+              <Text fontWeight={"700"}>1:6</Text>
+            </HStack>
+            <Input
+              borderRadius={"lg"}
+              placeholder="title"
+              defaultValue={course.six.section2.title}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  six: {
+                    ...course.six,
+                    section2: { ...course.six.section2, title: e.target.value },
+                  },
+                });
+              }}
+            />
+            <HStack spacing={6}>
+              <HStack spacing={3}>
+                <Text>Month</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.six.section2.month}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      six: {
+                        ...course.six,
+                        section2: {
+                          ...course.six.section2,
+                          month: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+              <HStack spacing={3}>
+                <Text>Session</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.six.section2.session}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      six: {
+                        ...course.six,
+                        section2: {
+                          ...course.six.section2,
+                          session: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+            </HStack>
+            <Textarea
+              resize={"none"}
+              borderRadius={"lg"}
+              h={"160px"}
+              placeholder="description"
+              defaultValue={course.six.section2.description}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  six: {
+                    ...course.six,
+                    section2: {
+                      ...course.six.section2,
+                      description: e.target.value,
+                    },
+                  },
+                });
+              }}
+            />
+          </Stack>
+          <Stack spacing={3}>
+            <HStack fontSize={"lg"} spacing={8}>
+              <Text>section 3</Text>
+              <Text fontWeight={"700"}>1:6</Text>
+            </HStack>
+            <Input
+              borderRadius={"lg"}
+              placeholder="title"
+              defaultValue={course.six.section3.title}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  six: {
+                    ...course.six,
+                    section3: { ...course.six.section3, title: e.target.value },
+                  },
+                });
+              }}
+            />
+            <HStack spacing={6}>
+              <HStack spacing={3}>
+                <Text>Month</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.six.section3.month}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      six: {
+                        ...course.six,
+                        section3: {
+                          ...course.six.section3,
+                          month: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+              <HStack spacing={3}>
+                <Text>Session</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.six.section3.session}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      six: {
+                        ...course.six,
+                        section3: {
+                          ...course.six.section3,
+                          session: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+            </HStack>
+            <Textarea
+              resize={"none"}
+              borderRadius={"lg"}
+              h={"160px"}
+              placeholder="description"
+              defaultValue={course.six.section3.description}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  six: {
+                    ...course.six,
+                    section3: {
+                      ...course.six.section3,
+                      description: e.target.value,
+                    },
+                  },
+                });
+              }}
+            />
+          </Stack>
+          <Stack spacing={3}>
+            <HStack fontSize={"lg"} spacing={8}>
+              <Text>section 4</Text>
+              <Text fontWeight={"700"}>1:6</Text>
+            </HStack>
+            <Input
+              borderRadius={"lg"}
+              placeholder="title"
+              defaultValue={course.six.section4.title}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  six: {
+                    ...course.six,
+                    section4: { ...course.six.section4, title: e.target.value },
+                  },
+                });
+              }}
+            />
+            <HStack spacing={6}>
+              <HStack spacing={3}>
+                <Text>Month</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.six.section4.month}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      six: {
+                        ...course.six,
+                        section4: {
+                          ...course.six.section4,
+                          month: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+              <HStack spacing={3}>
+                <Text>Session</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.six.section4.session}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      six: {
+                        ...course.six,
+                        section4: {
+                          ...course.six.section4,
+                          session: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+            </HStack>
+            <Textarea
+              resize={"none"}
+              borderRadius={"lg"}
+              h={"160px"}
+              placeholder="description"
+              defaultValue={course.six.section4.description}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  six: {
+                    ...course.six,
+                    section4: {
+                      ...course.six.section4,
+                      description: e.target.value,
+                    },
+                  },
+                });
+              }}
+            />
+          </Stack>
+          <Stack spacing={3}>
+            <HStack fontSize={"lg"} spacing={8}>
+              <Text>section 1</Text>
+              <Text fontWeight={"700"}>VOD</Text>
+            </HStack>
+            <Input
+              borderRadius={"lg"}
+              placeholder="title"
+              defaultValue={course.vod.section1.title}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  vod: {
+                    ...course.vod,
+                    section1: { ...course.vod.section1, title: e.target.value },
+                  },
+                });
+              }}
+            />
+            <HStack spacing={6}>
+              <HStack spacing={3}>
+                <Text>Month</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.vod.section1.month}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      vod: {
+                        ...course.vod,
+                        section1: {
+                          ...course.vod.section1,
+                          month: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+              <HStack spacing={3}>
+                <Text>Session</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.vod.section1.session}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      vod: {
+                        ...course.vod,
+                        section1: {
+                          ...course.vod.section1,
+                          session: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+            </HStack>
+            <Textarea
+              resize={"none"}
+              borderRadius={"lg"}
+              h={"160px"}
+              placeholder="description"
+              defaultValue={course.vod.section1.description}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  vod: {
+                    ...course.vod,
+                    section1: {
+                      ...course.vod.section1,
+                      description: e.target.value,
+                    },
+                  },
+                });
+              }}
+            />
+          </Stack>
+          <Stack spacing={3}>
+            <HStack fontSize={"lg"} spacing={8}>
+              <Text>section 2</Text>
+              <Text fontWeight={"700"}>VOD</Text>
+            </HStack>
+            <Input
+              borderRadius={"lg"}
+              placeholder="title"
+              defaultValue={course.vod.section2.title}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  vod: {
+                    ...course.vod,
+                    section2: { ...course.vod.section2, title: e.target.value },
+                  },
+                });
+              }}
+            />
+            <HStack spacing={6}>
+              <HStack spacing={3}>
+                <Text>Month</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.vod.section2.month}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      vod: {
+                        ...course.vod,
+                        section2: {
+                          ...course.vod.section2,
+                          month: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+              <HStack spacing={3}>
+                <Text>Session</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.vod.section2.session}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      vod: {
+                        ...course.vod,
+                        section2: {
+                          ...course.vod.section2,
+                          session: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+            </HStack>
+            <Textarea
+              resize={"none"}
+              borderRadius={"lg"}
+              h={"160px"}
+              placeholder="description"
+              defaultValue={course.vod.section2.description}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  vod: {
+                    ...course.vod,
+                    section2: {
+                      ...course.vod.section2,
+                      description: e.target.value,
+                    },
+                  },
+                });
+              }}
+            />
+          </Stack>
+          <Stack spacing={3}>
+            <HStack fontSize={"lg"} spacing={8}>
+              <Text>section 3</Text>
+              <Text fontWeight={"700"}>VOD</Text>
+            </HStack>
+            <Input
+              borderRadius={"lg"}
+              placeholder="title"
+              defaultValue={course.vod.section3.title}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  vod: {
+                    ...course.vod,
+                    section3: { ...course.vod.section3, title: e.target.value },
+                  },
+                });
+              }}
+            />
+            <HStack spacing={6}>
+              <HStack spacing={3}>
+                <Text>Month</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.vod.section3.month}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      vod: {
+                        ...course.vod,
+                        section3: {
+                          ...course.vod.section3,
+                          month: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+              <HStack spacing={3}>
+                <Text>Session</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.vod.section3.session}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      vod: {
+                        ...course.vod,
+                        section3: {
+                          ...course.vod.section3,
+                          session: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+            </HStack>
+            <Textarea
+              resize={"none"}
+              borderRadius={"lg"}
+              h={"160px"}
+              placeholder="description"
+              defaultValue={course.vod.section3.description}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  vod: {
+                    ...course.vod,
+                    section3: {
+                      ...course.vod.section3,
+                      description: e.target.value,
+                    },
+                  },
+                });
+              }}
+            />
+          </Stack>
+          <Stack spacing={3}>
+            <HStack fontSize={"lg"} spacing={8}>
+              <Text>section 4</Text>
+              <Text fontWeight={"700"}>VOD</Text>
+            </HStack>
+            <Input
+              borderRadius={"lg"}
+              placeholder="title"
+              defaultValue={course.vod.section4.title}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  vod: {
+                    ...course.vod,
+                    section4: { ...course.vod.section4, title: e.target.value },
+                  },
+                });
+              }}
+            />
+            <HStack spacing={6}>
+              <HStack spacing={3}>
+                <Text>Month</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.vod.section4.month}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      vod: {
+                        ...course.vod,
+                        section4: {
+                          ...course.vod.section4,
+                          month: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+              <HStack spacing={3}>
+                <Text>Session</Text>
+                <Input
+                  w={"50px"}
+                  placeholder="0"
+                  defaultValue={course.vod.section4.session}
+                  onChange={(e) => {
+                    props.onChange({
+                      ...course,
+                      vod: {
+                        ...course.vod,
+                        section4: {
+                          ...course.vod.section4,
+                          session: e.target.value,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </HStack>
+            </HStack>
+            <Textarea
+              resize={"none"}
+              borderRadius={"lg"}
+              h={"160px"}
+              placeholder="description"
+              defaultValue={course.vod.section4.description}
+              onChange={(e) => {
+                props.onChange({
+                  ...course,
+                  vod: {
+                    ...course.vod,
+                    section4: {
+                      ...course.vod.section4,
+                      description: e.target.value,
+                    },
+                  },
+                });
+              }}
+            />
+          </Stack>
+        </Stack>
+      )}
+    </>
   );
 };
 

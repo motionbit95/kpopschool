@@ -1,8 +1,10 @@
 import {
   Box,
   Button,
+  Center,
   Container,
   Flex,
+  HStack,
   Image,
   Stack,
   Text,
@@ -12,8 +14,16 @@ import TeacherInfo from "./Teachers/TeacherInfo";
 import { LessonItem, TeacherItem } from "../../Component/HomeDetail";
 import ImageCarousel from "../../Component/ImageCarousel";
 import { host_url } from "../../App";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const Nav = useNavigate();
+  const [main, setMain] = useState({});
+  const [matching, setMatching] = useState(null);
+  const [lessons, setLessons] = useState(null);
+  const [course, setCourse] = useState({});
+  const [lessonType, setLessonType] = useState({});
+
   const [teacher, setTeacher] = useState([]);
   const scrollToSection = (id) => {
     const section = document.getElementById(id);
@@ -52,10 +62,47 @@ const Home = () => {
     window.scrollTo(0, 0);
 
     const getHomeData = async () => {
-      fetch(`${host_url}/home/list`)
+      fetch(`${host_url}/home/get/main`)
+        .then((res) => res.json())
+        .then((res) => {
+          setMain(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      fetch(`${host_url}/home/get/matching`)
+        .then((res) => res.json())
+        .then((res) => {
+          setMatching(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      fetch(`${host_url}/home/get/lessons`)
+        .then((res) => res.json())
+        .then((res) => {
+          setLessons(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      fetch(`${host_url}/home/get/course`)
+        .then((res) => res.json())
+        .then((res) => {
+          setCourse(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      fetch(`${host_url}/home/get/lessonType`)
         .then((res) => res.json())
         .then((res) => {
           console.log(res);
+          setLessonType(res);
         })
         .catch((err) => {
           console.log(err);
@@ -70,22 +117,12 @@ const Home = () => {
         <Stack spacing={16}>
           <Stack direction={{ base: "column", md: "row" }}>
             <Box flex={1} borderRadius={"20"} overflow={"hidden"}>
-              <Image src={require("../../Asset/Image/banner 1.png")} alt={""} />
+              <Image src={main?.banner?.[0]} alt={""} />
             </Box>
           </Stack>
           <Stack spacing={12}>
-            <Text fontSize={"xl"}>
-              We will help you turn your dream of becoming a K-pop star into
-              reality! Shine on stage like a K-pop star through
-              <br />
-              classes taught by original vocal and dance trainers who have
-              nurtured your favorite K-pop stars. K-pop School offers
-              <br />
-              the chance to acquire the skills and charms of internationally
-              acclaimed K-pop artists. Real-time video classes and
-              <br />
-              VOD content make learning easy and fun anytime, anywhere. Start
-              your K-pop journey right now.
+            <Text fontSize={"xl"} whiteSpace={"pre-line"}>
+              {main?.description}
             </Text>
             <Box>
               <Button
@@ -95,7 +132,7 @@ const Home = () => {
                 variant={"outline"}
                 borderColor={"#FF3CA2"}
                 color={"#FF3CA2"}
-                onClick={() => scrollToSection("Lessons")}
+                onClick={() => scrollToSection(main?.strLink)}
               >
                 VIEW MORE
               </Button>
@@ -116,7 +153,7 @@ const Home = () => {
                 Teachers
               </Text>
             </Box>
-            <TeacherItem teacher={teacher} />
+            <TeacherItem teacher={matching} />
           </Stack>
           <Stack id="Lessons">
             <Box>
@@ -124,10 +161,208 @@ const Home = () => {
                 Lessons
               </Text>
             </Box>
-            <LessonItem />
+            <LessonItem lessons={lessons} />
+          </Stack>
+          <Stack id="Our Courses">
+            <Text fontSize={"6xl"} color={"#00B2FF"} fontWeight={"bold"}>
+              {course?.title}
+            </Text>
+            <HStack justifyContent={"space-between"} h={"680px"} spacing={8}>
+              <Stack w={"100%"} h={"100%"} justifyContent={"space-between"}>
+                <Stack>
+                  <Image src={course?.beginner?.image} alt={""} />
+                  <Text color={"#FFCC00"} fontSize={"40px"} fontWeight={"bold"}>
+                    Beginner
+                  </Text>
+                  <Text fontSize={"24px"} whiteSpace={"pre-line"}>
+                    {course?.beginner?.description.split("\n").map((item) => (
+                      <Text
+                        color={item.includes("#") ? "#FF3CA2" : "black"}
+                        key={item}
+                      >
+                        {item}
+                      </Text>
+                    ))}
+                    {/* {course?.beginner?.description} */}
+                  </Text>
+                </Stack>
+                <Button
+                  bgColor={"#FFCC00"}
+                  color="white"
+                  fontSize={"24px"}
+                  whiteSpace={"pre-line"}
+                  height={"110px"}
+                  lineHeight={"36px"}
+                  onClick={() => Nav(course?.beginner?.strLink)}
+                >
+                  {`$80 per session\nPAYMENT`}
+                </Button>
+              </Stack>
+              <Stack w={"100%"} h={"100%"} justifyContent={"space-between"}>
+                <Stack>
+                  <Image src={course?.intermediate?.image} alt={""} />
+                  <Text color={"#00C3BA"} fontSize={"40px"} fontWeight={"bold"}>
+                    Intermediate
+                  </Text>
+                  <Text fontSize={"24px"} whiteSpace={"pre-line"}>
+                    {course?.intermediate?.description
+                      .split("\n")
+                      .map((item) => (
+                        <Text
+                          color={item.includes("#") ? "#FF3CA2" : "black"}
+                          key={item}
+                        >
+                          {item}
+                        </Text>
+                      ))}
+                    {/* {course?.beginner?.description} */}
+                  </Text>
+                </Stack>
+                <Button
+                  bgColor={"#00C3BA"}
+                  color="white"
+                  fontSize={"24px"}
+                  whiteSpace={"pre-line"}
+                  height={"110px"}
+                  lineHeight={"36px"}
+                  onClick={() => Nav(course?.beginner?.strLink)}
+                >
+                  {`$85 per session\nPAYMENT`}
+                </Button>
+              </Stack>
+              <Stack w={"100%"} h={"100%"} justifyContent={"space-between"}>
+                <Stack>
+                  <Image src={course?.advanced?.image} alt={""} />
+                  <Text color={"#00B2FF"} fontSize={"40px"} fontWeight={"bold"}>
+                    Advanced
+                  </Text>
+                  <Text fontSize={"24px"} whiteSpace={"pre-line"}>
+                    {course?.advanced?.description.split("\n").map((item) => (
+                      <Text
+                        color={item.includes("#") ? "#FF3CA2" : "black"}
+                        key={item}
+                      >
+                        {item}
+                      </Text>
+                    ))}
+                    {/* {course?.beginner?.description} */}
+                  </Text>
+                </Stack>
+                <Button
+                  bgColor={"#00B2FF"}
+                  color="white"
+                  fontSize={"24px"}
+                  whiteSpace={"pre-line"}
+                  height={"110px"}
+                  lineHeight={"36px"}
+                  onClick={() => Nav(course?.advanced?.strLink)}
+                >
+                  {`$90 per session\nPAYMENT`}
+                </Button>
+              </Stack>
+              <Stack w={"100%"} h={"100%"} justifyContent={"space-between"}>
+                <Stack>
+                  <Image src={course?.professional?.image} alt={""} />
+                  <Text color={"#FF3CA2"} fontSize={"40px"} fontWeight={"bold"}>
+                    Professional
+                  </Text>
+                  <Text fontSize={"24px"} whiteSpace={"pre-line"}>
+                    {course?.professional?.description
+                      .split("\n")
+                      .map((item) => (
+                        <Text
+                          color={item.includes("#") ? "#FF3CA2" : "black"}
+                          key={item}
+                        >
+                          {item}
+                        </Text>
+                      ))}
+                    {/* {course?.beginner?.description} */}
+                  </Text>
+                </Stack>
+                <Button
+                  bgColor={"#FF3CA2"}
+                  color="white"
+                  fontSize={"24px"}
+                  whiteSpace={"pre-line"}
+                  height={"110px"}
+                  lineHeight={"36px"}
+                  onClick={() => Nav(course?.professional?.strLink)}
+                >
+                  {`$99 per session\nPAYMENT`}
+                </Button>
+              </Stack>
+            </HStack>
           </Stack>
         </Stack>
       </Container>
+      <Image src={main?.promotion} alt={""} />
+      <Container minW={"container.xl"} p={24}>
+        <Image src={main?.withus} alt={""} />
+      </Container>
+      <Container minW={"container.xl"} pb={24}>
+        <Text fontSize={"6xl"} color={"#FF3CA2"} fontWeight={"bold"}>
+          Lesson Type
+        </Text>
+        <HStack
+          justifyContent={"space-between"}
+          alignItems={"flex-start"}
+          spacing={8}
+        >
+          <Stack
+            onClick={() => Nav(lessonType?.one?.strLink)}
+            w={"100%"}
+            h={"100%"}
+            cursor={"pointer"}
+            justifyContent={"space-between"}
+          >
+            <Image src={lessonType?.one?.image} alt={""} />
+            <Text color={"#FFCC00"} fontSize={"40px"} fontWeight={"bold"}>
+              1:1 Personal
+            </Text>
+            <Text fontSize={"24px"}>{lessonType?.one?.description}</Text>
+          </Stack>
+          <Stack
+            onClick={() => Nav(lessonType?.six?.strLink)}
+            w={"100%"}
+            h={"100%"}
+            cursor={"pointer"}
+            justifyContent={"space-between"}
+          >
+            <Image src={lessonType?.six?.image} alt={""} />
+            <Text color={"#00C3BA"} fontSize={"40px"} fontWeight={"bold"}>
+              1:6 Group
+            </Text>
+            <Text fontSize={"24px"}>{lessonType?.vod?.description}</Text>
+          </Stack>
+          <Stack
+            onClick={() => Nav(lessonType?.vod?.strLink)}
+            w={"100%"}
+            h={"100%"}
+            cursor={"pointer"}
+            justifyContent={"space-between"}
+          >
+            <Image src={lessonType?.vod?.image} alt={""} />
+            <Text color={"#00B2FF"} fontSize={"40px"} fontWeight={"bold"}>
+              VOD
+            </Text>
+            <Text fontSize={"24px"}>{lessonType?.vod?.description}</Text>
+          </Stack>
+        </HStack>
+      </Container>
+
+      <Center bgColor={"#F1F1F1"} py={24} mb={36}>
+        <HStack
+          fontSize={"140px"}
+          spacing={8}
+          fontWeight={"bold"}
+          whiteSpace={"nowrap"}
+        >
+          <Text color={"#00C3BA"}>Be a</Text>
+          <Text color={"#FFCC00"}>STAR</Text>
+          <Text color={"#00C3BA"}>with us!</Text>
+        </HStack>
+      </Center>
     </Flex>
   );
 };
