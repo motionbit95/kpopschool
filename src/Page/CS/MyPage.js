@@ -15,7 +15,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ClassInterestTab from "../../Component/MyLessons/ClassInterestTab";
 import CurrentClass from "../../Component/MyLessons/CurrentClass";
 import ClassinProgress from "../../Component/MyLessons/ClassinProgress";
@@ -32,8 +32,11 @@ import Information from "../../Component/Setting/Information";
 import Notification from "../../Component/Notification";
 import TeacherDashboard from "./TeacherDashboard";
 import Management from "./Management";
+import { auth } from "../../Firebase/Config";
+import { host_url } from "../../App";
 
 const MyPage = () => {
+  const navigation = useNavigate();
   const [selectedTabIndex, setSelectedTabIndex] = useState(0); // 버튼 이펙트 인덱스 변경
   // 로케이션 state
   const location = useLocation();
@@ -63,6 +66,55 @@ const MyPage = () => {
     "setting",
   ];
   const MypageTabButtons2 = ["Dashboard", "class management", "setting"];
+
+  const [userInfo, setUserInfo] = useState({});
+
+  useEffect(() => {
+    // 회원 정보 가지고 오기
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        fetch(`${host_url}/users/get`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: user.uid,
+          }),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(res);
+            setUserInfo(res);
+            // setUserType(res.userType);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        // 로그인 페이지로 이동
+        navigation("/signin");
+      }
+    });
+  }, []);
+
+  const updateUserInfo = (data) => {
+    console.log(data);
+    fetch(`${host_url}/users/update`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.text())
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <Flex flex={1}>
@@ -305,7 +357,11 @@ const MyPage = () => {
                     minH={"400px"}
                   >
                     <TabPanel p={0} pl={10} h={"full"}>
-                      <UserInfo />
+                      <UserInfo
+                        userInfo={userInfo}
+                        onChange={(data) => setUserInfo(data)}
+                        onSave={() => updateUserInfo(userInfo)}
+                      />
                     </TabPanel>
                     <TabPanel p={0} h={"full"}>
                       <PasswordChange />
