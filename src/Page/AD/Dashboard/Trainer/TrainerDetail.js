@@ -11,12 +11,15 @@ import {
 import React, { useState } from "react";
 import { host_url } from "../../../../App";
 import ImageUpload from "../../../../Component/ImageUpload";
+import ConfirmBox from "../../../../Component/ConfirmBox";
 
 const TrainerDetail = (props) => {
   const [career, setCareer] = useState("");
   const toDate = (timestamp) => {
     return new Date(timestamp._seconds * 1000);
   };
+
+  const [saveStep, setSaveStep] = useState(0);
 
   const updateTeacher = (id) => {
     fetch(`${host_url}/teachers/update`, {
@@ -32,6 +35,7 @@ const TrainerDetail = (props) => {
       .then((res) => res.text())
       .then((res) => {
         console.log(res);
+        setSaveStep(2);
       })
       .catch((err) => {
         console.log(err);
@@ -39,6 +43,14 @@ const TrainerDetail = (props) => {
   };
   return (
     <Flex w={"100%"} h={"100%"}>
+      <ConfirmBox
+        isOpen={saveStep === 1}
+        onClose={() => setSaveStep(0)}
+        onConfirm={() => props.setIsdetail(false)}
+      >
+        <Text>Are you sure you want to cancel editing?</Text>
+        <Text color={"#FF3CA2"}>Content is not saved</Text>
+      </ConfirmBox>
       <Stack
         px={16}
         pt={16}
@@ -57,7 +69,9 @@ const TrainerDetail = (props) => {
                 variant={"outline"}
                 borderColor={"#00C3BA"}
                 color={"#00C3BA"}
-                onClick={() => props.setIsdetail(false)}
+                onClick={() => {
+                  setSaveStep(1);
+                }}
               >
                 Back to List
               </Button>

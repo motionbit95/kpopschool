@@ -24,7 +24,9 @@ function ConfirmBox(props) {
           <ModalCloseButton />
           <ModalBody fontSize={"20px"} fontWeight={"bold"} p={0}>
             <Center p={12}>
-              <VStack spacing={0}>{props.children}</VStack>
+              <VStack textAlign={"center"} spacing={0}>
+                {props.children}
+              </VStack>
             </Center>
           </ModalBody>
           <ModalFooter>
