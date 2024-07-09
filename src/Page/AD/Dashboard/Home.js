@@ -462,7 +462,9 @@ const Home = () => {
           </Stack>
         </Stack>
         <Stack p={16}>
-          <Text>Course Description</Text>
+          <Text fontSize={"20px"} fontWeight={"600"}>
+            Course Description
+          </Text>
           <Tabs>
             <TabList justifyContent={"center"} borderBottomColor={"#00C3BA"}>
               <Tab
@@ -663,30 +665,446 @@ const LinkTo = () => {
 
 const VocalTab = () => {
   return (
-    <Stack>
-      <HStack fontSize={"lg"} spacing={8}>
-        <Text>section 1</Text>
-        <Text fontWeight={"700"}>1:1</Text>
-      </HStack>
-      <Input borderRadius={"xl"} />
-      <HStack spacing={6}>
-        <Text>Month</Text>
-        <Input w={"50px"} />
-        <Text>Session</Text>
-        <Input w={"50px"} />
-      </HStack>
-      <Textarea resize={"none"} borderRadius={"xl"} h={"auto"} />
+    <Stack spacing={6}>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 1</Text>
+          <Text fontWeight={"700"}>1:1</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Beginner Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 2</Text>
+          <Text fontWeight={"700"}>1:1</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Intermediate Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 3</Text>
+          <Text fontWeight={"700"}>1:1</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Advanced Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 4</Text>
+          <Text fontWeight={"700"}>1:1</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Professional Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 1</Text>
+          <Text fontWeight={"700"}>1:6</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Beginner Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 2</Text>
+          <Text fontWeight={"700"}>1:6</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Intermediate Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 3</Text>
+          <Text fontWeight={"700"}>1:6</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Advanced Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 4</Text>
+          <Text fontWeight={"700"}>1:6</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Professional Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 1</Text>
+          <Text fontWeight={"700"}>VOD</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Beginner Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 2</Text>
+          <Text fontWeight={"700"}>VOD</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Intermediate Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 3</Text>
+          <Text fontWeight={"700"}>VOD</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Advanced Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 4</Text>
+          <Text fontWeight={"700"}>VOD</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Professional Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
     </Stack>
   );
 };
 
 const DanceTab = () => {
   return (
-    <Stack>
-      <HStack fontSize={"lg"} spacing={8}>
-        <Text>section 1</Text>
-        <Text fontWeight={"700"}>1:1</Text>
-      </HStack>
+    <Stack spacing={6}>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 1</Text>
+          <Text fontWeight={"700"}>1:1</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Beginner Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 2</Text>
+          <Text fontWeight={"700"}>1:1</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Intermediate Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 3</Text>
+          <Text fontWeight={"700"}>1:1</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Advanced Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 4</Text>
+          <Text fontWeight={"700"}>1:1</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Professional Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 1</Text>
+          <Text fontWeight={"700"}>1:6</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Beginner Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 2</Text>
+          <Text fontWeight={"700"}>1:6</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Intermediate Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 3</Text>
+          <Text fontWeight={"700"}>1:6</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Advanced Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 4</Text>
+          <Text fontWeight={"700"}>1:6</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Professional Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 1</Text>
+          <Text fontWeight={"700"}>VOD</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Beginner Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 2</Text>
+          <Text fontWeight={"700"}>VOD</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Intermediate Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 3</Text>
+          <Text fontWeight={"700"}>VOD</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Advanced Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
+      <Stack spacing={3}>
+        <HStack fontSize={"lg"} spacing={8}>
+          <Text>section 4</Text>
+          <Text fontWeight={"700"}>VOD</Text>
+        </HStack>
+        <Input borderRadius={"lg"} placeholder="Professional Course" />
+        <HStack spacing={6}>
+          <HStack spacing={3}>
+            <Text>Month</Text>
+            <Input w={"50px"} />
+          </HStack>
+          <HStack spacing={3}>
+            <Text>Session</Text>
+            <Input w={"50px"} />
+          </HStack>
+        </HStack>
+        <Textarea resize={"none"} borderRadius={"lg"} h={"auto"} />
+      </Stack>
     </Stack>
   );
 };

@@ -19,6 +19,7 @@ import { collection, onSnapshot } from "firebase/firestore";
 const Topbar = () => {
   const [isLogin, setIsLogin] = useState(false);
   const location = useLocation();
+  const [userType, setUserType] = useState(1);
   const Nav = useNavigate();
   const [hoveredButton, setHoveredButton] = useState(null);
 
@@ -259,70 +260,109 @@ const Topbar = () => {
                 </Button>
                 {hoveredButton === "3" && (
                   <>
-                    <Button
-                      w={"full"}
-                      position={"absolute"}
-                      bgColor={"white"}
-                      borderRadius={0}
-                      top={12}
-                      _hover={{ color: "#00C3BA" }}
-                      onClick={() => {
-                        const myPageIndex = 0;
-                        Nav(`/mypage`, {
-                          state: { myPageIndex },
-                        });
-                      }}
-                    >
-                      My lesson
-                    </Button>
-                    <Button
-                      w={"full"}
-                      position={"absolute"}
-                      bgColor={"white"}
-                      borderRadius={0}
-                      top={24}
-                      _hover={{ color: "#00C3BA" }}
-                      onClick={() => {
-                        const myPageIndex = 1;
-                        Nav(`/mypage`, {
-                          state: { myPageIndex },
-                        });
-                      }}
-                    >
-                      Payment
-                    </Button>
-                    <Button
-                      w={"full"}
-                      position={"absolute"}
-                      bgColor={"white"}
-                      borderRadius={0}
-                      top={36}
-                      _hover={{ color: "#00C3BA" }}
-                      onClick={() => {
-                        const myPageIndex = 2;
-                        Nav(`/mypage`, {
-                          state: { myPageIndex },
-                        });
-                      }}
-                    >
-                      Coupon
-                    </Button>
-                    <Button
-                      w={"full"}
-                      position={"absolute"}
-                      bgColor={"white"}
-                      borderRadius={0}
-                      top={48}
-                      _hover={{ color: "#00C3BA" }}
-                      onClick={() => {
-                        const myPageIndex = 3;
-                        Nav(`/mypage`, {
-                          state: { myPageIndex },
-                        });
-                      }}
-                    >
-                      1:1 inquiry
-                    </Button>
+                    {userType === 0 ? (
+                      <>
+                        <Button
+                          w={"full"}
+                          position={"absolute"}
+                          bgColor={"white"}
+                          borderRadius={0}
+                          top={12}
+                          _hover={{ color: "#00C3BA" }}
+                          onClick={() => {
+                            const myPageIndex = 0;
+                            Nav(`/mypage`, {
+                              state: { myPageIndex },
+                            });
+                          }}
+                        >
+                          My lesson
+                        </Button>
+                        <Button
+                          w={"full"}
+                          position={"absolute"}
+                          bgColor={"white"}
+                          borderRadius={0}
+                          top={24}
+                          _hover={{ color: "#00C3BA" }}
+                          onClick={() => {
+                            const myPageIndex = 1;
+                            Nav(`/mypage`, {
+                              state: { myPageIndex },
+                            });
+                          }}
+                        >
+                          Payment
+                        </Button>
+                        <Button
+                          w={"full"}
+                          position={"absolute"}
+                          bgColor={"white"}
+                          borderRadius={0}
+                          top={36}
+                          _hover={{ color: "#00C3BA" }}
+                          onClick={() => {
+                            const myPageIndex = 2;
+                            Nav(`/mypage`, {
+                              state: { myPageIndex },
+                            });
+                          }}
+                        >
+                          Coupon
+                        </Button>
+                        <Button
+                          w={"full"}
+                          position={"absolute"}
+                          bgColor={"white"}
+                          borderRadius={0}
+                          top={48}
+                          _hover={{ color: "#00C3BA" }}
+                          onClick={() => {
+                            const myPageIndex = 3;
+                            Nav(`/mypage`, {
+                              state: { myPageIndex },
+                            });
+                          }}
+                        >
+                          1:1 inquiry
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button
+                          w={"full"}
+                          position={"absolute"}
+                          bgColor={"white"}
+                          borderRadius={0}
+                          top={12}
+                          _hover={{ color: "#00C3BA" }}
+                          onClick={() => {
+                            const myPageIndex = 0;
+                            Nav(`/mypage`, {
+                              state: { myPageIndex },
+                            });
+                          }}
+                        >
+                          Dashboard
+                        </Button>
+                        <Button
+                          w={"full"}
+                          position={"absolute"}
+                          bgColor={"white"}
+                          borderRadius={0}
+                          top={24}
+                          _hover={{ color: "#00C3BA" }}
+                          onClick={() => {
+                            const myPageIndex = 1;
+                            Nav(`/mypage`, {
+                              state: { myPageIndex },
+                            });
+                          }}
+                        >
+                          Class
+                        </Button>
+                      </>
+                    )}
                   </>
                 )}
               </Stack>

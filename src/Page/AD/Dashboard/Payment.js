@@ -187,7 +187,7 @@ const Payment = () => {
                       <Tr>
                         <Td textAlign={"center"}>{`${data.no}.`}</Td>
                         <Td textAlign={"center"}>{data.name}</Td>
-                        <Td textAlign={"center"}>{data.id}</Td>
+                        {/* <Td textAlign={"center"}>{data.id}</Td> */}
                         <Td textAlign={"center"}>{data.division}</Td>
                         <Td textAlign={"center"}>{data.course}</Td>
                         <Td textAlign={"center"}>{data.class}</Td>

@@ -90,6 +90,8 @@ const Coupon = (props) => {
               <Button
                 mt={-10}
                 onClick={() => props.setIsdetail({ view: "Coupon Issuance" })}
+                color={"white"}
+                bgColor={"#00B2FF"}
               >
                 CREATE
               </Button>
@@ -103,15 +105,15 @@ const Coupon = (props) => {
                 borderRadius={"md"}
                 p={4}
               >
-                <HStack>
+                <HStack spacing={6}>
                   <Box
-                    w={"200px"}
-                    h={"100px"}
+                    w={"330px"}
+                    h={"140px"}
                     bgColor={"#00C3BA"}
                     borderRadius={"md"}
                     overflow={"hidden"}
                   >
-                    <Image src={data.thumbnail}></Image>
+                    <Image w={"full"} h={"full"} src={data.thumbnail}></Image>
                   </Box>
                   <Stack>
                     <Text>{data.title}</Text>
@@ -136,7 +138,11 @@ const Coupon = (props) => {
                 <Stack h={"full"} justify={"space-between"}>
                   <Text>publication Date {toDate(data.createdAt)}</Text>
                   <Box display={"flex"} justifyContent={"flex-end"}>
-                    <Button onClick={() => deleteCoupon(data.id)}>
+                    <Button
+                      color={"white"}
+                      bgColor={"#FF3CA2"}
+                      onClick={() => deleteCoupon(data.id)}
+                    >
                       DELETE
                     </Button>
                   </Box>

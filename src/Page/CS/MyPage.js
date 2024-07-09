@@ -30,6 +30,8 @@ import UserInfo from "../../Component/Setting/UserInfo";
 import PasswordChange from "../../Component/Setting/PasswordChange";
 import Information from "../../Component/Setting/Information";
 import Notification from "../../Component/Notification";
+import TeacherDashboard from "./TeacherDashboard";
+import Management from "./Management";
 
 const MyPage = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState(0); // 버튼 이펙트 인덱스 변경
@@ -37,6 +39,7 @@ const MyPage = () => {
   const location = useLocation();
   const [myPageIndex, setMyPageIndex] = useState(0);
   const [openNotification, setOpenNotification] = useState(false);
+  const [userType, setUserType] = useState(1);
   useEffect(() => {
     if (location.state && location.state.myPageIndex !== undefined) {
       setMyPageIndex(location.state.myPageIndex);
@@ -59,6 +62,7 @@ const MyPage = () => {
     "1:1 inquiry",
     "setting",
   ];
+  const MypageTabButtons2 = ["Dashboard", "class management", "setting"];
 
   return (
     <Flex flex={1}>
@@ -112,201 +116,274 @@ const MyPage = () => {
             )}
           </Box>
         </Flex>
-        <Tabs
-          variant={"unstyled"}
-          index={myPageIndex}
-          onChange={handleMypageTabChange}
-        >
-          <TabList gap={12}>
-            {MypageTabButtons.map((tab) => (
-              <Tab
-                px={0}
-                fontSize={"2xl"}
-                fontWeight={"600"}
-                color={"#E1E4E4"}
-                _selected={{ color: "#00C3BA" }}
-              >
-                {tab}
-              </Tab>
-            ))}
-          </TabList>
-          <TabPanels>
-            {/* My lessons */}
-            <TabPanel px={0}>
-              <Tabs
-                variant={"unstyled"}
-                display={"flex"}
-                flexDirection={"row"}
-                gap={2}
-                index={selectedTabIndex}
-                onChange={handleSelectedTabChange}
-              >
-                <TabList flexDirection={"column"} pr={2}>
-                  {items.map((item, index) => (
-                    <TabButton
-                      item={item}
-                      index={index}
-                      selectedTabIndex={selectedTabIndex}
-                    />
-                  ))}
-                </TabList>
-                <TabPanels
-                  h={"full"}
-                  pl={10}
-                  pt={4}
-                  borderLeft={"1px solid #E1E4E4"}
-                  minH={"400px"}
+        {userType === 0 ? (
+          <Tabs
+            variant={"unstyled"}
+            index={myPageIndex}
+            onChange={handleMypageTabChange}
+          >
+            <TabList gap={12}>
+              {MypageTabButtons.map((tab) => (
+                <Tab
+                  px={0}
+                  fontSize={"2xl"}
+                  fontWeight={"600"}
+                  color={"#E1E4E4"}
+                  _selected={{ color: "#00C3BA" }}
                 >
-                  <TabPanel p={0} h={"full"}>
-                    <Stack spacing={6}>
-                      <CurrentClass />
-                      <ClassinProgress />
+                  {tab}
+                </Tab>
+              ))}
+            </TabList>
+            <TabPanels>
+              {/* My lessons */}
+              <TabPanel px={0}>
+                <Tabs
+                  variant={"unstyled"}
+                  display={"flex"}
+                  flexDirection={"row"}
+                  index={selectedTabIndex}
+                  onChange={handleSelectedTabChange}
+                >
+                  <TabList flexDirection={"column"} pr={2}>
+                    {items.map((item, index) => (
+                      <TabButton
+                        item={item}
+                        index={index}
+                        selectedTabIndex={selectedTabIndex}
+                      />
+                    ))}
+                  </TabList>
+                  <TabPanels
+                    h={"full"}
+                    pl={10}
+                    pt={4}
+                    borderLeft={"1px solid #E1E4E4"}
+                    minH={"400px"}
+                  >
+                    <TabPanel p={0} h={"full"}>
+                      <Stack spacing={6}>
+                        <CurrentClass />
+                        <ClassinProgress />
+                      </Stack>
+                    </TabPanel>
+                    <TabPanel p={0} h={"full"}>
+                      <ClassInterestTab />
+                    </TabPanel>
+                    <TabPanel p={0} h={"full"}>
+                      <InterestTrainer />
+                    </TabPanel>
+                  </TabPanels>
+                </Tabs>
+              </TabPanel>
+              {/* Payment */}
+              <TabPanel px={0}>
+                <Tabs
+                  variant={"unstyled"}
+                  display={"flex"}
+                  flexDirection={"row"}
+                  onChange={handleSelectedTabChange}
+                >
+                  <TabList flexDirection={"column"} pr={2}>
+                    {items2.map((item, index) => (
+                      <TabButton
+                        item={item}
+                        index={index}
+                        selectedTabIndex={selectedTabIndex}
+                      />
+                    ))}
+                  </TabList>
+                  <TabPanels
+                    h={"full"}
+                    borderLeft={"1px solid #E1E4E4"}
+                    minH={"400px"}
+                  >
+                    <TabPanel p={0} h={"full"}>
+                      <PaymentHistory />
+                    </TabPanel>
+                    <TabPanel p={0} h={"full"} pl={10} pt={4}>
+                      <Stack spacing={6}>
+                        <YourCards />
+                        <AddCards />
+                      </Stack>
+                    </TabPanel>
+                  </TabPanels>
+                </Tabs>
+              </TabPanel>
+              {/* coupon */}
+              <TabPanel px={0}>
+                <Tabs
+                  variant={"unstyled"}
+                  display={"flex"}
+                  flexDirection={"row"}
+                  onChange={handleSelectedTabChange}
+                >
+                  <TabList flexDirection={"column"} pr={2}>
+                    {items3.map((item, index) => (
+                      <TabButton
+                        item={item}
+                        index={index}
+                        selectedTabIndex={selectedTabIndex}
+                      />
+                    ))}
+                  </TabList>
+                  <TabPanels
+                    h={"full"}
+                    borderLeft={"1px solid #E1E4E4"}
+                    minH={"400px"}
+                  >
+                    <TabPanel p={0} h={"full"}>
+                      <RetainedCoupon />
+                    </TabPanel>
+                  </TabPanels>
+                </Tabs>
+              </TabPanel>
+              {/* 1:1 inquiry */}
+              <TabPanel px={0}>
+                <Tabs
+                  variant={"unstyled"}
+                  display={"flex"}
+                  flexDirection={"row"}
+                  onChange={handleSelectedTabChange}
+                >
+                  <TabList flexDirection={"column"} pr={2}>
+                    {items4.map((item, index) => (
+                      <TabButton
+                        item={item}
+                        index={index}
+                        selectedTabIndex={selectedTabIndex}
+                      />
+                    ))}
+                  </TabList>
+                  <TabPanels
+                    h={"full"}
+                    borderLeft={"1px solid #E1E4E4"}
+                    minH={"400px"}
+                  >
+                    <TabPanel p={0} h={"full"}>
+                      <InquiryHistory />
+                    </TabPanel>
+                    <TabPanel p={0} pl={10} pt={4} h={"full"}>
+                      <MakeInquiry />
+                    </TabPanel>
+                  </TabPanels>
+                </Tabs>
+              </TabPanel>
+              {/* settings */}
+              <TabPanel px={0}>
+                <Tabs
+                  variant={"unstyled"}
+                  display={"flex"}
+                  flexDirection={"row"}
+                  onChange={handleSelectedTabChange}
+                >
+                  <TabList flexDirection={"column"}>
+                    <Stack justify={"space-between"} h={"full"}>
+                      <Stack pr={2}>
+                        {items5.map((item, index) => (
+                          <TabButton
+                            item={item}
+                            index={index}
+                            selectedTabIndex={selectedTabIndex}
+                          />
+                        ))}
+                      </Stack>
+                      <Stack p={6} borderTop={"1px solid #00C3BA"}>
+                        <Text color={"#FFCC00"} fontWeight={"600"}>
+                          LOGOUT
+                        </Text>
+                        <Text color={"#FF3CA2"} fontWeight={"600"}>
+                          Membership Withdrawal
+                        </Text>
+                      </Stack>
                     </Stack>
-                  </TabPanel>
-                  <TabPanel p={0} h={"full"}>
-                    <ClassInterestTab />
-                  </TabPanel>
-                  <TabPanel p={0} h={"full"}>
-                    <InterestTrainer />
-                  </TabPanel>
-                </TabPanels>
-              </Tabs>
-            </TabPanel>
-            {/* Payment */}
-            <TabPanel px={0}>
-              <Tabs
-                variant={"unstyled"}
-                display={"flex"}
-                flexDirection={"row"}
-                gap={2}
-                onChange={handleSelectedTabChange}
-              >
-                <TabList flexDirection={"column"} pr={2}>
-                  {items2.map((item, index) => (
-                    <TabButton
-                      item={item}
-                      index={index}
-                      selectedTabIndex={selectedTabIndex}
-                    />
-                  ))}
-                </TabList>
-                <TabPanels
-                  h={"full"}
-                  borderLeft={"1px solid #E1E4E4"}
-                  minH={"400px"}
+                  </TabList>
+                  <TabPanels
+                    h={"full"}
+                    pt={4}
+                    borderLeft={"1px solid #E1E4E4"}
+                    minH={"400px"}
+                  >
+                    <TabPanel p={0} pl={10} h={"full"}>
+                      <UserInfo />
+                    </TabPanel>
+                    <TabPanel p={0} h={"full"}>
+                      <PasswordChange />
+                    </TabPanel>
+                    <TabPanel p={0} h={"full"}>
+                      <Information />
+                    </TabPanel>
+                  </TabPanels>
+                </Tabs>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        ) : (
+          <Tabs
+            variant={"unstyled"}
+            index={myPageIndex}
+            onChange={handleMypageTabChange}
+          >
+            <TabList gap={12}>
+              {MypageTabButtons2.map((tab) => (
+                <Tab
+                  px={0}
+                  fontSize={"2xl"}
+                  fontWeight={"600"}
+                  color={"#E1E4E4"}
+                  _selected={{ color: "#00C3BA" }}
                 >
-                  <TabPanel p={0} h={"full"}>
-                    <PaymentHistory />
-                  </TabPanel>
-                  <TabPanel p={0} h={"full"} pl={10} pt={4}>
-                    <Stack spacing={6}>
-                      <YourCards />
-                      <AddCards />
-                    </Stack>
-                  </TabPanel>
-                </TabPanels>
-              </Tabs>
-            </TabPanel>
-            {/* coupon */}
-            <TabPanel px={0}>
-              <Tabs
-                variant={"unstyled"}
-                display={"flex"}
-                flexDirection={"row"}
-                gap={2}
-                onChange={handleSelectedTabChange}
-              >
-                <TabList flexDirection={"column"} pr={2}>
-                  {items3.map((item, index) => (
-                    <TabButton
-                      item={item}
-                      index={index}
-                      selectedTabIndex={selectedTabIndex}
-                    />
-                  ))}
-                </TabList>
-                <TabPanels
-                  h={"full"}
-                  borderLeft={"1px solid #E1E4E4"}
-                  minH={"400px"}
+                  {tab}
+                </Tab>
+              ))}
+            </TabList>
+            <TabPanels>
+              {/* Dashboard */}
+              <TabPanel px={0}>
+                <TeacherDashboard />
+              </TabPanel>
+              {/* class management */}
+              <TabPanel px={0}>
+                <Management />
+              </TabPanel>
+              {/* setting */}
+              <TabPanel px={0}>
+                <Tabs
+                  variant={"unstyled"}
+                  display={"flex"}
+                  flexDirection={"row"}
+                  onChange={handleSelectedTabChange}
                 >
-                  <TabPanel p={0} h={"full"}>
-                    <RetainedCoupon />
-                  </TabPanel>
-                </TabPanels>
-              </Tabs>
-            </TabPanel>
-            {/* 1:1 inquiry */}
-            <TabPanel px={0}>
-              <Tabs
-                variant={"unstyled"}
-                display={"flex"}
-                flexDirection={"row"}
-                gap={2}
-                onChange={handleSelectedTabChange}
-              >
-                <TabList flexDirection={"column"} pr={2}>
-                  {items4.map((item, index) => (
-                    <TabButton
-                      item={item}
-                      index={index}
-                      selectedTabIndex={selectedTabIndex}
-                    />
-                  ))}
-                </TabList>
-                <TabPanels
-                  h={"full"}
-                  borderLeft={"1px solid #E1E4E4"}
-                  minH={"400px"}
-                >
-                  <TabPanel p={0} h={"full"}>
-                    <InquiryHistory />
-                  </TabPanel>
-                  <TabPanel p={0} pl={10} pt={4} h={"full"}>
-                    <MakeInquiry />
-                  </TabPanel>
-                </TabPanels>
-              </Tabs>
-            </TabPanel>
-            {/* settings */}
-            <TabPanel px={0}>
-              <Tabs
-                variant={"unstyled"}
-                display={"flex"}
-                flexDirection={"row"}
-                gap={2}
-                onChange={handleSelectedTabChange}
-              >
-                <TabList flexDirection={"column"} pr={2}>
-                  {items5.map((item, index) => (
-                    <TabButton
-                      item={item}
-                      index={index}
-                      selectedTabIndex={selectedTabIndex}
-                    />
-                  ))}
-                </TabList>
-                <TabPanels
-                  h={"full"}
-                  pl={10}
-                  pt={4}
-                  borderLeft={"1px solid #E1E4E4"}
-                  minH={"400px"}
-                >
-                  <TabPanel p={0} h={"full"}>
-                    <UserInfo />
-                  </TabPanel>
-                  <TabPanel p={0} h={"full"}>
-                    <PasswordChange />
-                  </TabPanel>
-                  <TabPanel p={0} h={"full"}>
-                    <Information />
-                  </TabPanel>
-                </TabPanels>
-              </Tabs>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
+                  <TabList flexDirection={"column"} pr={2}>
+                    {items5.map((item, index) => (
+                      <TabButton
+                        item={item}
+                        index={index}
+                        selectedTabIndex={selectedTabIndex}
+                      />
+                    ))}
+                  </TabList>
+                  <TabPanels
+                    h={"full"}
+                    pt={4}
+                    borderLeft={"1px solid #E1E4E4"}
+                    minH={"400px"}
+                  >
+                    <TabPanel p={0} pl={10} h={"full"}>
+                      <UserInfo />
+                    </TabPanel>
+                    <TabPanel p={0} h={"full"}>
+                      <PasswordChange />
+                    </TabPanel>
+                    <TabPanel p={0} h={"full"}>
+                      <Information />
+                    </TabPanel>
+                  </TabPanels>
+                </Tabs>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        )}
       </Container>
     </Flex>
   );

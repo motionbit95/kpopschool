@@ -4,6 +4,7 @@ import {
   SearchIcon,
 } from "@chakra-ui/icons";
 import {
+  Box,
   Button,
   ButtonGroup,
   Checkbox,
@@ -384,7 +385,9 @@ const AddTrainerModal = (props) => {
           <ModalHeader></ModalHeader>
           <ModalBody>
             <Stack py={4}>
-              <Input />
+              <Stack align={"center"} justify={"center"}>
+                <Input w={"70%"} placeholder="Search" />
+              </Stack>
               <TableContainer>
                 <Table>
                   <Tbody>
@@ -476,8 +479,14 @@ const AddTrainerModal = (props) => {
                   borderColor={"#00C3BA"}
                 />
               </Flex>
-              <Stack align={"center"} mt={4}>
-                <Button onClick={() => addTeacher()}>ADD</Button>
+              <Stack align={"center"} mt={16}>
+                <Button
+                  color={"white"}
+                  bgColor={"#00B2FF"}
+                  onClick={() => addTeacher()}
+                >
+                  ADD
+                </Button>
               </Stack>
             </Stack>
           </ModalBody>

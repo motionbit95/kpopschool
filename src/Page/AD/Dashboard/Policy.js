@@ -47,6 +47,7 @@ const Policy = () => {
 
   const handleSubmit = () => {
     console.log(formData);
+    //업로드 구현 필요
   };
 
   return (

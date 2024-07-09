@@ -4,10 +4,13 @@ import {
   Button,
   Circle,
   Flex,
+  Grid,
+  GridItem,
   HStack,
   Icon,
   Image,
   Input,
+  Select,
   SimpleGrid,
   Stack,
   Text,
@@ -33,23 +36,67 @@ const UserInfo = () => {
         <Text>User Name</Text>
       </HStack>
       <Flex>
-        <SimpleGrid columns={2} rowGap={8} columnGap={8} fontWeight={"600"}>
-          <Stack>
-            <Text fontSize={"lg"}>Name</Text>
-            <Input w={"200px"} />
-          </Stack>
-          <Stack>
-            <Text fontSize={"lg"}>First Name</Text>
-            <Input w={"200px"} />
-          </Stack>
-          <Stack>
-            <Text fontSize={"lg"}>Email Adress</Text>
-            <Input w={"200px"} />
-          </Stack>
-        </SimpleGrid>
+        <Grid templateColumns={"repeat(2, 1fr)"} rowGap={8} columnGap={16}>
+          <GridItem>
+            <Stack>
+              <Text fontSize={"20px"} fontWeight={"600"}>
+                Name
+              </Text>
+              <Input focusBorderColor="#00C3BA" />
+            </Stack>
+          </GridItem>
+          <GridItem>
+            <Stack>
+              <Text fontSize={"20px"} fontWeight={"600"}>
+                First Name
+              </Text>
+              <Input focusBorderColor="#00C3BA" />
+            </Stack>
+          </GridItem>
+          <GridItem>
+            <Stack>
+              <Text fontSize={"20px"} fontWeight={"600"}>
+                Email Address
+              </Text>
+              <Input focusBorderColor="#00C3BA" />
+            </Stack>
+          </GridItem>
+          <GridItem>
+            <Stack>
+              <Text fontSize={"20px"} fontWeight={"600"}>
+                Birthday
+              </Text>
+              <Input focusBorderColor="#00C3BA" placeholder="DD/MM/YY" />
+            </Stack>
+          </GridItem>
+          <GridItem>
+            <Stack>
+              <Text fontSize={"20px"} fontWeight={"600"}>
+                Other class experience
+              </Text>
+              <Select>
+                <option value="1">At all</option>
+                <option value="2">1</option>
+                <option value="3">2</option>
+              </Select>
+            </Stack>
+          </GridItem>
+        </Grid>
       </Flex>
+      <Stack>
+        <Text fontSize={"20px"} fontWeight={"600"}>
+          K-pop genre or artist you are interested in
+        </Text>
+        <Input
+          focusBorderColor="#00C3BA"
+          w={"484px"}
+          placeholder="Fill the text"
+        />
+      </Stack>
       <Box>
-        <Button>SAVE</Button>
+        <Button color={"white"} bgColor={"#00C3BA"}>
+          SAVE
+        </Button>
       </Box>
     </Stack>
   );

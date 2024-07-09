@@ -1,22 +1,68 @@
-import { Button, Input, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  HStack,
+  Input,
+  Stack,
+  StackDivider,
+  Text,
+} from "@chakra-ui/react";
 import React from "react";
 
 const PasswordChange = () => {
   return (
-    <Stack>
-      <Text fontSize={"25px"} fontWeight={"600"} color={"4E4E4E"}>
-        Password
-      </Text>
-      <Text>
-        Please change your password to protect your personal information
-      </Text>
-      <Text>Current Password</Text>
-      <Input />
-      <Text>New Password</Text>
-      <Input />
-      <Input />
-      <Text>Forgot your password?</Text>
-      <Button>SAVE</Button>
+    <Stack
+      color={"#4E4E4E"}
+      divider={<StackDivider borderColor="gray.200" />}
+      spacing={8}
+    >
+      <Stack spacing={8} pl={10}>
+        <Stack spacing={3}>
+          <Text fontSize={"25px"} fontWeight={"600"}>
+            Password
+          </Text>
+          <Text>
+            Please change your password to protect your personal information
+          </Text>
+        </Stack>
+        <Stack spacing={3}>
+          <Text fontSize={"lg"} fontWeight={"600"}>
+            Current Password
+          </Text>
+          <Input w={"200px"} />
+        </Stack>
+        <Stack spacing={3}>
+          <Text fontSize={"lg"} fontWeight={"600"}>
+            New Password
+          </Text>
+          <Stack>
+            <Input w={"200px"} />
+            <Input w={"200px"} />
+          </Stack>
+          <Text color={"#00C3BA"}>Forgot your password?</Text>
+        </Stack>
+        <Box>
+          <Button color={"white"} bgColor={"#00C3BA"}>
+            SAVE
+          </Button>
+        </Box>
+      </Stack>
+      <Stack pl={10}>
+        <Stack spacing={3}>
+          <Text fontSize={"25px"} fontWeight={"600"}>
+            2 Level Verification Security
+          </Text>
+          <Text>
+            Increase your security by registering your mobile phone number
+          </Text>
+        </Stack>
+        <HStack>
+          <Input w={"200px"} />
+          <Button color={"white"} bgColor={"#00C3BA"}>
+            Get Code
+          </Button>
+        </HStack>
+      </Stack>
     </Stack>
   );
 };
