@@ -15,6 +15,7 @@
     "@toast-ui/react-editor": "^3.2.3",
     "@zoom/meetingsdk": "^3.7.0",
     "@zoomus/websdk": "^2.18.3",
+    "date-fns": "^3.6.0",
     "express": "^4.19.2",
     "firebase": "^10.12.2",
     "firebase-admin": "^12.1.1",

@@ -4,7 +4,7 @@ import Home from "./Home";
 import User from "./User/User";
 import Trainer from "./Trainer/Trainer";
 import Payment from "./Payment";
-import Class from "./Class";
+import Class from "../Class/Class";
 import Coupon from "./Coupon/Coupon";
 import Inquiry from "./Inquriy";
 import Policy from "./Policy";
