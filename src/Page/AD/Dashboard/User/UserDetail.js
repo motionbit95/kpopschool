@@ -615,7 +615,35 @@ const InquiryModal = (props) => {
           <ModalCloseButton />
           <ModalHeader></ModalHeader>
           <ModalBody p={0}>
-            <Text>Inquiry 상세</Text>
+            <Stack>
+              <HStack
+                borderY={"1px solid #E1E4E4"}
+                py={4}
+                px={2}
+                justify={"space-between"}
+              >
+                <Text color={"#4E4E4E"}>Jane Deo</Text>
+                <Text color={"#4E4E4E"}>Jane_DOoee</Text>
+                <Text color={"#4E4E4E"}>21-07-2024</Text>
+                <Text color={"#4E4E4E"}>email</Text>
+              </HStack>
+              <Stack>
+                <HStack>
+                  <Text>Tag</Text>
+                  <Text></Text>
+                </HStack>
+                <HStack>
+                  <Text>Title</Text>
+                  <Text></Text>
+                </HStack>
+              </Stack>
+              <Stack>
+                <Text>I accidentally paid for another teacher's course.</Text>
+                <Text>Please refund that portion.</Text>
+                <Text>I paid for Mr. Lee's Advanced Course.</Text>
+              </Stack>
+              <Stack p={6} borderRadius={"md"} bgColor={"#E1E4E4"}></Stack>
+            </Stack>
           </ModalBody>
         </ModalContent>
       </Modal>
