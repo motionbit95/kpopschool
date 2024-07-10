@@ -30,8 +30,9 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import React, { useEffect, useMemo, useState } from "react";
-import { host_url } from "../../../../App";
+import { host_url, popblue } from "../../../../App";
 import { popmint } from "../../../../App";
+import MessageBox from "../../../../Component/MessageBox";
 
 const Trainer = (props) => {
   const toDate = (timestamp) => {
@@ -61,7 +62,7 @@ const Trainer = (props) => {
     // console.log(filteredData);
     // console.log("exceptData", exceptData);
     let teachers = [];
-    filteredData.forEach((data) => {
+    filteredData.forEach((data, index) => {
       console.log(data.id);
       fetch(`${host_url}/teachers/get`, {
         method: "POST",
@@ -73,7 +74,7 @@ const Trainer = (props) => {
         .then(async (res) => await res.json())
         .then(async (res) => {
           teachers.push({ ...data, ...res });
-          if (teachers.length === filteredData.length) {
+          if (index === filteredData.length - 1) {
             setTeachers(teachers);
           }
         })
@@ -309,6 +310,10 @@ const AddTrainerModal = (props) => {
     currentPage * ITEMS_PER_PAGE
   );
 
+  const [modalState, setModalState] = useState({
+    isAdded: false,
+  });
+
   const addTeacher = () => {
     selectedItem.forEach((id) => {
       fetch(`${host_url}/users/update`, {
@@ -323,8 +328,8 @@ const AddTrainerModal = (props) => {
       })
         .then((res) => res.text())
         .then((res) => {
-          console.log(res);
-          props.onClose();
+          // console.log(res);
+          // props.onClose();
         })
         .catch((err) => {
           console.log(err);
@@ -346,41 +351,26 @@ const AddTrainerModal = (props) => {
       })
         .then((res) => res.text())
         .then((res) => {
-          console.log(res);
-          props.onClose();
+          // console.log(res);
+          // props.onClose();
+          setModalState({
+            ...modalState,
+            isAdded: true,
+          });
         })
         .catch((err) => {
           console.log(err);
         });
     });
   };
-  // 이거 맞나?
-  // useEffect(() => {
-  //   const AddUser = async () => {
-  //     fetch(`${host_url}/users/add`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         isTeacher: true,
-  //       }),
-  //     })
-  //       .then((res) => res.json())
-  //       .then((res) => {
-  //         console.log(res);
-  //         setUserData(res);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
-  //   AddUser();
-  // }, []);
 
   return (
     <>
       <Modal size={"5xl"} isOpen={props.isOpen} onClose={props.onClose}>
+        <MessageBox isOpen={modalState.isAdded} onClose={props.onClose}>
+          <Text>Addition</Text>
+          <Text color={popblue}>completed successfully</Text>
+        </MessageBox>
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />

@@ -68,33 +68,33 @@ const UserDetail = (props) => {
     console.log(inquirys);
   }, []);
 
-  useEffect(() => {
-    const getReview = async () => {
-      fetch(`${host_url}/review/search`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          conditions: [
-            {
-              field: "userId",
-              operator: "==",
-              value: props.data.id,
-            },
-          ],
-        }),
+  const getReview = async () => {
+    fetch(`${host_url}/review/search`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        conditions: [
+          {
+            field: "userId",
+            operator: "==",
+            value: props.data.id,
+          },
+        ],
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log("review", res);
+        setReviewList(res);
       })
-        .then((res) => res.json())
-        .then((res) => {
-          console.log("review", res);
-          setReviewList(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
+  useEffect(() => {
     getReview();
   }, []);
 
@@ -204,7 +204,9 @@ const UserDetail = (props) => {
                 </Box>
                 <Stack spacing={4}>
                   <Text fontSize={"lg"} fontWeight={"500"}>
-                    {`${props.data.name} ${props.data.firstName}`}
+                    {`${props.data.name} ${
+                      props.data.firstName ? props.data.firstName : ""
+                    }`}
                   </Text>
                   <Stack>
                     {/* <HStack>
@@ -438,58 +440,61 @@ const UserDetail = (props) => {
                         <Td textAlign={"center"}>Rating</Td>
                       </Tr>
                       {reviewList.map((data) => (
-                        <Tr cursor={"pointer"} onClick={handleOpenReview}>
-                          <Td textAlign={"center"}>{data.division}</Td>
-                          <Td
-                            textAlign={"center"}
-                            maxW={"250px"}
-                            overflow={"hidden"}
-                            textOverflow={"ellipsis"}
-                          >
-                            {data.comment}
-                          </Td>
-                          <Td textAlign={"center"}>
-                            {toDate(data.createdAt)
-                              .toLocaleDateString("en-US", {
-                                year: "numeric",
-                                month: "2-digit",
-                                day: "2-digit",
-                              })
-                              .replace(/(\d+)\/(\d+)\/(\d+)/, "$1-$2-$3")}
-                          </Td>
-                          <Td textAlign={"center"}>
-                            <Flex
-                              gap={1}
-                              w={"100%"}
-                              align={"center"}
-                              justify={"center"}
+                        <>
+                          <Tr cursor={"pointer"} onClick={handleOpenReview}>
+                            <Td textAlign={"center"}>Trainer</Td>
+                            <Td
+                              textAlign={"center"}
+                              maxW={"250px"}
+                              overflow={"hidden"}
+                              textOverflow={"ellipsis"}
                             >
-                              {Array.from({ length: 5 }, (_, i) => (
-                                <Image
-                                  key={i}
-                                  src={
-                                    i < data.rating
-                                      ? require("../../../../Asset/Icon/starFill.png")
-                                      : require("../../../../Asset/Icon/starDefault.png")
-                                  }
-                                  alt="star"
-                                  boxSize="18px" // 적절한 크기로 설정
-                                />
-                              ))}
-                            </Flex>
-                          </Td>
-                        </Tr>
+                              {data.comment}
+                            </Td>
+                            <Td textAlign={"center"}>
+                              {toDate(data.createdAt)
+                                .toLocaleDateString("en-US", {
+                                  year: "numeric",
+                                  month: "2-digit",
+                                  day: "2-digit",
+                                })
+                                .replace(/(\d+)\/(\d+)\/(\d+)/, "$1-$2-$3")}
+                            </Td>
+                            <Td textAlign={"center"}>
+                              <Flex
+                                gap={1}
+                                w={"100%"}
+                                align={"center"}
+                                justify={"center"}
+                              >
+                                {Array.from({ length: 5 }, (_, i) => (
+                                  <Image
+                                    key={i}
+                                    src={
+                                      i < data.rating
+                                        ? require("../../../../Asset/Icon/starFill.png")
+                                        : require("../../../../Asset/Icon/starDefault.png")
+                                    }
+                                    alt="star"
+                                    boxSize="18px" // 적절한 크기로 설정
+                                  />
+                                ))}
+                              </Flex>
+                            </Td>
+                          </Tr>
+                          {openReview && (
+                            <ReviewModal
+                              isOpen={handleOpenReview}
+                              onClose={() => window.location.reload()}
+                              data={data}
+                              // ReviewUserData
+                            />
+                          )}
+                        </>
                       ))}
                     </Tbody>
                   </Table>
                 </TableContainer>
-                {openReview && (
-                  <ReviewModal
-                    isOpen={handleOpenReview}
-                    onClose={handleOpenReview}
-                    // ReviewUserData
-                  />
-                )}
               </Stack>
               <Flex mt={4} justifyContent="center" alignItems="center">
                 <IconButton
@@ -551,7 +556,11 @@ const PaymentModal = (props) => {
           <ModalCloseButton />
           <ModalHeader></ModalHeader>
           <ModalBody p={0}>
-            <Stack divider={<StackDivider borderColor={popmint} />}>
+            <Stack
+              divider={<StackDivider borderColor={popmint} />}
+              pt={4}
+              py={8}
+            >
               <Stack spacing={4} py={4} px={8}>
                 <Stack>
                   <HStack fontWeight={"500"}>
@@ -653,29 +662,102 @@ const InquiryModal = (props) => {
 };
 
 const ReviewModal = (props) => {
-  const userData = props.userData;
+  const [userData, setUserData] = useState({});
   const toDate = (timestamp) => {
-    return new Date(timestamp._seconds * 1000);
+    if (timestamp) return new Date(timestamp._seconds * 1000);
+    else return new Date();
   };
+
+  useEffect(() => {
+    console.log(props.data);
+
+    const getUserInfo = async () => {
+      fetch(`${host_url}/users/get`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: props.data.userId,
+        }),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          setUserData(res);
+        });
+    };
+
+    getUserInfo();
+  }, []);
+
+  const [modalState, setModalState] = useState({
+    isConfirm: false,
+    isInfo: false,
+  });
+
+  const confirmDelete = () => {
+    setModalState({
+      ...modalState,
+      isConfirm: true,
+    });
+  };
+
+  const handleDelete = async () => {
+    fetch(`${host_url}/review/delete`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: props.data.id,
+      }),
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          setModalState({
+            ...modalState,
+            isConfirm: false,
+            isInfo: true,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
+      <ConfirmBox
+        isOpen={modalState.isConfirm}
+        onClose={() => setModalState({ ...modalState, isConfirm: false })}
+        onConfirm={handleDelete}
+      >
+        <Text>Do you really want to</Text>
+        <Text color={popmag}>delete comments?</Text>
+      </ConfirmBox>
+      <MessageBox isOpen={modalState.isInfo} onClose={() => props.onClose()}>
+        <Text>Comment has been </Text>
+        <Text color={popmag}>deleted</Text>
+      </MessageBox>
       <Modal size={"3xl"} isOpen={props.isOpen} onClose={props.onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />
           <ModalHeader></ModalHeader>
-          <ModalBody p={0}>
+          <ModalBody px={0}>
             <Stack>
               <HStack
                 p={4}
                 borderY={"1px solid #E1E4E4"}
-                justify={"space-between"}
+                justify={"space-around"}
                 fontSize={"15px"}
               >
-                <Text fontWeight={"500"}>{userData.name}</Text>
-                <Text>{userData.snsId}</Text>
+                <Text fontWeight={"500"}>
+                  {userData?.name ? userData?.name : ""}
+                </Text>
                 <Text>
-                  {toDate(userData.createdAt)
+                  {toDate(userData?.createdAt)
                     .toLocaleDateString("en-US", {
                       year: "numeric",
                       month: "2-digit",
@@ -683,42 +765,38 @@ const ReviewModal = (props) => {
                     })
                     .replace(/(\d+)\/(\d+)\/(\d+)/, "$1-$2-$3")}
                 </Text>
-                <Text>{userData.email}</Text>
+                <Text>{userData?.email}</Text>
               </HStack>
               <Stack p={4} spacing={4}>
-                <Grid templateColumns="repeat(2, 1fr)">
+                <Grid gap={4} templateColumns="repeat(2, 1fr)" maxW={"210px"}>
                   <GridItem>Division</GridItem>
                   <GridItem>Trainer</GridItem>
                   <GridItem>Rating</GridItem>
                   <GridItem>
-                    <Flex gap={1} align={"center"} justify={"center"}>
+                    <HStack gap={1} alignItems={"center"}>
                       {Array.from({ length: 5 }, (_, i) => (
                         <Image
                           key={i}
                           src={
-                            i < 5
+                            i < props.data.rating
                               ? require("../../../../Asset/Icon/starFill.png")
                               : require("../../../../Asset/Icon/starDefault.png")
                           }
                           alt="star"
-                          boxSize="18px" // 적절한 크기로 설정
+                          w={"18px"}
+                          h={"18px"}
                         />
                       ))}
-                    </Flex>
+                    </HStack>
                   </GridItem>
                 </Grid>
-                <Text>
-                  I can feel that trainer is working very hard to prepare for
-                  class. After taking the prepared course step by step, you can
-                  see that your skills have improved. I highly recommend
-                  downloading the videos that are uploaded after class!
-                </Text>
+                <Text>{props.data.comment}</Text>
               </Stack>
             </Stack>
           </ModalBody>
-          <ModalFooter>
-            <Button color={"white"} bg={popmag}>
-              Delete
+          <ModalFooter justifyContent={"center"}>
+            <Button color={"white"} bg={popmag} onClick={confirmDelete}>
+              DELETE
             </Button>
           </ModalFooter>
         </ModalContent>

@@ -315,7 +315,7 @@ const ClassList = (props) => {
       .then((res) => {
         const filterList = res.filter((data) => data.isTeacher);
         let newList = [];
-        filterList.forEach((data) => {
+        filterList.forEach((data, index) => {
           fetch(`${host_url}/teachers/get`, {
             method: "POST",
             headers: {
@@ -326,9 +326,12 @@ const ClassList = (props) => {
             .then((res) => res.json())
             .then((res) => {
               newList.push({ ...data, ...res });
-              if (newList.length === filterList.length) {
+              if (index === filterList.length - 1) {
                 setTeachers(newList);
               }
+              // if (newList.length === filterList.length) {
+              //   setTeachers(newList);
+              // }
             });
         });
       })

@@ -136,9 +136,9 @@ const User = (props) => {
                     >
                       <Td textAlign={"center"}>{itemNumber}</Td>
                       <Td textAlign={"center"}>{data.isTeacher ? "O" : "-"}</Td>
-                      <Td
-                        textAlign={"center"}
-                      >{`${data.name} ${data.firstName}`}</Td>
+                      <Td textAlign={"center"}>{`${data.name} ${
+                        data.firstName ? " " + data.firstName : ""
+                      }`}</Td>
                       {/* <Td textAlign={"center"}>{data.snsId}</Td> */}
                       <Td textAlign={"center"}>{data.email}</Td>
                       <Td textAlign={"center"}>

@@ -25,6 +25,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { popyellow, popblue, popmint, popmag, host_url } from "../../../App";
+import MessageBox from "../../../Component/MessageBox";
 
 const Inquiry = () => {
   const ITEMS_PER_PAGE = 10;
@@ -172,6 +173,9 @@ const InquiryModal = (props) => {
   const data = props.data;
 
   const [reply, setReply] = useState("");
+  const [modalState, setModalState] = useState({
+    isAnswered: false,
+  });
 
   const handleSubmit = () => {
     console.log(reply);
@@ -189,8 +193,10 @@ const InquiryModal = (props) => {
     })
       .then((res) => res.text())
       .then((res) => {
-        console.log(res);
-        props.onClose();
+        setModalState({
+          ...modalState,
+          isAnswered: true,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -204,6 +210,12 @@ const InquiryModal = (props) => {
       isOpen={props.isOpen}
       onClose={props.onClose}
     >
+      <MessageBox isOpen={modalState.isAnswered} onClose={props.onClose}>
+        <HStack>
+          <Text color={popmint}>Answered</Text>
+          <Text>your inquiry</Text>
+        </HStack>
+      </MessageBox>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader></ModalHeader>
