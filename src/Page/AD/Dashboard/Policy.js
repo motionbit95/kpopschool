@@ -16,6 +16,9 @@ import { host_url, popmint } from "../../../App";
 const Policy = () => {
   const [sections, setSection] = useState([]);
   useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+  useEffect(() => {
     const getPolicy = async () => {
       fetch(`${host_url}/home/get/policy`)
         .then((res) => res.json())

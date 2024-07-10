@@ -255,13 +255,7 @@ const Home = () => {
         spacing={0}
         divider={<StackDivider borderColor={"#E1E4E4"} />}
       >
-        <HStack
-          p={16}
-          justify={"space-between"}
-          spacing={16}
-          align={"start"}
-          maxW={"1200px"}
-        >
+        <HStack p={16} justify={"space-between"} spacing={16} align={"start"}>
           <Stack spacing={8} w={"full"}>
             <Stack pb={8}>
               <HStack justify={"space-between"}>

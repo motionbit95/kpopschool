@@ -200,7 +200,7 @@ const UserDetail = (props) => {
             <HStack justify={"space-between"} spacing={8}>
               <HStack spacing={4} w={"40%"}>
                 <Box boxSize={"160px"} borderRadius={"md"} bgColor={"gray.200"}>
-                  <Image src={props.data.profile} />
+                  <Image src={props.data.profile} borderRadius={"md"} />
                 </Box>
                 <Stack spacing={4}>
                   <Text fontSize={"lg"} fontWeight={"500"}>
@@ -485,7 +485,7 @@ const UserDetail = (props) => {
                           {openReview && (
                             <ReviewModal
                               isOpen={handleOpenReview}
-                              onClose={() => window.location.reload()}
+                              onClose={handleOpenReview}
                               data={data}
                               // ReviewUserData
                             />
@@ -736,7 +736,10 @@ const ReviewModal = (props) => {
         <Text>Do you really want to</Text>
         <Text color={popmag}>delete comments?</Text>
       </ConfirmBox>
-      <MessageBox isOpen={modalState.isInfo} onClose={() => props.onClose()}>
+      <MessageBox
+        isOpen={modalState.isInfo}
+        onClose={() => window.location.reload()}
+      >
         <Text>Comment has been </Text>
         <Text color={popmag}>deleted</Text>
       </MessageBox>

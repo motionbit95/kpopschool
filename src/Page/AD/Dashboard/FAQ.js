@@ -16,6 +16,10 @@ import { host_url, popmint } from "../../../App";
 const FAQ = () => {
   const [formData, setFormData] = useState([]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
   const addSection = () => {
     setFormData([
       ...formData,
