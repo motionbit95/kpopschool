@@ -12,7 +12,7 @@ import {
 import React, { useEffect } from "react";
 import ToastEditor from "../../../../Component/ToastEditor";
 import ImageUpload from "../../../../Component/ImageUpload";
-import { host_url } from "../../../../App";
+import { host_url, popmint } from "../../../../App";
 
 const CreateCoupon = () => {
   const [formData, setFormData] = React.useState({});
@@ -76,7 +76,7 @@ const CreateCoupon = () => {
             </Text>
             <Box>
               <Button
-                bgColor={"#00C3BA"}
+                bgColor={popmint}
                 color={"white"}
                 fontWeight={"bold"}
                 onClick={addCoupon}

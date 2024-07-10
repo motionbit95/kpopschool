@@ -1,6 +1,7 @@
 import { Box, Button, Center, IconButton, Image } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { IoAddCircle } from "react-icons/io5";
+import { popmint } from "../App";
 
 const ImageUpload = ({ ...props }) => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -64,7 +65,7 @@ const ImageUpload = ({ ...props }) => {
       />
       {!imageUrl && (
         <IoAddCircle
-          color="#00C3BA"
+          color={popmint}
           style={{ width: "36px", height: "36px" }}
           onClick={() => imageRef.current.click()}
         />

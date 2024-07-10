@@ -8,6 +8,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React from "react";
+import { popmint, popmag } from "../../App";
 
 const CurrentClass = () => {
   return (
@@ -19,7 +20,7 @@ const CurrentClass = () => {
         <Stack flex={1} borderRight={"1px solid #E1E4E4"} py={6} px={8}>
           <HStack justify={"space-between"}>
             <Stack>
-              <Text pb={"6px"} color={"#00C3BA"} fontSize={"lg"}>
+              <Text pb={"6px"} color={popmint} fontSize={"lg"}>
                 The class I'm taking now
               </Text>
               <Text fontSize={"lg"} fontWeight={"700"} color={"4E4E4E"}>
@@ -35,11 +36,11 @@ const CurrentClass = () => {
                 <Text>Rose</Text>
               </Flex>
             </Stack>
-            <CircularProgress size={"80px"} value={25} color="#FF3CA2">
+            <CircularProgress size={"80px"} value={25} color={popmag}>
               <CircularProgressLabel
                 fontSize={"md"}
                 fontWeight={"600"}
-                color="#FF3CA2"
+                color={popmag}
               >
                 25%
               </CircularProgressLabel>
@@ -57,7 +58,7 @@ const CurrentClass = () => {
             <Text fontWeight={"500"} color={"#4E4E4E"}>
               Total Class
             </Text>
-            <Text fontWeight={"700"} fontSize={"22px"} color={"#00C3BA"}>
+            <Text fontWeight={"700"} fontSize={"22px"} color={popmint}>
               3
             </Text>
           </Stack>
@@ -65,7 +66,7 @@ const CurrentClass = () => {
             <Text fontWeight={"500"} color={"#4E4E4E"}>
               Total Sessions
             </Text>
-            <Text fontWeight={"700"} fontSize={"22px"} color={"#00C3BA"}>
+            <Text fontWeight={"700"} fontSize={"22px"} color={popmint}>
               13
             </Text>
           </Stack>
@@ -73,7 +74,7 @@ const CurrentClass = () => {
             <Text fontWeight={"500"} color={"#4E4E4E"}>
               Total Month
             </Text>
-            <Text fontWeight={"700"} fontSize={"22px"} color={"#00C3BA"}>
+            <Text fontWeight={"700"} fontSize={"22px"} color={popmint}>
               15
             </Text>
           </Stack>
@@ -81,7 +82,7 @@ const CurrentClass = () => {
             <Text fontWeight={"500"} color={"#4E4E4E"}>
               Review
             </Text>
-            <Text fontWeight={"700"} fontSize={"22px"} color={"#00C3BA"}>
+            <Text fontWeight={"700"} fontSize={"22px"} color={popmint}>
               1
             </Text>
           </Stack>

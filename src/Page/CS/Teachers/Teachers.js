@@ -14,6 +14,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { popyellow, popblue, popmint } from "../../../App";
 
 const Teachers = () => {
   const [teachers, setTeachers] = useState([]);
@@ -45,7 +46,7 @@ const Teachers = () => {
     <Flex flex={1}>
       <Container minW={"container.xl"}>
         <Box py={6}>
-          <Text fontSize={"5xl"} fontWeight={"bold"} color={"#FFCC00"}>
+          <Text fontSize={"5xl"} fontWeight={"bold"} color={popyellow}>
             Teachers
           </Text>
         </Box>
@@ -56,7 +57,7 @@ const Teachers = () => {
               fontSize={"2xl"}
               fontWeight={"600"}
               color={"#E1E4E4"}
-              _selected={{ color: "#00C3BA" }}
+              _selected={{ color: popmint }}
             >
               All Trainer
             </Tab>
@@ -65,7 +66,7 @@ const Teachers = () => {
               fontSize={"2xl"}
               fontWeight={"600"}
               color={"#E1E4E4"}
-              _selected={{ color: "#00C3BA" }}
+              _selected={{ color: popmint }}
             >
               Vocal Trainer
             </Tab>
@@ -74,7 +75,7 @@ const Teachers = () => {
               fontSize={"2xl"}
               fontWeight={"600"}
               color={"#E1E4E4"}
-              _selected={{ color: "#00C3BA" }}
+              _selected={{ color: popmint }}
             >
               Dance Trainer
             </Tab>

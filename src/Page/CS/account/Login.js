@@ -17,6 +17,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../../Firebase/Config";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { popmint } from "../../../App";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -90,7 +91,7 @@ const Login = () => {
             </HStack>
             <Button
               color={"white"}
-              bgColor={"#00C3BA"}
+              bgColor={popmint}
               fontSize={"24px"}
               h={"66px"}
               onClick={handleClick}
@@ -150,13 +151,13 @@ const Login = () => {
             />
           </ButtonGroup>
           <Stack textAlign={"center"} align={"center"}>
-            <Text color={"#00C3BA"} cursor={"pointer"}>
+            <Text color={popmint} cursor={"pointer"}>
               Forgot Password?
             </Text>
             <Flex gap={4}>
               <Text fontWeight={"500"}>New to K-Pop SCHOOL?</Text>
               <Text
-                color={"#00C3BA"}
+                color={popmint}
                 cursor={"pointer"}
                 onClick={() => navigate("/signup")}
               >

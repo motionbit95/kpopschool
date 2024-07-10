@@ -33,7 +33,7 @@ import Notification from "../../Component/Notification";
 import TeacherDashboard from "./TeacherDashboard";
 import Management from "./Management";
 import { auth } from "../../Firebase/Config";
-import { host_url } from "../../App";
+import { host_url, popyellow } from "../../App";
 
 const MyPage = () => {
   const navigation = useNavigate();
@@ -120,7 +120,7 @@ const MyPage = () => {
     <Flex flex={1}>
       <Container minW={"container.xl"} pb={16}>
         <Flex py={6} justify={"space-between"} align={"end"}>
-          <Text fontSize={"5xl"} fontWeight={"bold"} color={"#00C3BA"}>
+          <Text fontSize={"5xl"} fontWeight={"bold"} color={popmint}>
             My Page
           </Text>
           <Box boxSize={"20px"} position={"relative"}>
@@ -181,7 +181,7 @@ const MyPage = () => {
                   fontSize={"2xl"}
                   fontWeight={"600"}
                   color={"#E1E4E4"}
-                  _selected={{ color: "#00C3BA" }}
+                  _selected={{ color: popmint }}
                 >
                   {tab}
                 </Tab>
@@ -341,10 +341,10 @@ const MyPage = () => {
                         ))}
                       </Stack>
                       <Stack p={6} borderTop={"1px solid #00C3BA"}>
-                        <Text color={"#FFCC00"} fontWeight={"600"}>
+                        <Text color={popyellow} fontWeight={"600"}>
                           LOGOUT
                         </Text>
-                        <Text color={"#FF3CA2"} fontWeight={"600"}>
+                        <Text color={popmag} fontWeight={"600"}>
                           Membership Withdrawal
                         </Text>
                       </Stack>
@@ -387,7 +387,7 @@ const MyPage = () => {
                   fontSize={"2xl"}
                   fontWeight={"600"}
                   color={"#E1E4E4"}
-                  _selected={{ color: "#00C3BA" }}
+                  _selected={{ color: popmint }}
                 >
                   {tab}
                 </Tab>
@@ -462,7 +462,7 @@ const TabButton = ({ item, index, selectedTabIndex }) => {
           <Box
             w={"5px"}
             h={"full"}
-            bgColor={"#00C3BA"}
+            bgColor={popmint}
             borderRightRadius={"xl"}
           />
         ) : (

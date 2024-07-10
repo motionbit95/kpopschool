@@ -24,6 +24,7 @@ import React, { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
 import Timetable from "../../../Component/TimeTabel";
+import { popyellow, popblue, popmint } from "../../../App";
 
 const CurriculumDetail = () => {
   const location = useLocation();
@@ -86,22 +87,22 @@ const CurriculumDetail = () => {
             <FiChevronRight />
             <Text>Intro</Text> {/* 댄스인지 보컬인지에 대한 여부 */}
             <FiChevronRight />
-            <Text color={"#00C3BA"}>{category}</Text>
+            <Text color={popmint}>{category}</Text>
           </Flex>
           <Stack spacing={4}>
-            <Text fontSize={"3xl"} fontWeight={"600"} color={"#FF3CA2"}>
+            <Text fontSize={"3xl"} fontWeight={"600"} color={popmag}>
               {category}
             </Text>
           </Stack>
         </Stack>
       </Container>
       <Tabs defaultIndex={format === "1:1" ? 0 : format === "1:6" ? 1 : 2}>
-        <TabList justifyContent={"center"} borderBottomColor={"#00C3BA"}>
+        <TabList justifyContent={"center"} borderBottomColor={popmint}>
           <Tab
             px={20}
-            color={format === "1:1" ? "#00C3BA" : "#E1E4E4"}
-            borderBottomColor={format === "1:1" ? "#00C3BA" : "#E1E4E4"}
-            // _selected={{ color: "#00C3BA", borderBottomColor: "#00C3BA" }}
+            color={format === "1:1" ? popmint : "#E1E4E4"}
+            borderBottomColor={format === "1:1" ? popmint : "#E1E4E4"}
+            // _selected={{ color: popmint, borderBottomColor: popmint }}
             onClick={() => {
               setFormat("1:1");
             }}
@@ -110,9 +111,9 @@ const CurriculumDetail = () => {
           </Tab>
           <Tab
             px={20}
-            color={format === "1:6" ? "#00C3BA" : "#E1E4E4"}
-            borderBottomColor={format === "1:6" ? "#00C3BA" : "#E1E4E4"}
-            // _selected={{ color: "#00C3BA", borderBottomColor: "#00C3BA" }}
+            color={format === "1:6" ? popmint : "#E1E4E4"}
+            borderBottomColor={format === "1:6" ? popmint : "#E1E4E4"}
+            // _selected={{ color: popmint, borderBottomColor: popmint }}
             onClick={() => {
               setFormat("1:6");
             }}
@@ -121,23 +122,23 @@ const CurriculumDetail = () => {
           </Tab>
           <Tab
             px={20}
-            color={format === "VOD" ? "#00C3BA" : "#E1E4E4"}
-            borderBottomColor={format === "VOD" ? "#00C3BA" : "#E1E4E4"}
+            color={format === "VOD" ? popmint : "#E1E4E4"}
+            borderBottomColor={format === "VOD" ? popmint : "#E1E4E4"}
             onClick={() => {
               setFormat("VOD");
             }}
-            // _selected={{ color: "#00C3BA", borderBottomColor: "#00C3BA" }}
+            // _selected={{ color: popmint, borderBottomColor: popmint }}
           >
             VOD
           </Tab>
           <Tab
             px={20}
-            color={format === "Time Table" ? "#00C3BA" : "#E1E4E4"}
-            borderBottomColor={format === "Time Table" ? "#00C3BA" : "#E1E4E4"}
+            color={format === "Time Table" ? popmint : "#E1E4E4"}
+            borderBottomColor={format === "Time Table" ? popmint : "#E1E4E4"}
             onClick={() => {
               setFormat("Time Table");
             }}
-            // _selected={{ color: "#00C3BA", borderBottomColor: "#00C3BA" }}
+            // _selected={{ color: popmint, borderBottomColor: popmint }}
           >
             Time Table
           </Tab>
@@ -222,12 +223,12 @@ const Lessons = ({ curriculumList, category, format }) => {
                   fontWeight={"600"}
                   color={
                     item.difficulty === "Beginner"
-                      ? "#FFCC00"
+                      ? popyellow
                       : item.difficulty === "Intermediate"
-                      ? "#00C3BA"
+                      ? popmint
                       : item.difficulty === "Advanced"
                       ? "#00B2FF"
-                      : "#FF3CA2"
+                      : popmag
                   }
                 >
                   {`${item.difficulty} course`}
@@ -235,20 +236,20 @@ const Lessons = ({ curriculumList, category, format }) => {
                 <HStack spacing={16}>
                   <Stack spacing={0}>
                     <Text color={"#C0C0C0"}>Month</Text>
-                    <Text fontWeight={"700"} color={"#00C3BA"}>
+                    <Text fontWeight={"700"} color={popmint}>
                       {item.month}
                     </Text>
                   </Stack>
                   <Stack spacing={0}>
                     <Text color={"#C0C0C0"}>Sessions</Text>
-                    <Text fontWeight={"700"} color={"#00C3BA"}>
+                    <Text fontWeight={"700"} color={popmint}>
                       {item.totalSessions}
                       {/* {item.sessions} */}
                     </Text>
                   </Stack>
                   {/* <Stack spacing={0}>
                     <Text color={"#C0C0C0"}>Price</Text>
-                    <Text fontWeight={"700"} color={"#00C3BA"}>
+                    <Text fontWeight={"700"} color={popmint}>
                       {`$${item.price} per session`}
                     </Text>
                   </Stack> */}
@@ -271,7 +272,7 @@ const Lessons = ({ curriculumList, category, format }) => {
                 {/* <Box w={"100%"} display={"flex"} justifyContent={"flex-end"}>
                   <Button
                     size={"lg"}
-                    bgColor={isOkay ? "#FF3CA2" : "#00B2FF"}
+                    bgColor={isOkay ? popmag : "#00B2FF"}
                     color={"white"}
                   >
                     {isOkay ? "APPLY" : "CONTINUE"}

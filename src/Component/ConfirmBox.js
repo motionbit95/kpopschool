@@ -15,7 +15,7 @@ import {
 
 function ConfirmBox(props) {
   const { isOpen, onClose, onConfirm } = props;
-  const color = "#FF3CA2";
+  const color = popmag;
   return (
     <>
       <Modal size={"sm"} isCentered isOpen={isOpen} onClose={onClose}>

@@ -11,7 +11,7 @@ import {
   Text,
   Tr,
 } from "@chakra-ui/react";
-import { host_url } from "../../App";
+import { host_url, popmint } from "../../App";
 
 const InquiryHistory = () => {
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
@@ -60,7 +60,7 @@ const InquiryHistory = () => {
               {headers.map((item) => (
                 <Td
                   h={"54px"}
-                  color={"#00C3BA"}
+                  color={popmint}
                   fontWeight={"500"}
                   textAlign={"center"}
                 >

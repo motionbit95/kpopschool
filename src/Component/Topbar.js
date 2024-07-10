@@ -15,6 +15,7 @@ import { signOut } from "firebase/auth";
 import { auth, db } from "../Firebase/Config";
 import { getCheckoutUrl, getIsPayment } from "../Firebase/StripePayment";
 import { collection, onSnapshot } from "firebase/firestore";
+import { popmint } from "../App";
 
 const Topbar = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -106,11 +107,9 @@ const Topbar = () => {
                 w={"140px"}
                 bgColor={"white"}
                 borderRadius={0}
-                _hover={{ color: "#00C3BA" }}
+                _hover={{ color: popmint }}
                 color={
-                  location.pathname.startsWith("/teachers")
-                    ? "#00C3BA"
-                    : "black"
+                  location.pathname.startsWith("/teachers") ? popmint : "black"
                 }
               >
                 Teachers
@@ -125,10 +124,10 @@ const Topbar = () => {
                   w={"140px"}
                   bgColor={"white"}
                   borderRadius={0}
-                  _hover={{ color: "#00C3BA" }}
+                  _hover={{ color: popmint }}
                   color={
                     location.pathname.startsWith("/curriculum")
-                      ? "#00C3BA"
+                      ? popmint
                       : "black"
                   }
                 >
@@ -142,7 +141,7 @@ const Topbar = () => {
                       bgColor={"white"}
                       borderRadius={0}
                       top={12}
-                      _hover={{ color: "#00C3BA" }}
+                      _hover={{ color: popmint }}
                       onClick={() => {
                         const category = "Vocal";
                         const format = "1:1";
@@ -159,7 +158,7 @@ const Topbar = () => {
                       bgColor={"white"}
                       borderRadius={0}
                       top={24}
-                      _hover={{ color: "#00C3BA" }}
+                      _hover={{ color: popmint }}
                       onClick={() => {
                         const category = "Dance";
                         const format = "1:1";
@@ -179,13 +178,13 @@ const Topbar = () => {
                 onMouseLeave={handleMouseleave}
               >
                 <Button
-                  _hover={{ color: "#00C3BA" }}
+                  _hover={{ color: popmint }}
                   w={"140px"}
                   bgColor={"white"}
                   borderRadius={0}
                   color={
                     location.pathname.startsWith("/community")
-                      ? "#00C3BA"
+                      ? popmint
                       : "black"
                   }
                   onClick={() => {
@@ -205,7 +204,7 @@ const Topbar = () => {
                       bgColor={"white"}
                       borderRadius={0}
                       top={12}
-                      _hover={{ color: "#00C3BA" }}
+                      _hover={{ color: popmint }}
                       onClick={() => {
                         const communityIndex = 0;
                         Nav(`/community`, {
@@ -221,7 +220,7 @@ const Topbar = () => {
                       bgColor={"white"}
                       borderRadius={0}
                       top={24}
-                      _hover={{ color: "#00C3BA" }}
+                      _hover={{ color: popmint }}
                       onClick={() => {
                         const communityIndex = 1;
                         Nav(`/community`, {
@@ -241,13 +240,11 @@ const Topbar = () => {
                 onMouseLeave={handleMouseleave}
               >
                 <Button
-                  _hover={{ color: "#00C3BA" }}
+                  _hover={{ color: popmint }}
                   bgColor={"white"}
                   borderRadius={0}
                   color={
-                    location.pathname.startsWith("/mypage")
-                      ? "#00C3BA"
-                      : "black"
+                    location.pathname.startsWith("/mypage") ? popmint : "black"
                   }
                   onClick={() => {
                     const myPageIndex = 0;
@@ -268,7 +265,7 @@ const Topbar = () => {
                           bgColor={"white"}
                           borderRadius={0}
                           top={12}
-                          _hover={{ color: "#00C3BA" }}
+                          _hover={{ color: popmint }}
                           onClick={() => {
                             const myPageIndex = 0;
                             Nav(`/mypage`, {
@@ -284,7 +281,7 @@ const Topbar = () => {
                           bgColor={"white"}
                           borderRadius={0}
                           top={24}
-                          _hover={{ color: "#00C3BA" }}
+                          _hover={{ color: popmint }}
                           onClick={() => {
                             const myPageIndex = 1;
                             Nav(`/mypage`, {
@@ -300,7 +297,7 @@ const Topbar = () => {
                           bgColor={"white"}
                           borderRadius={0}
                           top={36}
-                          _hover={{ color: "#00C3BA" }}
+                          _hover={{ color: popmint }}
                           onClick={() => {
                             const myPageIndex = 2;
                             Nav(`/mypage`, {
@@ -316,7 +313,7 @@ const Topbar = () => {
                           bgColor={"white"}
                           borderRadius={0}
                           top={48}
-                          _hover={{ color: "#00C3BA" }}
+                          _hover={{ color: popmint }}
                           onClick={() => {
                             const myPageIndex = 3;
                             Nav(`/mypage`, {
@@ -335,7 +332,7 @@ const Topbar = () => {
                           bgColor={"white"}
                           borderRadius={0}
                           top={12}
-                          _hover={{ color: "#00C3BA" }}
+                          _hover={{ color: popmint }}
                           onClick={() => {
                             const myPageIndex = 0;
                             Nav(`/mypage`, {
@@ -351,7 +348,7 @@ const Topbar = () => {
                           bgColor={"white"}
                           borderRadius={0}
                           top={24}
-                          _hover={{ color: "#00C3BA" }}
+                          _hover={{ color: popmint }}
                           onClick={() => {
                             const myPageIndex = 1;
                             Nav(`/mypage`, {
@@ -379,7 +376,7 @@ const Topbar = () => {
                 <Button
                   variant={"solid"}
                   color={"white"}
-                  bgColor={"#00C3BA"}
+                  bgColor={popmint}
                   onClick={() => Nav("/signin")}
                 >
                   LOG IN

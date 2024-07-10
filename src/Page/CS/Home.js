@@ -13,7 +13,7 @@ import React, { useEffect, useState } from "react";
 import TeacherInfo from "./Teachers/TeacherInfo";
 import { LessonItem, TeacherItem } from "../../Component/HomeDetail";
 import ImageCarousel from "../../Component/ImageCarousel";
-import { host_url } from "../../App";
+import { host_url, popyellow, popmag, popmint } from "../../App";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
@@ -130,8 +130,8 @@ const Home = () => {
                 px={24}
                 py={8}
                 variant={"outline"}
-                borderColor={"#FF3CA2"}
-                color={"#FF3CA2"}
+                borderColor={popmag}
+                color={popmag}
                 onClick={() => scrollToSection(main?.strLink)}
               >
                 VIEW MORE
@@ -149,7 +149,7 @@ const Home = () => {
         <Stack spacing={16}>
           <Stack>
             <Box>
-              <Text fontSize={"6xl"} color={"#FFCC00"} fontWeight={"bold"}>
+              <Text fontSize={"6xl"} color={popyellow} fontWeight={"bold"}>
                 Teachers
               </Text>
             </Box>
@@ -157,7 +157,7 @@ const Home = () => {
           </Stack>
           <Stack id="Lessons">
             <Box>
-              <Text fontSize={"6xl"} color={"#FF3CA2"} fontWeight={"bold"}>
+              <Text fontSize={"6xl"} color={popmag} fontWeight={"bold"}>
                 Lessons
               </Text>
             </Box>
@@ -171,13 +171,13 @@ const Home = () => {
               <Stack w={"100%"} h={"100%"} justifyContent={"space-between"}>
                 <Stack>
                   <Image src={course?.beginner?.image} alt={""} />
-                  <Text color={"#FFCC00"} fontSize={"40px"} fontWeight={"bold"}>
+                  <Text color={popyellow} fontSize={"40px"} fontWeight={"bold"}>
                     Beginner
                   </Text>
                   <Text fontSize={"24px"} whiteSpace={"pre-line"}>
                     {course?.beginner?.description.split("\n").map((item) => (
                       <Text
-                        color={item.includes("#") ? "#FF3CA2" : "black"}
+                        color={item.includes("#") ? popmag : "black"}
                         key={item}
                       >
                         {item}
@@ -187,7 +187,7 @@ const Home = () => {
                   </Text>
                 </Stack>
                 <Button
-                  bgColor={"#FFCC00"}
+                  bgColor={popyellow}
                   color="white"
                   fontSize={"24px"}
                   whiteSpace={"pre-line"}
@@ -201,7 +201,7 @@ const Home = () => {
               <Stack w={"100%"} h={"100%"} justifyContent={"space-between"}>
                 <Stack>
                   <Image src={course?.intermediate?.image} alt={""} />
-                  <Text color={"#00C3BA"} fontSize={"40px"} fontWeight={"bold"}>
+                  <Text color={popmint} fontSize={"40px"} fontWeight={"bold"}>
                     Intermediate
                   </Text>
                   <Text fontSize={"24px"} whiteSpace={"pre-line"}>
@@ -209,7 +209,7 @@ const Home = () => {
                       .split("\n")
                       .map((item) => (
                         <Text
-                          color={item.includes("#") ? "#FF3CA2" : "black"}
+                          color={item.includes("#") ? popmag : "black"}
                           key={item}
                         >
                           {item}
@@ -219,7 +219,7 @@ const Home = () => {
                   </Text>
                 </Stack>
                 <Button
-                  bgColor={"#00C3BA"}
+                  bgColor={popmint}
                   color="white"
                   fontSize={"24px"}
                   whiteSpace={"pre-line"}
@@ -239,7 +239,7 @@ const Home = () => {
                   <Text fontSize={"24px"} whiteSpace={"pre-line"}>
                     {course?.advanced?.description.split("\n").map((item) => (
                       <Text
-                        color={item.includes("#") ? "#FF3CA2" : "black"}
+                        color={item.includes("#") ? popmag : "black"}
                         key={item}
                       >
                         {item}
@@ -263,7 +263,7 @@ const Home = () => {
               <Stack w={"100%"} h={"100%"} justifyContent={"space-between"}>
                 <Stack>
                   <Image src={course?.professional?.image} alt={""} />
-                  <Text color={"#FF3CA2"} fontSize={"40px"} fontWeight={"bold"}>
+                  <Text color={popmag} fontSize={"40px"} fontWeight={"bold"}>
                     Professional
                   </Text>
                   <Text fontSize={"24px"} whiteSpace={"pre-line"}>
@@ -271,7 +271,7 @@ const Home = () => {
                       .split("\n")
                       .map((item) => (
                         <Text
-                          color={item.includes("#") ? "#FF3CA2" : "black"}
+                          color={item.includes("#") ? popmag : "black"}
                           key={item}
                         >
                           {item}
@@ -281,7 +281,7 @@ const Home = () => {
                   </Text>
                 </Stack>
                 <Button
-                  bgColor={"#FF3CA2"}
+                  bgColor={popmag}
                   color="white"
                   fontSize={"24px"}
                   whiteSpace={"pre-line"}
@@ -301,7 +301,7 @@ const Home = () => {
         <Image src={main?.withus} alt={""} />
       </Container>
       <Container minW={"container.xl"} pb={24}>
-        <Text fontSize={"6xl"} color={"#FF3CA2"} fontWeight={"bold"}>
+        <Text fontSize={"6xl"} color={popmag} fontWeight={"bold"}>
           Lesson Type
         </Text>
         <HStack
@@ -317,7 +317,7 @@ const Home = () => {
             justifyContent={"space-between"}
           >
             <Image src={lessonType?.one?.image} alt={""} />
-            <Text color={"#FFCC00"} fontSize={"40px"} fontWeight={"bold"}>
+            <Text color={popyellow} fontSize={"40px"} fontWeight={"bold"}>
               1:1 Personal
             </Text>
             <Text fontSize={"24px"}>{lessonType?.one?.description}</Text>
@@ -330,7 +330,7 @@ const Home = () => {
             justifyContent={"space-between"}
           >
             <Image src={lessonType?.six?.image} alt={""} />
-            <Text color={"#00C3BA"} fontSize={"40px"} fontWeight={"bold"}>
+            <Text color={popmint} fontSize={"40px"} fontWeight={"bold"}>
               1:6 Group
             </Text>
             <Text fontSize={"24px"}>{lessonType?.vod?.description}</Text>
@@ -358,9 +358,9 @@ const Home = () => {
           fontWeight={"bold"}
           whiteSpace={"nowrap"}
         >
-          <Text color={"#00C3BA"}>Be a</Text>
-          <Text color={"#FFCC00"}>STAR</Text>
-          <Text color={"#00C3BA"}>with us!</Text>
+          <Text color={popmint}>Be a</Text>
+          <Text color={popyellow}>STAR</Text>
+          <Text color={popmint}>with us!</Text>
         </HStack>
       </Center>
     </Flex>

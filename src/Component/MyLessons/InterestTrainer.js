@@ -22,6 +22,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { popyellow, popblue, popmint } from "../../App";
 
 const InterestTrainer = () => {
   const tabLists = ["ALL", "VOCAL", "DANCE"];
@@ -62,7 +63,7 @@ const InterestTrainer = () => {
               fontWeight={"600"}
               color={"white"}
               bgColor={"#E1E4E4"}
-              _selected={{ bgColor: "#FFCC00" }}
+              _selected={{ bgColor: popyellow }}
             >
               {tab}
             </Tab>

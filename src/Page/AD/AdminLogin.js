@@ -45,7 +45,7 @@ const AdminLogin = () => {
         <Stack spacing={12} w={"full"}>
           <Text
             textAlign={"center"}
-            color={"#00C3BA"}
+            color={popmint}
             fontSize={"4xl"}
             fontWeight={"800"}
           >
@@ -67,7 +67,7 @@ const AdminLogin = () => {
           <Button
             size={"lg"}
             color={"white"}
-            bgColor={"#00C3BA"}
+            bgColor={popmint}
             onClick={handleLogin}
           >
             SIGN IN

@@ -11,7 +11,7 @@ import {
 import React, { useEffect, useState } from "react";
 import ToastEditor from "../../../Component/ToastEditor";
 import { FiPlus } from "react-icons/fi";
-import { host_url } from "../../../App";
+import { host_url, popmint } from "../../../App";
 
 const Policy = () => {
   const [sections, setSection] = useState([]);
@@ -77,7 +77,7 @@ const Policy = () => {
             Terms and Conditions Policy
           </Text>
           <Box>
-            <Button color={"white"} bgColor={"#00C3BA"} onClick={handleSubmit}>
+            <Button color={"white"} bgColor={popmint} onClick={handleSubmit}>
               SAVE
             </Button>
           </Box>
@@ -97,7 +97,7 @@ const Policy = () => {
           ))}
         </Stack>
         <Stack align={"center"} pt={8}>
-          <Circle onClick={addSection} size={"33px"} bgColor={"#00C3BA"}>
+          <Circle onClick={addSection} size={"33px"} bgColor={popmint}>
             <FiPlus color="white" size={20} />
           </Circle>
         </Stack>

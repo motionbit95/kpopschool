@@ -15,6 +15,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { auth } from "../../Firebase/Config";
 import { getCheckoutUrl } from "../../Firebase/StripePayment";
+import { popyellow, popblue, popmint, popmag } from "../../App";
 
 const Payment = () => {
   const navigate = useNavigate();
@@ -41,8 +42,8 @@ const Payment = () => {
   const handleTest = async () => {
     if (isLogin) {
       // const user = auth.currentUser;
-      // 테스트 product ID : price_1PV3ZUGcRvPNh5Hm56ZrKdfe
-      const productId = "price_1PV3ZUGcRvPNh5Hm56ZrKdfe";
+      // 테스트 product ID : price_1Pb4DGGcRvPNh5Hmp7kkeOG1
+      const productId = "price_1Pb4DGGcRvPNh5Hmp7kkeOG1";
       let checkoutUrl = await getCheckoutUrl(productId);
       console.log(checkoutUrl);
       window.location.href = checkoutUrl;
@@ -58,7 +59,7 @@ const Payment = () => {
           <Stack
             w={"full"}
             spacing={8}
-            divider={<StackDivider borderColor={"#00C3BA"} />}
+            divider={<StackDivider borderColor={popmint} />}
           >
             <Stack
               p={8}
@@ -106,7 +107,7 @@ const Payment = () => {
                 fontSize={"2xl"}
                 fontWeight={"700"}
                 textAlign={"right"}
-                color={"#FF3CA2"}
+                color={popmag}
               >{`$${item.price}`}</Text>
             </Stack>
             <Stack spacing={3}>
@@ -130,11 +131,11 @@ const Payment = () => {
                 <HStack justify={"space-between"}>
                   <Flex gap={1}>
                     <Text>There is </Text>
-                    <Text color={"#00C3BA"}>coupon </Text>
+                    <Text color={popmint}>coupon </Text>
                     <Text>available</Text>
                   </Flex>
                   <ChevronRightIcon
-                    color={"#00C3BA"}
+                    color={popmint}
                     boxSize={"20px"}
                     onClick={() => setOpenCoupon(!openCoupon)}
                   />
@@ -164,7 +165,7 @@ const Payment = () => {
                 <HStack justify={"space-between"}>
                   <Text>Stripe</Text>
                   <ChevronRightIcon
-                    color={"#00C3BA"}
+                    color={popmint}
                     boxSize={"20px"}
                     onClick={() => setOpenPayment(!openPayment)}
                   />
@@ -236,20 +237,20 @@ const Payment = () => {
             </HStack>
             <hr />
             <HStack justify={"space-between"}>
-              <Text fontSize={"2xl"} fontWeight={"700"} color={"#FF3CA2"}>
+              <Text fontSize={"2xl"} fontWeight={"700"} color={popmag}>
                 Total
               </Text>
               <Text
                 fontSize={"2xl"}
                 fontWeight={"700"}
-                color={"#FF3CA2"}
+                color={popmag}
               >{`$${item.price}`}</Text>
             </HStack>
             <Stack p={4} alignContent={"center"} justifyContent={"center"}>
               <Button
                 size={"lg"}
                 color={"white"}
-                bgColor={"#FFCC00"}
+                bgColor={popyellow}
                 onClick={handleTest}
               >
                 PLACE ORDER

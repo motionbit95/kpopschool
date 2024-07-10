@@ -17,7 +17,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { host_url } from "../../../../App";
+import { host_url, popmint } from "../../../../App";
 
 const Coupon = (props) => {
   const [list, setList] = useState([]);
@@ -109,7 +109,7 @@ const Coupon = (props) => {
                   <Box
                     w={"330px"}
                     h={"140px"}
-                    bgColor={"#00C3BA"}
+                    bgColor={popmint}
                     borderRadius={"md"}
                     overflow={"hidden"}
                   >
@@ -140,7 +140,7 @@ const Coupon = (props) => {
                   <Box display={"flex"} justifyContent={"flex-end"}>
                     <Button
                       color={"white"}
-                      bgColor={"#FF3CA2"}
+                      bgColor={popmag}
                       onClick={() => deleteCoupon(data.id)}
                     >
                       DELETE

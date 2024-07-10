@@ -26,6 +26,7 @@ import {
   signInWithRedirect,
 } from "firebase/auth";
 import { auth } from "../../../Firebase/Config";
+import { popmint } from "../../../App";
 
 const SignUp = () => {
   const [step, setStep] = useState(0);
@@ -146,7 +147,7 @@ const EmailSignupForm = ({ setStep, navigate, formData, setFormData }) => {
         <Button
           color={"white"}
           fontSize={"24px"}
-          bgColor={"#00C3BA"}
+          bgColor={popmint}
           h={"66px"}
           onClick={() => confirmPassword()}
         >
@@ -213,7 +214,7 @@ const EmailSignupForm = ({ setStep, navigate, formData, setFormData }) => {
       <Stack textAlign={"center"} align={"center"}>
         <Stack w={"320px"} align={"center"}>
           <Flex
-            color={"#00C3BA"}
+            color={popmint}
             cursor={"pointer"}
             whiteSpace={"nowrap"}
             gap={1}
@@ -226,7 +227,7 @@ const EmailSignupForm = ({ setStep, navigate, formData, setFormData }) => {
         <Flex gap={4}>
           <Text fontWeight={"500"}>Already have an account?</Text>
           <Text
-            color={"#00C3BA"}
+            color={popmint}
             cursor={"pointer"}
             onClick={() => navigate("/signin")}
           >
@@ -266,7 +267,7 @@ const NameSignupForm = ({
         <Button
           color={"white"}
           fontSize={"24px"}
-          bgColor={"#00C3BA"}
+          bgColor={popmint}
           h={"66px"}
           onClick={() => sendEmail()}
         >
@@ -359,7 +360,7 @@ const ConfirmForm = ({
             <HStack
               p={3}
               border={"1px solid"}
-              borderColor={errEnter ? "#FF3CA2" : "#E1E4E4"}
+              borderColor={errEnter ? popmag : "#E1E4E4"}
               borderRadius={"md"}
             >
               <PinInput
@@ -368,31 +369,31 @@ const ConfirmForm = ({
                   setErrEnter(false);
                 }}
                 variant={"flushed"}
-                focusBorderColor={"#00C3BA"}
+                focusBorderColor={popmint}
                 placeholder=""
               >
                 <PinInputField
-                  color={errEnter ? "#FF3CA2" : "black"}
+                  color={errEnter ? popmag : "black"}
                   fontSize={"24px"}
                   fontWeight={"700"}
                 />
                 <PinInputField
-                  color={errEnter ? "#FF3CA2" : "black"}
+                  color={errEnter ? popmag : "black"}
                   fontSize={"24px"}
                   fontWeight={"700"}
                 />
                 <PinInputField
-                  color={errEnter ? "#FF3CA2" : "black"}
+                  color={errEnter ? popmag : "black"}
                   fontSize={"24px"}
                   fontWeight={"700"}
                 />
                 <PinInputField
-                  color={errEnter ? "#FF3CA2" : "black"}
+                  color={errEnter ? popmag : "black"}
                   fontSize={"24px"}
                   fontWeight={"700"}
                 />
                 <PinInputField
-                  color={errEnter ? "#FF3CA2" : "black"}
+                  color={errEnter ? popmag : "black"}
                   fontSize={"24px"}
                   fontWeight={"700"}
                 />
@@ -400,25 +401,21 @@ const ConfirmForm = ({
             </HStack>
           </HStack>
           {errEnter && (
-            <Text color={"#FF3CA2"} fontSize={"24px"} textAlign={"center"}>
+            <Text color={popmag} fontSize={"24px"} textAlign={"center"}>
               Code does not match
             </Text>
           )}
         </Stack>
         <Flex gap={4} fontSize={"lg"} fontWeight={"500"} justify={"center"}>
           <Text>Didn't receive the code?</Text>
-          <Text
-            cursor={"pointer"}
-            color={"#FF3CA2"}
-            onClick={() => sendEmail()}
-          >
+          <Text cursor={"pointer"} color={popmag} onClick={() => sendEmail()}>
             Send Again
           </Text>
         </Flex>
         <Button
           color={"white"}
           fontSize={"24px"}
-          bgColor={"#00C3BA"}
+          bgColor={popmint}
           h={"66px"}
           onClick={() => confirmValidCode()}
         >

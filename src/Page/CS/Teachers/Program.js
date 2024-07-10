@@ -26,7 +26,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { host_url } from "../../../App";
+import { host_url, popyellow, popblue, popmint } from "../../../App";
 
 const Program = () => {
   const location = useLocation();
@@ -158,7 +158,7 @@ const Program = () => {
             <FiChevronRight />
             <Text>{`${item.difficulty} course`}</Text>
             <FiChevronRight />
-            <Text color={"#00C3BA"}></Text>
+            <Text color={popmint}></Text>
           </Flex>
           {/* 강의 정보 */}
           <HStack spacing={4}>
@@ -260,7 +260,7 @@ const Program = () => {
                       <Flex gap={3}>
                         <Tag
                           borderRadius={"xl"}
-                          bgColor={"#FFCC00"}
+                          bgColor={popyellow}
                           color={"white"}
                           fontWeight={"bold"}
                           px={3}
@@ -269,7 +269,7 @@ const Program = () => {
                         </Tag>
                         <Tag
                           borderRadius={"xl"}
-                          bgColor={"#FFCC00"}
+                          bgColor={popyellow}
                           color={"white"}
                           fontWeight={"bold"}
                           px={3}
@@ -278,7 +278,7 @@ const Program = () => {
                         </Tag>
                         <Tag
                           borderRadius={"xl"}
-                          bgColor={"#FFCC00"}
+                          bgColor={popyellow}
                           color={"white"}
                           fontWeight={"bold"}
                           px={3}
@@ -330,12 +330,12 @@ const Program = () => {
       </Container>
       {/* 강의 정보 */}
       <Tabs>
-        <TabList justifyContent={"center"} borderBottomColor={"#00C3BA"}>
+        <TabList justifyContent={"center"} borderBottomColor={popmint}>
           <Tab
             px={20}
             color={"#E1E4E4"}
             borderBottomColor={"#E1E4E4"}
-            _selected={{ color: "#00C3BA", borderBottomColor: "#00C3BA" }}
+            _selected={{ color: popmint, borderBottomColor: popmint }}
           >
             Curriculum
           </Tab>
@@ -343,7 +343,7 @@ const Program = () => {
             px={20}
             color={"#E1E4E4"}
             borderBottomColor={"#E1E4E4"}
-            _selected={{ color: "#00C3BA", borderBottomColor: "#00C3BA" }}
+            _selected={{ color: popmint, borderBottomColor: popmint }}
           >
             Review
           </Tab>
@@ -351,7 +351,7 @@ const Program = () => {
         <TabPanels>
           <TabPanel>
             <Stack>
-              {item.classes.map((value, index) => (
+              {item?.classes?.map((value, index) => (
                 <HStack border={"1px solid #E1E4E4"} borderRadius={"md"} p={4}>
                   {value.file.length > 0 && (
                     <Image
@@ -388,12 +388,7 @@ const Program = () => {
                   placeholder="You can use it after logging in. Please leave a review after taking the course"
                 />
                 <InputRightElement h={"full"} mr={8}>
-                  <Button
-                    px={8}
-                    size={"sm"}
-                    color={"white"}
-                    bgColor={"#00C3BA"}
-                  >
+                  <Button px={8} size={"sm"} color={"white"} bgColor={popmint}>
                     GO
                   </Button>
                 </InputRightElement>

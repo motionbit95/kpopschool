@@ -99,7 +99,7 @@ const Cummunity = () => {
               fontSize={"2xl"}
               fontWeight={"600"}
               color={"#E1E4E4"}
-              _selected={{ color: "#00C3BA" }}
+              _selected={{ color: popmint }}
             >
               event
             </Tab>
@@ -108,7 +108,7 @@ const Cummunity = () => {
               fontSize={"2xl"}
               fontWeight={"600"}
               color={"#E1E4E4"}
-              _selected={{ color: "#00C3BA" }}
+              _selected={{ color: popmint }}
             >
               FAQ
             </Tab>
@@ -164,7 +164,7 @@ const Cummunity = () => {
                           <Box w={"full"}>
                             <Text
                               fontSize={"4xl"}
-                              color={"#00C3BA"}
+                              color={popmint}
                               fontWeight={"600"}
                             >
                               {event.title}

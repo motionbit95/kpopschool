@@ -2,6 +2,7 @@ import { Container, Flex, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
+import { popyellow, popblue, popmint } from "../../../App";
 
 const CurriculumList = () => {
   const location = useLocation();
@@ -24,7 +25,7 @@ const CurriculumList = () => {
             <FiChevronRight />
             <Text>{item.category}</Text>
             <FiChevronRight />
-            <Text color={"#00C3BA"}>{`${item.difficulty} Course`}</Text>
+            <Text color={popmint}>{`${item.difficulty} Course`}</Text>
           </Flex>
           <Stack spacing={4}>
             <Text
@@ -32,12 +33,12 @@ const CurriculumList = () => {
               fontWeight={"600"}
               color={
                 item.difficulty === "Beginner"
-                  ? "#FFCC00"
+                  ? popyellow
                   : item.difficulty === "Intermediate"
-                  ? "#00C3BA"
+                  ? popmint
                   : item.difficulty === "Advanced"
                   ? "#00B2FF"
-                  : "#FF3CA2"
+                  : popmag
               }
             >
               {`${item.difficulty} course`}

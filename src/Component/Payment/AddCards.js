@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useRef, useState } from "react";
 import { FiMinus } from "react-icons/fi";
+import { popmint } from "../../App";
 
 const AddCards = () => {
   const [values, setValues] = useState(["", "", "", ""]);
@@ -65,8 +66,8 @@ const AddCards = () => {
                 ref={(el) => (inputRefs.current[index] = el)}
                 onPaste={handleCardPaste}
                 textAlign="center"
-                focusBorderColor="#00C3BA"
-                borderColor={value.length === 4 ? "#00C3BA" : "#E1E4E4"}
+                focusBorderColor={popmint}
+                borderColor={value.length === 4 ? popmint : "#E1E4E4"}
                 borderWidth={value.length === 4 ? "2px" : "1px"}
               />
               {index < 3 && <FiMinus color={"#4E4E4E"} />}
@@ -115,7 +116,7 @@ const AddCards = () => {
         </Text>
       </HStack>
       <Box pt={4}>
-        <Button size={"lg"} color={"white"} bg={"#00C3BA"}>
+        <Button size={"lg"} color={"white"} bg={popmint}>
           SAVE
         </Button>
       </Box>

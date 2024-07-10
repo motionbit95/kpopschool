@@ -3,6 +3,7 @@ import { signOut } from "firebase/auth";
 import React from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { auth } from "../Firebase/Config";
+import { popmint } from "../App";
 
 const DashboardTopbar = (props) => {
   return (
@@ -16,11 +17,11 @@ const DashboardTopbar = (props) => {
     >
       <HStack>
         <Text>Dashboard</Text>
-        <FiChevronRight color="#00C3BA" />
+        <FiChevronRight color={popmint} />
         <Text fontWeight={props.isdetail ? "400" : "600"}>{props.sideTab}</Text>
         {props.isdetail && (
           <>
-            <FiChevronRight color="#00C3BA" />
+            <FiChevronRight color={popmint} />
             <Text fontWeight={"600"}>{props.isdetail}</Text>
           </>
         )}

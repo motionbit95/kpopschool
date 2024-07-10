@@ -9,6 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { popyellow, popblue, popmint } from "../../App";
 
 const Management = () => {
   return (
@@ -37,13 +38,13 @@ const Management = () => {
                   </Text>
                   <Text
                     fontSize={"lg"}
-                    color={"#FFCC00"} // item.difficulty === "Beginner"  ? "#FFCC00" : item.difficulty === "Intermediate" ? "#00C3BA" : item.difficulty === "Advanced" ? "#00B2FF": "#FF3CA2"
+                    color={popyellow} // item.difficulty === "Beginner"  ? popyellow : item.difficulty === "Intermediate" ? popmint : item.difficulty === "Advanced" ? "#00B2FF": popmag
                   >{`Beginner course`}</Text>
                 </HStack>
                 <Flex gap={3}>
                   <Tag
                     borderRadius={"xl"}
-                    bgColor={"#FFCC00"}
+                    bgColor={popyellow}
                     color={"white"}
                     fontWeight={"bold"}
                     px={3}
@@ -52,7 +53,7 @@ const Management = () => {
                   </Tag>
                   <Tag
                     borderRadius={"xl"}
-                    bgColor={"#FFCC00"}
+                    bgColor={popyellow}
                     color={"white"}
                     fontWeight={"bold"}
                     px={3}
@@ -61,7 +62,7 @@ const Management = () => {
                   </Tag>
                   <Tag
                     borderRadius={"xl"}
-                    bgColor={"#FFCC00"}
+                    bgColor={popyellow}
                     color={"white"}
                     fontWeight={"bold"}
                     px={3}
@@ -77,41 +78,41 @@ const Management = () => {
               >
                 <HStack spacing={3}>
                   <Text>Number of lickes</Text>
-                  <Text color={"#00C3BA"}>532</Text>
+                  <Text color={popmint}>532</Text>
                 </HStack>
                 <HStack spacing={3}>
                   <Text>review</Text>
-                  <Text color={"#00C3BA"}>15</Text>
+                  <Text color={popmint}>15</Text>
                 </HStack>
                 <HStack spacing={3}>
                   <Text>student</Text>
-                  <Text color={"#00C3BA"}>6</Text>
+                  <Text color={popmint}>6</Text>
                 </HStack>
               </HStack>
               <HStack spacing={8}>
                 <Stack>
                   <Text fontSize={"15px"}>Month</Text>
-                  <Text color={"#00C3BA"} fontSize={"17px"}>
+                  <Text color={popmint} fontSize={"17px"}>
                     3
                   </Text>
                 </Stack>
                 <Stack>
                   <Text fontSize={"15px"}>Sessions</Text>
                   <HStack spacing={0} fontSize={"17px"}>
-                    <Text color={"#00C3BA"}>2</Text>
+                    <Text color={popmint}>2</Text>
                     <Text>/12</Text>
                   </HStack>
                 </Stack>
                 <Stack>
                   <Text fontSize={"15px"}>Price</Text>
                   <Text
-                    color={"#00C3BA"}
+                    color={popmint}
                     fontSize={"17px"}
                   >{`$80 per session`}</Text>
                 </Stack>
                 <Stack>
                   <Text fontSize={"15px"}>GMT</Text>
-                  <Text color={"#00C3BA"} fontSize={"17px"}>
+                  <Text color={popmint} fontSize={"17px"}>
                     LA
                   </Text>
                 </Stack>

@@ -116,7 +116,7 @@ const ClassinProgress = () => {
               <Button
                 w={"140px"}
                 size={"lg"}
-                bgColor={item.progress !== "100%" ? "#00B2FF" : "#FF3CA2"}
+                bgColor={item.progress !== "100%" ? "#00B2FF" : popmag}
                 color={"white"}
                 onClick={() => console.log(item)}
               >

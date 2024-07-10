@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { popmint } from "../App";
 
 export const TeacherItem = ({ teacher }) => {
   const Nav = useNavigate();
@@ -25,7 +26,7 @@ export const TeacherItem = ({ teacher }) => {
       {teacher && (
         <Stack spacing={16}>
           <Stack>
-            <Text fontSize={"40px"} fontWeight={"600"} color={"#00C3BA"}>
+            <Text fontSize={"40px"} fontWeight={"600"} color={popmint}>
               {teacher.title1}
             </Text>
             <Stack gap={24} pt={4}>
@@ -38,8 +39,8 @@ export const TeacherItem = ({ teacher }) => {
                     onClick={() => Nav(teacher.trainer1.strLink)}
                     size={"lg"}
                     variant={"outline"}
-                    color={"#00C3BA"}
-                    borderColor={"#00C3BA"}
+                    color={popmint}
+                    borderColor={popmint}
                     fontWeight={"600"}
                   >
                     Apply
@@ -65,8 +66,8 @@ export const TeacherItem = ({ teacher }) => {
                     onClick={() => Nav(teacher.trainer2.strLink)}
                     size={"lg"}
                     variant={"outline"}
-                    color={"#00C3BA"}
-                    borderColor={"#00C3BA"}
+                    color={popmint}
+                    borderColor={popmint}
                     fontWeight={"600"}
                   >
                     Apply
@@ -89,7 +90,7 @@ export const TeacherItem = ({ teacher }) => {
             <Text
               fontSize={"40px"}
               fontWeight={"600"}
-              color={"#00C3BA"}
+              color={popmint}
               textAlign={"end"}
             >
               {teacher.title2}
@@ -127,8 +128,8 @@ export const TeacherItem = ({ teacher }) => {
                     w={"full"}
                     size={"lg"}
                     variant={"outline"}
-                    color={"#00C3BA"}
-                    borderColor={"#00C3BA"}
+                    color={popmint}
+                    borderColor={popmint}
                     fontWeight={"600"}
                     onClick={() => Nav(teacher.trainer3.strLink)}
                   >
@@ -168,8 +169,8 @@ export const TeacherItem = ({ teacher }) => {
                     w={"full"}
                     size={"lg"}
                     variant={"outline"}
-                    color={"#00C3BA"}
-                    borderColor={"#00C3BA"}
+                    color={popmint}
+                    borderColor={popmint}
                     fontWeight={"600"}
                     onClick={() => Nav(teacher.trainer4.strLink)}
                   >
@@ -209,8 +210,8 @@ export const TeacherItem = ({ teacher }) => {
                     w={"full"}
                     size={"lg"}
                     variant={"outline"}
-                    color={"#00C3BA"}
-                    borderColor={"#00C3BA"}
+                    color={popmint}
+                    borderColor={popmint}
                     fontWeight={"600"}
                     onClick={() => Nav(teacher.trainer5.strLink)}
                   >
@@ -237,7 +238,7 @@ export const LessonItem = ({ lessons }) => {
       {lessons && (
         <Stack spacing={16}>
           <Stack>
-            <Text fontSize={"40px"} fontWeight={"600"} color={"#00C3BA"}>
+            <Text fontSize={"40px"} fontWeight={"600"} color={popmint}>
               {`Vocal`}
             </Text>
             <SimpleGrid display={"flex"} column={2} columnGap={12} pt={4}>
@@ -259,7 +260,7 @@ export const LessonItem = ({ lessons }) => {
                 <Box display={"flex"} justifyContent={"flex-start"}>
                   <Button
                     color={"white"}
-                    bgColor={"#00C3BA"}
+                    bgColor={popmint}
                     size={"xl"}
                     px={16}
                     py={4}
@@ -281,7 +282,7 @@ export const LessonItem = ({ lessons }) => {
             <Text
               fontSize={"40px"}
               fontWeight={"600"}
-              color={"#00C3BA"}
+              color={popmint}
               textAlign={"end"}
             >
               {`Dance`}
@@ -292,7 +293,7 @@ export const LessonItem = ({ lessons }) => {
                 <Box display={"flex"} justifyContent={"flex-end"}>
                   <Button
                     color={"white"}
-                    bgColor={"#00C3BA"}
+                    bgColor={popmint}
                     size={"xl"}
                     px={16}
                     py={4}

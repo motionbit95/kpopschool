@@ -10,6 +10,7 @@ import {
   Text,
   Tr,
 } from "@chakra-ui/react";
+import { popmint } from "../App";
 
 const RetainedCoupon = () => {
   return (
@@ -30,7 +31,7 @@ const RetainedCoupon = () => {
               {headers.map((item) => (
                 <Td
                   h={"54px"}
-                  color={"#00C3BA"}
+                  color={popmint}
                   fontWeight={"500"}
                   textAlign={"center"}
                 >

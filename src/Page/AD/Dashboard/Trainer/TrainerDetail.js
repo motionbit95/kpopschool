@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import { host_url } from "../../../../App";
 import ImageUpload from "../../../../Component/ImageUpload";
 import ConfirmBox from "../../../../Component/ConfirmBox";
+import { popmint } from "../../../../App";
 
 const TrainerDetail = (props) => {
   const [career, setCareer] = useState("");
@@ -49,7 +50,7 @@ const TrainerDetail = (props) => {
         onConfirm={() => props.setIsdetail(false)}
       >
         <Text>Are you sure you want to cancel editing?</Text>
-        <Text color={"#FF3CA2"}>Content is not saved</Text>
+        <Text color={popmag}>Content is not saved</Text>
       </ConfirmBox>
       <Stack
         px={16}
@@ -67,8 +68,8 @@ const TrainerDetail = (props) => {
             <HStack>
               <Button
                 variant={"outline"}
-                borderColor={"#00C3BA"}
-                color={"#00C3BA"}
+                borderColor={popmint}
+                color={popmint}
                 onClick={() => {
                   setSaveStep(1);
                 }}
@@ -77,7 +78,7 @@ const TrainerDetail = (props) => {
               </Button>
               <Button
                 color={"white"}
-                bgColor={"#00C3BA"}
+                bgColor={popmint}
                 onClick={() => updateTeacher(props.data.id)}
               >
                 SAVE

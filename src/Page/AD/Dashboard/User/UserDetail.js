@@ -29,6 +29,7 @@ import React, { useEffect, useState } from "react";
 import { host_url } from "../../../../App";
 import ConfirmBox from "../../../../Component/ConfirmBox";
 import MessageBox from "../../../../Component/MessageBox";
+import { popmint } from "../../../../App";
 
 const UserDetail = (props) => {
   const ITEMS_PER_PAGE = 10;
@@ -155,7 +156,7 @@ const UserDetail = (props) => {
         }}
       >
         <Text>Do you really want to </Text>
-        <Text color={"#FF3CA2"}>delete information?</Text>
+        <Text color={popmag}>delete information?</Text>
       </ConfirmBox>
       <MessageBox
         isOpen={userDeleteStep === 2}
@@ -165,7 +166,7 @@ const UserDetail = (props) => {
         }}
       >
         <Text>Member information has been</Text>
-        <Text color={"#FF3CA2"}>deleted</Text>
+        <Text color={popmag}>deleted</Text>
       </MessageBox>
       <Stack
         px={16}
@@ -183,8 +184,8 @@ const UserDetail = (props) => {
             <Box>
               <Button
                 variant={"outline"}
-                borderColor={"#00C3BA"}
-                color={"#00C3BA"}
+                borderColor={popmint}
+                color={popmint}
                 onClick={() => props.setIsdetail(false)}
               >
                 Back to List
@@ -275,7 +276,7 @@ const UserDetail = (props) => {
             <TableContainer>
               <Table>
                 <Tbody>
-                  <Tr fontWeight={"500"} color={"#00C3BA"}>
+                  <Tr fontWeight={"500"} color={popmint}>
                     <Td textAlign={"center"}>course</Td>
                     <Td textAlign={"center"}>devision</Td>
                     <Td textAlign={"center"}>trainer</Td>
@@ -319,8 +320,8 @@ const UserDetail = (props) => {
               onClick={handlePrevPage}
               isDisabled={currentPage === 1}
               variant={"outline"}
-              color={"#00C3BA"}
-              borderColor={"#00C3BA"}
+              color={popmint}
+              borderColor={popmint}
             />
             <ButtonGroup ml={4} mr={4}>
               {Array.from({ length: totalPages }, (_, index) => (
@@ -328,7 +329,7 @@ const UserDetail = (props) => {
                   key={index + 1}
                   onClick={() => handlePageClick(index + 1)}
                   color={"white"}
-                  bg={currentPage === index + 1 ? "#00C3BA" : "#E1E4E4"}
+                  bg={currentPage === index + 1 ? popmint : "#E1E4E4"}
                 >
                   {index + 1}
                 </Button>
@@ -338,9 +339,9 @@ const UserDetail = (props) => {
               icon={<ChevronRightIcon fontSize={"30px"} />}
               isDisabled={currentPage === totalPages}
               onClick={handleNextPage}
-              color={"#00C3BA"}
+              color={popmint}
               variant={"outline"}
-              borderColor={"#00C3BA"}
+              borderColor={popmint}
             />
           </Flex>
         </Stack>
@@ -356,7 +357,7 @@ const UserDetail = (props) => {
                 <TableContainer>
                   <Table>
                     <Tbody>
-                      <Tr fontWeight={"500"} color={"#00C3BA"}>
+                      <Tr fontWeight={"500"} color={popmint}>
                         <Td textAlign={"center"}>Tag</Td>
                         <Td textAlign={"center"}>Title</Td>
                         <Td textAlign={"center"}>Date</Td>
@@ -395,8 +396,8 @@ const UserDetail = (props) => {
                   onClick={handlePrevPage}
                   isDisabled={currentPage === 1}
                   variant={"outline"}
-                  color={"#00C3BA"}
-                  borderColor={"#00C3BA"}
+                  color={popmint}
+                  borderColor={popmint}
                 />
                 <ButtonGroup ml={4} mr={4}>
                   {Array.from({ length: totalPages }, (_, index) => (
@@ -404,7 +405,7 @@ const UserDetail = (props) => {
                       key={index + 1}
                       onClick={() => handlePageClick(index + 1)}
                       color={"white"}
-                      bg={currentPage === index + 1 ? "#00C3BA" : "#E1E4E4"}
+                      bg={currentPage === index + 1 ? popmint : "#E1E4E4"}
                     >
                       {index + 1}
                     </Button>
@@ -414,9 +415,9 @@ const UserDetail = (props) => {
                   icon={<ChevronRightIcon fontSize={"30px"} />}
                   isDisabled={currentPage === totalPages}
                   onClick={handleNextPage}
-                  color={"#00C3BA"}
+                  color={popmint}
                   variant={"outline"}
-                  borderColor={"#00C3BA"}
+                  borderColor={popmint}
                 />
               </Flex>
             </Stack>
@@ -430,7 +431,7 @@ const UserDetail = (props) => {
                 <TableContainer>
                   <Table>
                     <Tbody>
-                      <Tr fontWeight={"500"} color={"#00C3BA"}>
+                      <Tr fontWeight={"500"} color={popmint}>
                         <Td textAlign={"center"}>Division</Td>
                         <Td textAlign={"center"}>Detail</Td>
                         <Td textAlign={"center"}>Date</Td>
@@ -496,8 +497,8 @@ const UserDetail = (props) => {
                   onClick={handlePrevPage}
                   isDisabled={currentPage === 1}
                   variant={"outline"}
-                  color={"#00C3BA"}
-                  borderColor={"#00C3BA"}
+                  color={popmint}
+                  borderColor={popmint}
                 />
                 <ButtonGroup ml={4} mr={4}>
                   {Array.from({ length: totalPages }, (_, index) => (
@@ -505,7 +506,7 @@ const UserDetail = (props) => {
                       key={index + 1}
                       onClick={() => handlePageClick(index + 1)}
                       color={"white"}
-                      bg={currentPage === index + 1 ? "#00C3BA" : "#E1E4E4"}
+                      bg={currentPage === index + 1 ? popmint : "#E1E4E4"}
                     >
                       {index + 1}
                     </Button>
@@ -515,9 +516,9 @@ const UserDetail = (props) => {
                   icon={<ChevronRightIcon fontSize={"30px"} />}
                   isDisabled={currentPage === totalPages}
                   onClick={handleNextPage}
-                  color={"#00C3BA"}
+                  color={popmint}
                   variant={"outline"}
-                  borderColor={"#00C3BA"}
+                  borderColor={popmint}
                 />
               </Flex>
             </Stack>
@@ -525,7 +526,7 @@ const UserDetail = (props) => {
           <Box display={"flex"} justifyContent={"end"}>
             <Button
               color={"white"}
-              bgColor={"#FF3CA2"}
+              bgColor={popmag}
               onClick={() => setUserDeleteStep(1)}
             >
               Delete Member
@@ -550,7 +551,7 @@ const PaymentModal = (props) => {
           <ModalCloseButton />
           <ModalHeader></ModalHeader>
           <ModalBody p={0}>
-            <Stack divider={<StackDivider borderColor="#00C3BA" />}>
+            <Stack divider={<StackDivider borderColor={popmint} />}>
               <Stack spacing={4} py={4} px={8}>
                 <Stack>
                   <HStack fontWeight={"500"}>
@@ -586,7 +587,7 @@ const PaymentModal = (props) => {
                     <Text color={"#4E4E4E"}>{data.devision}</Text>
                     <Text color={"#4E4E4E"}>{data.trainer}</Text>
                     <Text color={"#4E4E4E"}>{`${data.month} month`}</Text>
-                    <Text color={"#FF3CA2"}>{`$${data.price}`}</Text>
+                    <Text color={popmag}>{`$${data.price}`}</Text>
                   </HStack>
                 ))}
                 <HStack>
@@ -716,7 +717,7 @@ const ReviewModal = (props) => {
             </Stack>
           </ModalBody>
           <ModalFooter>
-            <Button color={"white"} bg={"#FF3CA2"}>
+            <Button color={"white"} bg={popmag}>
               Delete
             </Button>
           </ModalFooter>

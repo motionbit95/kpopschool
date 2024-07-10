@@ -27,6 +27,7 @@ import { FiMinus } from "react-icons/fi";
 import { host_url } from "../../../App";
 import ImageUpload from "../../../Component/ImageUpload";
 import MessageBox from "../../../Component/MessageBox";
+import { popmint } from "../../../App";
 
 const Home = () => {
   const [main, setMain] = useState({});
@@ -246,7 +247,7 @@ const Home = () => {
         onClose={() => setOpenModal({ save: false })}
       >
         <Text>Your information</Text>
-        <Text color={"#00C3BA"}>has been saved</Text>
+        <Text color={popmint}>has been saved</Text>
       </MessageBox>
       <Stack
         w={"full"}
@@ -270,7 +271,7 @@ const Home = () => {
                 <Button
                   size={"lg"}
                   color={"white"}
-                  bgColor={"#00C3BA"}
+                  bgColor={popmint}
                   mt={-10}
                   onClick={handleSubmit}
                 >
@@ -534,12 +535,12 @@ const Home = () => {
             Course Description
           </Text>
           <Tabs>
-            <TabList justifyContent={"center"} borderBottomColor={"#00C3BA"}>
+            <TabList justifyContent={"center"} borderBottomColor={popmint}>
               <Tab
                 px={20}
                 color={"#E1E4E4"}
                 borderBottomColor={"#E1E4E4"}
-                _selected={{ color: "#00C3BA", borderBottomColor: "#00C3BA" }}
+                _selected={{ color: popmint, borderBottomColor: popmint }}
               >
                 Vocal
               </Tab>
@@ -547,7 +548,7 @@ const Home = () => {
                 px={20}
                 color={"#E1E4E4"}
                 borderBottomColor={"#E1E4E4"}
-                _selected={{ color: "#00C3BA", borderBottomColor: "#00C3BA" }}
+                _selected={{ color: popmint, borderBottomColor: popmint }}
               >
                 Dance
               </Tab>
@@ -1885,7 +1886,7 @@ const ArrayManipulationComponent = ({ ...props }) => {
       <IconButton
         icon={<AddIcon />}
         onClick={addItem}
-        bgColor={"#00C3BA"}
+        bgColor={popmint}
         color="white"
         borderRadius={"full"}
       />

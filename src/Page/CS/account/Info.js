@@ -13,6 +13,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React from "react";
+import { popmint } from "../../../App";
 
 const Info = () => {
   return (
@@ -22,7 +23,7 @@ const Info = () => {
           <Image src={require("../../../Asset/Logo/KpopLogo.png")} />
         </Box>
         <Stack align={"center"}>
-          <Text color={"#FF3CA2"} fontSize={"20px"} fontWeight={"600"}>
+          <Text color={popmag} fontSize={"20px"} fontWeight={"600"}>
             Welcome to K-POP SCHOOL!
           </Text>
           <Text color={"#4E4E4E"} fontSize={"20px"}>
@@ -40,7 +41,7 @@ const Info = () => {
                   <Text fontSize={"15px"} color={"#C0C0C0"}>
                     Class time is set to PT
                   </Text>
-                  <Text color={"#FF3CA2"}>*</Text>
+                  <Text color={popmag}>*</Text>
                 </HStack>
                 <Input />
               </Stack>
@@ -54,7 +55,7 @@ const Info = () => {
                   <Text fontSize={"15px"} color={"#C0C0C0"}>
                     What's your name?
                   </Text>
-                  <Text color={"#FF3CA2"}>*</Text>
+                  <Text color={popmag}>*</Text>
                 </HStack>
                 <Input placeholder="First Name" />
               </Stack>
@@ -73,7 +74,7 @@ const Info = () => {
                   <Text fontSize={"15px"} color={"#C0C0C0"}>
                     Date of Birth
                   </Text>
-                  <Text color={"#FF3CA2"}>*</Text>
+                  <Text color={popmag}>*</Text>
                 </HStack>
                 <Input placeholder="MM/DD/YY" />
               </Stack>
@@ -84,7 +85,7 @@ const Info = () => {
                   <Text fontSize={"20px"} fontWeight={"500"}>
                     Email Address
                   </Text>
-                  <Text color={"#FF3CA2"}>*</Text>
+                  <Text color={popmag}>*</Text>
                 </HStack>
                 <Input placeholder="Email Address" />
               </Stack>
@@ -95,7 +96,7 @@ const Info = () => {
                   <Text fontSize={"20px"} fontWeight={"500"}>
                     Gender
                   </Text>
-                  <Text color={"#FF3CA2"}>*</Text>
+                  <Text color={popmag}>*</Text>
                 </HStack>
                 <Select>
                   <option>ETC</option>
@@ -131,18 +132,18 @@ const Info = () => {
               <Text fontSize={"20px"} fontWeight={"500"}>
                 Agree to Terms of Use and Privacy Policy
               </Text>
-              <Text color={"#FF3CA2"}>*</Text>
+              <Text color={popmag}>*</Text>
             </HStack>
             <HStack>
               <Checkbox />
               <Text fontSize={"20px"} fontWeight={"500"}>
                 marketing consent
               </Text>
-              <Text color={"#FF3CA2"}>*</Text>
+              <Text color={popmag}>*</Text>
             </HStack>
           </Stack>
         </Stack>
-        <Button color={"white"} bgColor={"#00C3BA"}>
+        <Button color={"white"} bgColor={popmint}>
           SAVE
         </Button>
       </Stack>

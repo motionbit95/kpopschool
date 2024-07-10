@@ -22,6 +22,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { popyellow, popblue, popmint } from "../../../App";
 
 const Inquiry = () => {
   const ITEMS_PER_PAGE = 10;
@@ -72,7 +73,7 @@ const Inquiry = () => {
           <TableContainer>
             <Table>
               <Tbody>
-                <Tr fontWeight={"500"} color={"#00C3BA"}>
+                <Tr fontWeight={"500"} color={popmint}>
                   <Td textAlign={"center"}>No.</Td>
                   <Td textAlign={"center"}>Tag</Td>
                   <Td textAlign={"center"}>Title</Td>
@@ -89,9 +90,9 @@ const Inquiry = () => {
                       textAlign={"center"}
                       color={
                         data.state === "completed"
-                          ? "#FF3CA2"
+                          ? popmag
                           : data.state === "Waiting for"
-                          ? "#FFCC00"
+                          ? popyellow
                           : "black"
                       }
                     >
@@ -114,8 +115,8 @@ const Inquiry = () => {
               onClick={handlePrevPage}
               isDisabled={currentPage === 1}
               variant={"outline"}
-              color={"#00C3BA"}
-              borderColor={"#00C3BA"}
+              color={popmint}
+              borderColor={popmint}
             />
             <ButtonGroup ml={4} mr={4}>
               {Array.from({ length: totalPages }, (_, index) => (
@@ -123,7 +124,7 @@ const Inquiry = () => {
                   key={index + 1}
                   onClick={() => handlePageClick(index + 1)}
                   color={"white"}
-                  bg={currentPage === index + 1 ? "#00C3BA" : "#E1E4E4"}
+                  bg={currentPage === index + 1 ? popmint : "#E1E4E4"}
                 >
                   {index + 1}
                 </Button>
@@ -133,9 +134,9 @@ const Inquiry = () => {
               icon={<ChevronRightIcon fontSize={"30px"} />}
               isDisabled={currentPage === totalPages}
               onClick={handleNextPage}
-              color={"#00C3BA"}
+              color={popmint}
               variant={"outline"}
-              borderColor={"#00C3BA"}
+              borderColor={popmint}
             />
           </Flex>
           {/* )} */}

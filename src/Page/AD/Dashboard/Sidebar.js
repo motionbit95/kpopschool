@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { popmag } from "../../../App";
 
 export const getTab = () => {
   return window.location.pathname.split("/").pop() === "admin"
@@ -95,7 +96,7 @@ const SelectedButton = ({ Tabname, sideTab, setSideTab }) => {
         variant={"ghost"}
         fontWeight={"700"}
         fontSize={"xl"}
-        color={sideTab === Tabname ? "#FF3CA2" : "black"}
+        color={sideTab === Tabname ? popmag : "black"}
         onClick={() => {
           setSideTab(Tabname);
           navigate(`/admin/${Tabname}`);
@@ -112,7 +113,7 @@ const SelectedButton = ({ Tabname, sideTab, setSideTab }) => {
         right={0}
         w={2}
         h={"full"}
-        bgColor={"#FF3CA2"}
+        bgColor={popmag}
       />
     </Flex>
   );

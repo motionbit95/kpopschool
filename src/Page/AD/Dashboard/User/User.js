@@ -21,7 +21,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { host_url } from "../../../../App";
+import { host_url, popmint } from "../../../../App";
 
 const User = (props) => {
   const ITEMS_PER_PAGE = 10;
@@ -118,7 +118,7 @@ const User = (props) => {
           <TableContainer>
             <Table>
               <Tbody>
-                <Tr fontWeight={"500"} color={"#00C3BA"}>
+                <Tr fontWeight={"500"} color={popmint}>
                   <Td textAlign={"center"}>No.</Td>
                   <Td textAlign={"center"}>Trainer</Td>
                   <Td textAlign={"center"}>Name</Td>
@@ -164,8 +164,8 @@ const User = (props) => {
             onClick={handlePrevPage}
             isDisabled={currentPage === 1}
             variant={"outline"}
-            color={"#00C3BA"}
-            borderColor={"#00C3BA"}
+            color={popmint}
+            borderColor={popmint}
           />
           <ButtonGroup ml={4} mr={4}>
             {Array.from({ length: totalPages }, (_, index) => (
@@ -173,7 +173,7 @@ const User = (props) => {
                 key={index + 1}
                 onClick={() => handlePageClick(index + 1)}
                 color={"white"}
-                bg={currentPage === index + 1 ? "#00C3BA" : "#E1E4E4"}
+                bg={currentPage === index + 1 ? popmint : "#E1E4E4"}
               >
                 {index + 1}
               </Button>
@@ -183,9 +183,9 @@ const User = (props) => {
             icon={<ChevronRightIcon fontSize={"30px"} />}
             isDisabled={currentPage === totalPages}
             onClick={handleNextPage}
-            color={"#00C3BA"}
+            color={popmint}
             variant={"outline"}
-            borderColor={"#00C3BA"}
+            borderColor={popmint}
           />
         </Flex>
         {/* )} */}

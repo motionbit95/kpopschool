@@ -26,6 +26,11 @@ import Info from "./Page/CS/account/Info";
 export const host_url =
   window.location.hostname === "localhost" ? "http://localhost:8080" : "";
 
+export const popyellow = "#FFCC00";
+export const popblue = "#00B2FF";
+export const popmint = "#00C3BA";
+export const popmag = "#FF3CA2";
+
 function App() {
   const isAdmin = window.location.pathname.includes("/admin");
   const location = useLocation();

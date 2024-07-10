@@ -8,6 +8,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React from "react";
+import { popmint } from "../../App";
 
 const PasswordChange = () => {
   return (
@@ -39,10 +40,10 @@ const PasswordChange = () => {
             <Input w={"200px"} />
             <Input w={"200px"} />
           </Stack>
-          <Text color={"#00C3BA"}>Forgot your password?</Text>
+          <Text color={popmint}>Forgot your password?</Text>
         </Stack>
         <Box>
-          <Button color={"white"} bgColor={"#00C3BA"}>
+          <Button color={"white"} bgColor={popmint}>
             SAVE
           </Button>
         </Box>
@@ -58,7 +59,7 @@ const PasswordChange = () => {
         </Stack>
         <HStack>
           <Input w={"200px"} />
-          <Button color={"white"} bgColor={"#00C3BA"}>
+          <Button color={"white"} bgColor={popmint}>
             Get Code
           </Button>
         </HStack>

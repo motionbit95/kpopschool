@@ -31,6 +31,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useMemo, useState } from "react";
 import { host_url } from "../../../../App";
+import { popmint } from "../../../../App";
 
 const Trainer = (props) => {
   const toDate = (timestamp) => {
@@ -158,7 +159,7 @@ const Trainer = (props) => {
           <TableContainer>
             <Table>
               <Tbody>
-                <Tr fontWeight={"500"} color={"#00C3BA"}>
+                <Tr fontWeight={"500"} color={popmint}>
                   <Td textAlign={"center"}>No.</Td>
                   <Td textAlign={"center"}>Name</Td>
                   {/* <Td textAlign={"center"}>ID</Td> */}
@@ -223,8 +224,8 @@ const Trainer = (props) => {
             onClick={handlePrevPage}
             isDisabled={currentPage === 1}
             variant={"outline"}
-            color={"#00C3BA"}
-            borderColor={"#00C3BA"}
+            color={popmint}
+            borderColor={popmint}
           />
           <ButtonGroup ml={4} mr={4}>
             {Array.from({ length: totalPages }, (_, index) => (
@@ -232,7 +233,7 @@ const Trainer = (props) => {
                 key={index + 1}
                 onClick={() => handlePageClick(index + 1)}
                 color={"white"}
-                bg={currentPage === index + 1 ? "#00C3BA" : "#E1E4E4"}
+                bg={currentPage === index + 1 ? popmint : "#E1E4E4"}
               >
                 {index + 1}
               </Button>
@@ -242,14 +243,14 @@ const Trainer = (props) => {
             icon={<ChevronRightIcon fontSize={"30px"} />}
             isDisabled={currentPage === totalPages}
             onClick={handleNextPage}
-            color={"#00C3BA"}
+            color={popmint}
             variant={"outline"}
-            borderColor={"#00C3BA"}
+            borderColor={popmint}
           />
           <Button
             position={"absolute"}
             right={16}
-            bgColor={"#00C3BA"}
+            bgColor={popmint}
             color={"white"}
             onClick={() => setPopupOpen(true)}
           >
@@ -392,7 +393,7 @@ const AddTrainerModal = (props) => {
               <TableContainer>
                 <Table>
                   <Tbody>
-                    <Tr fontWeight={"500"} color={"#00C3BA"}>
+                    <Tr fontWeight={"500"} color={popmint}>
                       <Td textAlign={"center"}>No.</Td>
                       <Td align="center">
                         <Checkbox
@@ -456,8 +457,8 @@ const AddTrainerModal = (props) => {
                   onClick={handlePrevPage}
                   isDisabled={currentPage === 1}
                   variant={"outline"}
-                  color={"#00C3BA"}
-                  borderColor={"#00C3BA"}
+                  color={popmint}
+                  borderColor={popmint}
                 />
                 <ButtonGroup ml={4} mr={4}>
                   {Array.from({ length: totalPages }, (_, index) => (
@@ -465,7 +466,7 @@ const AddTrainerModal = (props) => {
                       key={index + 1}
                       onClick={() => handlePageClick(index + 1)}
                       color={"white"}
-                      bg={currentPage === index + 1 ? "#00C3BA" : "#E1E4E4"}
+                      bg={currentPage === index + 1 ? popmint : "#E1E4E4"}
                     >
                       {index + 1}
                     </Button>
@@ -475,9 +476,9 @@ const AddTrainerModal = (props) => {
                   icon={<ChevronRightIcon fontSize={"30px"} />}
                   isDisabled={currentPage === totalPages}
                   onClick={handleNextPage}
-                  color={"#00C3BA"}
+                  color={popmint}
                   variant={"outline"}
-                  borderColor={"#00C3BA"}
+                  borderColor={popmint}
                 />
               </Flex>
               <Stack align={"center"} mt={16}>

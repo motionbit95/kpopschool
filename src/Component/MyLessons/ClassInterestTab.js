@@ -13,6 +13,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React from "react";
+import { popyellow, popblue, popmint } from "../../App";
 
 const ClassInterestTab = () => {
   const tabLists = [
@@ -69,7 +70,7 @@ const ClassInterestTab = () => {
               fontWeight={"600"}
               color={"white"}
               bgColor={"#E1E4E4"}
-              _selected={{ bgColor: "#FFCC00" }}
+              _selected={{ bgColor: popyellow }}
             >
               {tab}
             </Tab>
@@ -206,7 +207,7 @@ const TabsItem = ({ item }) => {
         </Flex>
         <Button
           size={"lg"}
-          bgColor={item.progress !== "100%" ? "#00B2FF" : "#FF3CA2"}
+          bgColor={item.progress !== "100%" ? "#00B2FF" : popmag}
           color={"white"}
           onClick={() => console.log(item)}
         >

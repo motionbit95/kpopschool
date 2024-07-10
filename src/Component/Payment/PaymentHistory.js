@@ -10,6 +10,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import React from "react";
+import { popmint } from "../../App";
 
 const PaymentHistory = () => {
   return (
@@ -30,7 +31,7 @@ const PaymentHistory = () => {
               {headers.map((item) => (
                 <Td
                   h={"54px"}
-                  color={"#00C3BA"}
+                  color={popmint}
                   fontWeight={"500"}
                   textAlign={"center"}
                 >

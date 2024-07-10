@@ -31,7 +31,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import ImageUpload from "../../../Component/ImageUpload";
 import { AddIcon } from "@chakra-ui/icons";
 import MessageBox from "../../../Component/MessageBox";
-import { host_url } from "../../../App";
+import { host_url, popyellow, popmint } from "../../../App";
 import { startOfWeek, parse } from "date-fns";
 
 const toDate = (timestamp) => {
@@ -141,8 +141,8 @@ const Class = () => {
             <HStack justifyContent={"flex-end"}>
               <Button
                 variant={"outline"}
-                borderColor={"#00C3BA"}
-                color={"#00C3BA"}
+                borderColor={popmint}
+                color={popmint}
                 onClick={() => setClassStep(0)}
               >
                 Back to List
@@ -163,17 +163,13 @@ const Class = () => {
             <HStack justifyContent={"flex-end"}>
               <Button
                 variant={"outline"}
-                borderColor={"#00C3BA"}
-                color={"#00C3BA"}
+                borderColor={popmint}
+                color={popmint}
                 onClick={() => setClassStep(1)}
               >
                 Back to List
               </Button>
-              <Button
-                bgColor={"#00C3BA"}
-                color={"white"}
-                onClick={addCurriculum}
-              >
+              <Button bgColor={popmint} color={"white"} onClick={addCurriculum}>
                 SAVE
               </Button>
             </HStack>
@@ -198,7 +194,7 @@ const Class = () => {
             <Center>
               <IconButton
                 icon={<AddIcon />}
-                bgColor={"#00C3BA"}
+                bgColor={popmint}
                 color="white"
                 borderRadius={"full"}
                 onClick={() => setCurriculumList([...curriculumList, {}])}
@@ -361,13 +357,13 @@ const ClassList = (props) => {
                 borderRadius={"lg"}
                 borderColor={
                   data?.difficulty === "Beginner"
-                    ? "#FFCC00"
+                    ? popyellow
                     : data?.difficulty === "Intermediate"
-                    ? "#00C3BA"
+                    ? popmint
                     : data?.difficulty === "Advanced"
                     ? "#00B2FF"
                     : data?.difficulty === "Professional"
-                    ? "#FF3CA2"
+                    ? popmag
                     : "gray.200"
                 }
               >
@@ -378,13 +374,13 @@ const ClassList = (props) => {
                   px={2}
                   bgColor={
                     data?.difficulty === "Beginner"
-                      ? "#FFCC00"
+                      ? popyellow
                       : data?.difficulty === "Intermediate"
-                      ? "#00C3BA"
+                      ? popmint
                       : data?.difficulty === "Advanced"
                       ? "#00B2FF"
                       : data?.difficulty === "Professional"
-                      ? "#FF3CA2"
+                      ? popmag
                       : "gray.200"
                   }
                 >
@@ -412,9 +408,7 @@ const ClassList = (props) => {
         <Radio value="LA(PT)" isChecked colorScheme="teal">
           LA(PT)
         </Radio>
-        <Text color={"#FF3CA2"}>
-          The table shows the start times of classes
-        </Text>
+        <Text color={popmag}>The table shows the start times of classes</Text>
       </HStack>
       <Grid
         templateColumns={"repeat(7, 1fr)"}
@@ -539,7 +533,7 @@ const ClassList = (props) => {
       <TableContainer>
         <Table>
           <Tbody>
-            <Tr fontWeight={"500"} color={"#00C3BA"}>
+            <Tr fontWeight={"500"} color={popmint}>
               <Td textAlign={"center"}>No.</Td>
               <Td textAlign={"center"}>Name</Td>
               {/* <Td textAlign={"center"}>ID</Td> */}
@@ -609,7 +603,7 @@ const TrainerClass = (props) => {
       <TableContainer>
         <Table>
           <Tbody>
-            <Tr fontWeight={"500"} color={"#00C3BA"}>
+            <Tr fontWeight={"500"} color={popmint}>
               <Td textAlign={"center"}>No.</Td>
               <Td textAlign={"center"}>Name</Td>
               {/* <Td textAlign={"center"}>ID</Td> */}
@@ -736,8 +730,8 @@ const AddClass = (props) => {
                     }
                   />
                   <Input placeholder="enrollment" maxW={"150px"} />
-                  <Text color={"#00C3BA"}>{curriculum.month} months</Text>
-                  <Text color={"#00C3BA"}>{curriculum.session} sessions</Text>
+                  <Text color={popmint}>{curriculum.month} months</Text>
+                  <Text color={popmint}>{curriculum.session} sessions</Text>
                 </HStack>
                 <Input
                   placeholder="title"
@@ -749,11 +743,11 @@ const AddClass = (props) => {
                   <Button
                     color={"white"}
                     bgColor={
-                      curriculum.format === "1:1" ? "#FFCC00" : "#E1E4E4"
+                      curriculum.format === "1:1" ? popyellow : "#E1E4E4"
                     }
                     _hover={{
                       bgColor:
-                        curriculum.format === "1:1" ? "#FFCC00" : "#E1E4E4",
+                        curriculum.format === "1:1" ? popyellow : "#E1E4E4",
                     }}
                     borderRadius={"full"}
                     onClick={() =>
@@ -765,11 +759,11 @@ const AddClass = (props) => {
                   <Button
                     color={"white"}
                     bgColor={
-                      curriculum.format === "1:6" ? "#FFCC00" : "#E1E4E4"
+                      curriculum.format === "1:6" ? popyellow : "#E1E4E4"
                     }
                     _hover={{
                       bgColor:
-                        curriculum.format === "1:6" ? "#FFCC00" : "#E1E4E4",
+                        curriculum.format === "1:6" ? popyellow : "#E1E4E4",
                     }}
                     borderRadius={"full"}
                     onClick={() =>
@@ -782,11 +776,11 @@ const AddClass = (props) => {
                     borderRadius={"full"}
                     color={"white"}
                     bgColor={
-                      curriculum.category === "Vocal" ? "#FFCC00" : "#E1E4E4"
+                      curriculum.category === "Vocal" ? popyellow : "#E1E4E4"
                     }
                     _hover={{
                       bgColor:
-                        curriculum.category === "Vocal" ? "#FFCC00" : "#E1E4E4",
+                        curriculum.category === "Vocal" ? popyellow : "#E1E4E4",
                     }}
                     onClick={() =>
                       setCurriculum({ ...curriculum, category: "Vocal" })
@@ -798,11 +792,11 @@ const AddClass = (props) => {
                     borderRadius={"full"}
                     color={"white"}
                     bgColor={
-                      curriculum.category === "Dance" ? "#FFCC00" : "#E1E4E4"
+                      curriculum.category === "Dance" ? popyellow : "#E1E4E4"
                     }
                     _hover={{
                       bgColor:
-                        curriculum.category === "Dance" ? "#FFCC00" : "#E1E4E4",
+                        curriculum.category === "Dance" ? popyellow : "#E1E4E4",
                     }}
                     onClick={() =>
                       setCurriculum({ ...curriculum, category: "Dance" })
@@ -815,13 +809,13 @@ const AddClass = (props) => {
                     color={"white"}
                     bgColor={
                       curriculum.difficulty === "Beginner"
-                        ? "#FFCC00"
+                        ? popyellow
                         : "#E1E4E4"
                     }
                     _hover={{
                       bgColor:
                         curriculum.difficulty === "Beginner"
-                          ? "#FFCC00"
+                          ? popyellow
                           : "#E1E4E4",
                     }}
                     onClick={() =>
@@ -835,13 +829,13 @@ const AddClass = (props) => {
                     color={"white"}
                     bgColor={
                       curriculum.difficulty === "Intermediate"
-                        ? "#FFCC00"
+                        ? popyellow
                         : "#E1E4E4"
                     }
                     _hover={{
                       bgColor:
                         curriculum.difficulty === "Intermediate"
-                          ? "#FFCC00"
+                          ? popyellow
                           : "#E1E4E4",
                     }}
                     onClick={() =>
@@ -858,13 +852,13 @@ const AddClass = (props) => {
                     color={"white"}
                     bgColor={
                       curriculum.difficulty === "Advanced"
-                        ? "#FFCC00"
+                        ? popyellow
                         : "#E1E4E4"
                     }
                     _hover={{
                       bgColor:
                         curriculum.difficulty === "Advanced"
-                          ? "#FFCC00"
+                          ? popyellow
                           : "#E1E4E4",
                     }}
                     onClick={() =>
@@ -881,13 +875,13 @@ const AddClass = (props) => {
                     color={"white"}
                     bgColor={
                       curriculum.difficulty === "Professional"
-                        ? "#FFCC00"
+                        ? popyellow
                         : "#E1E4E4"
                     }
                     _hover={{
                       bgColor:
                         curriculum.difficulty === "Professional"
-                          ? "#FFCC00"
+                          ? popyellow
                           : "#E1E4E4",
                     }}
                     onClick={() =>
@@ -1058,7 +1052,7 @@ const AddClass = (props) => {
             DUPLICATE
           </Button>
           <Button
-            bgColor={"#FF3CA2"}
+            bgColor={popmag}
             color="white"
             size={"lg"}
             onClick={props.onDelete}

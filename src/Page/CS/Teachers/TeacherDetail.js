@@ -29,7 +29,8 @@ import React, { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import TeacherInfo from "./TeacherInfo";
 import { useNavigate } from "react-router-dom";
-import { host_url } from "../../../App";
+import { host_url, popyellow } from "../../../App";
+import { popmint } from "../../../App";
 
 const TeacherDetail = (props) => {
   const [teacher, setTeacher] = useState({});
@@ -193,11 +194,11 @@ const TeacherDetail = (props) => {
             <FiChevronRight />
             <Text>{`${teacher.category} Trainer`}</Text>
             <FiChevronRight />
-            <Text color={"#00C3BA"}>{teacher.name}</Text>
+            <Text color={popmint}>{teacher.name}</Text>
           </Flex>
           {/* 강사 정보 */}
           <Stack spacing={4}>
-            <Text fontSize={"3xl"} fontWeight={"600"} color={"#FFCC00"}>
+            <Text fontSize={"3xl"} fontWeight={"600"} color={popyellow}>
               {`${teacher.category} Trainer`}
             </Text>
             <TeacherInfo teacher={teacher} />
@@ -206,12 +207,12 @@ const TeacherDetail = (props) => {
       </Container>
       {/* 강의 정보 */}
       <Tabs>
-        <TabList justifyContent={"center"} borderBottomColor={"#00C3BA"}>
+        <TabList justifyContent={"center"} borderBottomColor={popmint}>
           <Tab
             px={20}
             color={"#E1E4E4"}
             borderBottomColor={"#E1E4E4"}
-            _selected={{ color: "#00C3BA", borderBottomColor: "#00C3BA" }}
+            _selected={{ color: popmint, borderBottomColor: popmint }}
           >
             Lesson
           </Tab>
@@ -219,7 +220,7 @@ const TeacherDetail = (props) => {
             px={20}
             color={"#E1E4E4"}
             borderBottomColor={"#E1E4E4"}
-            _selected={{ color: "#00C3BA", borderBottomColor: "#00C3BA" }}
+            _selected={{ color: popmint, borderBottomColor: popmint }}
           >
             Time Tabel
           </Tab>
@@ -227,7 +228,7 @@ const TeacherDetail = (props) => {
             px={20}
             color={"#E1E4E4"}
             borderBottomColor={"#E1E4E4"}
-            _selected={{ color: "#00C3BA", borderBottomColor: "#00C3BA" }}
+            _selected={{ color: popmint, borderBottomColor: popmint }}
           >
             Review
           </Tab>
@@ -277,12 +278,7 @@ const TeacherDetail = (props) => {
                   placeholder="You can use it after logging in. Please leave a review after taking the course"
                 />
                 <InputRightElement h={"full"} mr={8}>
-                  <Button
-                    px={8}
-                    size={"sm"}
-                    color={"white"}
-                    bgColor={"#00C3BA"}
-                  >
+                  <Button px={8} size={"sm"} color={"white"} bgColor={popmint}>
                     GO
                   </Button>
                 </InputRightElement>
@@ -339,12 +335,12 @@ const LessonForm = ({ curriculums, teacher, isOkay, navigate }) => {
             <Text
               color={
                 item.difficulty === "Beginner"
-                  ? "#FFCC00"
+                  ? popyellow
                   : item.difficulty === "Intermediate"
-                  ? "#00C3BA"
+                  ? popmint
                   : item.difficulty === "Advanced"
                   ? "#00B2FF"
-                  : "#FF3CA2"
+                  : popmag
               }
               fontSize={"lg"}
             >{`${item.difficulty} course`}</Text>
@@ -354,19 +350,19 @@ const LessonForm = ({ curriculums, teacher, isOkay, navigate }) => {
             <HStack spacing={16}>
               <Stack spacing={0}>
                 <Text color={"#C0C0C0"}>Month</Text>
-                <Text fontWeight={"700"} color={"#00C3BA"}>
+                <Text fontWeight={"700"} color={popmint}>
                   {item.month}
                 </Text>
               </Stack>
               <Stack spacing={0}>
                 <Text color={"#C0C0C0"}>Sessions</Text>
-                <Text fontWeight={"700"} color={"#00C3BA"}>
+                <Text fontWeight={"700"} color={popmint}>
                   {item.sessions}
                 </Text>
               </Stack>
               <Stack spacing={0}>
                 <Text color={"#C0C0C0"}>Price</Text>
-                <Text fontWeight={"700"} color={"#00C3BA"}>
+                <Text fontWeight={"700"} color={popmint}>
                   {`$${item.price} per session`}
                 </Text>
               </Stack>
@@ -379,7 +375,7 @@ const LessonForm = ({ curriculums, teacher, isOkay, navigate }) => {
             <Box w={"100%"} display={"flex"} justifyContent={"flex-end"}>
               <Button
                 size={"lg"}
-                bgColor={isOkay ? "#FF3CA2" : "#00B2FF"}
+                bgColor={isOkay ? popmag : "#00B2FF"}
                 color={"white"}
                 onClick={() => {
                   console.log(item, teacher);

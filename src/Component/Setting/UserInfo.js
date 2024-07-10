@@ -16,6 +16,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useRef, useState } from "react";
+import { popmint } from "../../App";
 
 const UserInfo = (props) => {
   const { userInfo, onChange, onSave } = props;
@@ -70,7 +71,7 @@ const UserInfo = (props) => {
           <Circle
             position={"absolute"}
             size={"30px"}
-            bgColor={"#00C3BA"}
+            bgColor={popmint}
             bottom={0}
             right={0}
             onClick={() => imageRef.current.click()}
@@ -96,7 +97,7 @@ const UserInfo = (props) => {
                 Name
               </Text>
               <Input
-                focusBorderColor="#00C3BA"
+                focusBorderColor={popmint}
                 defaultValue={userInfo?.name}
                 onChange={(e) =>
                   onChange({ ...userInfo, name: e.target.value })
@@ -110,7 +111,7 @@ const UserInfo = (props) => {
                 First Name
               </Text>
               <Input
-                focusBorderColor="#00C3BA"
+                focusBorderColor={popmint}
                 defaultValue={userInfo?.firstName}
                 onChange={(e) =>
                   onChange({ ...userInfo, firstName: e.target.value })
@@ -128,7 +129,7 @@ const UserInfo = (props) => {
                 readOnly
                 isDisabled
                 _disabled={{ cursor: "not-allowed", bgColor: "gray.100" }}
-                focusBorderColor="#00C3BA"
+                focusBorderColor={popmint}
                 defaultValue={userInfo?.email}
               />
             </Stack>
@@ -139,7 +140,7 @@ const UserInfo = (props) => {
                 Birthday
               </Text>
               <Input
-                focusBorderColor="#00C3BA"
+                focusBorderColor={popmint}
                 placeholder="DD/MM/YY"
                 defaultValue={userInfo?.birthday}
                 onChange={(e) =>
@@ -172,7 +173,7 @@ const UserInfo = (props) => {
           K-pop genre or artist you are interested in
         </Text>
         <Input
-          focusBorderColor="#00C3BA"
+          focusBorderColor={popmint}
           w={"484px"}
           placeholder="Fill the text"
           defaultValue={userInfo?.interest}
@@ -180,7 +181,7 @@ const UserInfo = (props) => {
         />
       </Stack>
       <Box>
-        <Button color={"white"} bgColor={"#00C3BA"} onClick={onSave}>
+        <Button color={"white"} bgColor={popmint} onClick={onSave}>
           SAVE
         </Button>
       </Box>

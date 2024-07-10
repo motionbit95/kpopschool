@@ -12,6 +12,7 @@ import {
 import React, { useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import { popmint } from "../../../App";
 
 const Curriculum = () => {
   const [isHoveredDance, setIsHoveredDance] = useState(false);
@@ -37,11 +38,11 @@ const Curriculum = () => {
         >
           <Text>Curriculum</Text>
           <FiChevronRight />
-          <Text color={"#00C3BA"}>Intro</Text>
+          <Text color={popmint}>Intro</Text>
         </Flex>
         <Stack>
           <Box py={6}>
-            <Text fontSize={"5xl"} fontWeight={"bold"} color={"#FF3CA2"}>
+            <Text fontSize={"5xl"} fontWeight={"bold"} color={popmag}>
               Curriculum
             </Text>
           </Box>
@@ -107,8 +108,8 @@ const Curriculum = () => {
               <Text>Supports format</Text>
               <ButtonGroup variant={"outline"}>
                 <Button
-                  color={"#00C3BA"}
-                  borderColor={"#00C3BA"}
+                  color={popmint}
+                  borderColor={popmint}
                   onClick={() => {
                     const category = "Dance";
                     const format = "1:1";
@@ -120,8 +121,8 @@ const Curriculum = () => {
                   1:1
                 </Button>
                 <Button
-                  color={"#00C3BA"}
-                  borderColor={"#00C3BA"}
+                  color={popmint}
+                  borderColor={popmint}
                   onClick={() => {
                     const category = "Dance";
                     const format = "1:6";
@@ -133,8 +134,8 @@ const Curriculum = () => {
                   1:6
                 </Button>
                 <Button
-                  color={"#00C3BA"}
-                  borderColor={"#00C3BA"}
+                  color={popmint}
+                  borderColor={popmint}
                   onClick={() => {
                     const category = "Dance";
                     const format = "VOD";
@@ -203,8 +204,8 @@ const Curriculum = () => {
               <Text>Supports format</Text>
               <ButtonGroup variant={"outline"}>
                 <Button
-                  color={"#00C3BA"}
-                  borderColor={"#00C3BA"}
+                  color={popmint}
+                  borderColor={popmint}
                   onClick={() => {
                     const category = "Vocal";
                     const format = "1:1";
@@ -216,8 +217,8 @@ const Curriculum = () => {
                   1:1
                 </Button>
                 <Button
-                  color={"#00C3BA"}
-                  borderColor={"#00C3BA"}
+                  color={popmint}
+                  borderColor={popmint}
                   onClick={() => {
                     const category = "Vocal";
                     const format = "1:6";
@@ -229,8 +230,8 @@ const Curriculum = () => {
                   1:6
                 </Button>
                 <Button
-                  color={"#00C3BA"}
-                  borderColor={"#00C3BA"}
+                  color={popmint}
+                  borderColor={popmint}
                   onClick={() => {
                     const category = "Vocal";
                     const format = "VOD";

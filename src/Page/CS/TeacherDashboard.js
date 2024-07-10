@@ -13,6 +13,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React from "react";
+import { popyellow, popblue, popmint } from "../../App";
 
 const TeacherDashboard = () => {
   return (
@@ -38,7 +39,7 @@ const TeacherDashboard = () => {
                 <Text fontSize={"22px"} fontWeight={"700"}>
                   Jessie
                 </Text>
-                <Text fontSize={"lg"} color={"#FFCC00"}>{`vocal trainer`}</Text>
+                <Text fontSize={"lg"} color={popyellow}>{`vocal trainer`}</Text>
               </HStack>
               <Grid
                 templateColumns={"repeat(2, 1fr)"}
@@ -75,13 +76,13 @@ const TeacherDashboard = () => {
           <HStack px={6} gap={6}>
             <Stack align={"center"}>
               <Text fontWeight={"500"}>Total Class</Text>
-              <Text color={"#00C3BA"} fontWeight={"700"} fontSize={"22px"}>
+              <Text color={popmint} fontWeight={"700"} fontSize={"22px"}>
                 38
               </Text>
             </Stack>
             <Stack align={"center"}>
               <Text fontWeight={"500"}>Total Student</Text>
-              <Text color={"#00C3BA"} fontWeight={"700"} fontSize={"22px"}>
+              <Text color={popmint} fontWeight={"700"} fontSize={"22px"}>
                 3560
               </Text>
             </Stack>

@@ -10,6 +10,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { popmint } from "../../App";
 
 const MakeInquiry = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -66,12 +67,12 @@ const MakeInquiry = () => {
           type="file"
           onChange={handleFileChange}
         />
-        <Text pl={8} color={"#FF3CA2"}>
+        <Text pl={8} color={popmag}>
           * Please attach files no larger than 5 MB
         </Text>
         <Box display={"flex"} justifyContent={"center"}>
           <Button
-            bgColor={"#00C3BA"}
+            bgColor={popmint}
             color={"white"}
             size={"lg"}
             onClick={handleSubmit}
