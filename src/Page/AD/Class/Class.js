@@ -314,10 +314,6 @@ const ClassList = (props) => {
   }, [classes]);
 
   useEffect(() => {
-    console.log("timetable", timetable);
-  }, [timetable]);
-
-  useEffect(() => {
     fetch(`${host_url}/users/list`)
       .then((res) => res.json())
       .then((res) => {
