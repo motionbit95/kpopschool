@@ -12,6 +12,7 @@ import {
   VStack,
   Button,
 } from "@chakra-ui/react";
+import { popmag } from "../App";
 
 function ConfirmBox(props) {
   const { isOpen, onClose, onConfirm } = props;

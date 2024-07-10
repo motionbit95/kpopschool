@@ -13,7 +13,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React from "react";
-import { popyellow, popblue, popmint } from "../../App";
+import { popyellow, popblue, popmint, popmag } from "../../App";
 
 const ClassInterestTab = () => {
   const tabLists = [

@@ -31,7 +31,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import ImageUpload from "../../../Component/ImageUpload";
 import { AddIcon } from "@chakra-ui/icons";
 import MessageBox from "../../../Component/MessageBox";
-import { host_url, popyellow, popmint } from "../../../App";
+import { host_url, popyellow, popmint, popmag } from "../../../App";
 import { startOfWeek, parse } from "date-fns";
 
 const toDate = (timestamp) => {

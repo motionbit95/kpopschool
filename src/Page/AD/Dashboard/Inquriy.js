@@ -2,6 +2,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import {
   Button,
   ButtonGroup,
+  Center,
   Flex,
   HStack,
   IconButton,
@@ -19,16 +20,15 @@ import {
   Tbody,
   Td,
   Text,
+  Textarea,
   Tr,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { popyellow, popblue, popmint } from "../../../App";
+import React, { useEffect, useState } from "react";
+import { popyellow, popblue, popmint, popmag, host_url } from "../../../App";
 
 const Inquiry = () => {
   const ITEMS_PER_PAGE = 10;
   const [currentPage, setCurrentPage] = useState(1);
-
-  const totalPages = Math.ceil(InquiryData.length / ITEMS_PER_PAGE);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -53,9 +53,29 @@ const Inquiry = () => {
     setInquirydata(data);
   };
 
+  const [inquiryList, setInquiryList] = useState([]);
+
+  const totalPages = Math.ceil(inquiryList.length / ITEMS_PER_PAGE);
+
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentData = InquiryData.slice(startIndex, endIndex);
+  const currentData = inquiryList.slice(startIndex, endIndex);
+
+  useEffect(() => {
+    const getInquiry = async () => {
+      fetch(`${host_url}/inquiry/list`)
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          setInquiryList(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getInquiry();
+  }, []);
+
   return (
     <Flex w={"100%"} h={"100%"}>
       <Stack
@@ -80,9 +100,9 @@ const Inquiry = () => {
                   <Td textAlign={"center"}>Date</Td>
                   <Td textAlign={"center"}>State</Td>
                 </Tr>
-                {currentData.map((data) => (
+                {currentData.map((data, index) => (
                   <Tr onClick={() => handleOpeninquiry(data)}>
-                    <Td textAlign={"center"}>{`${data.no}.`}</Td>
+                    <Td textAlign={"center"}>{`${index + 1}.`}</Td>
                     <Td textAlign={"center"}>{data.tag}</Td>
                     <Td textAlign={"center"}>{data.title}</Td>
                     <Td textAlign={"center"}>{data.date}</Td>
@@ -91,7 +111,7 @@ const Inquiry = () => {
                       color={
                         data.state === "completed"
                           ? popmag
-                          : data.state === "Waiting for"
+                          : data.state === "waiting for"
                           ? popyellow
                           : "black"
                       }
@@ -150,14 +170,46 @@ export default Inquiry;
 
 const InquiryModal = (props) => {
   const data = props.data;
+
+  const [reply, setReply] = useState("");
+
+  const handleSubmit = () => {
+    console.log(reply);
+
+    fetch(`${host_url}/inquiry/update`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: data.id,
+        reply: reply,
+        state: "completed",
+      }),
+    })
+      .then((res) => res.text())
+      .then((res) => {
+        console.log(res);
+        props.onClose();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
-    <Modal size={"3xl"} isOpen={props.isOpen} onClose={props.onClose}>
+    <Modal
+      isCentered
+      size={"3xl"}
+      isOpen={props.isOpen}
+      onClose={props.onClose}
+    >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader></ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Stack>
+          <Stack spacing={6}>
             <HStack
               borderY={"1px solid #E1E4E4"}
               py={4}
@@ -166,25 +218,49 @@ const InquiryModal = (props) => {
             >
               <Text color={"#4E4E4E"}>Jane Deo</Text>
               <Text color={"#4E4E4E"}>Jane_DOoee</Text>
-              <Text color={"#4E4E4E"}>21-07-2024</Text>
+              <Text color={"#4E4E4E"}>{data.date}</Text>
               <Text color={"#4E4E4E"}>email</Text>
             </HStack>
-            <Stack>
+            <Stack spacing={4}>
               <HStack>
-                <Text>Tag</Text>
+                <Text w={"70px"}>Tag</Text>
                 <Text>{data.tag}</Text>
               </HStack>
               <HStack>
-                <Text>Title</Text>
+                <Text w={"70px"}>Title</Text>
                 <Text>{data.title}</Text>
               </HStack>
+              <Text whiteSpace={"pre-line"} fontWeight={"300"}>
+                {data.details}
+              </Text>
             </Stack>
-            <Stack>
-              <Text>I accidentally paid for another teacher's course.</Text>
-              <Text>Please refund that portion.</Text>
-              <Text>I paid for Mr. Lee's Advanced Course.</Text>
-            </Stack>
-            <Stack p={6} borderRadius={"md"} bgColor={"#E1E4E4"}></Stack>
+            {data.state === "completed" && (
+              <Stack p={6} borderRadius={"md"} bgColor={"#E1E4E4"}>
+                <Text>{data.reply}</Text>
+              </Stack>
+            )}
+            {data.state === "waiting for" && (
+              <Stack spacing={6} py={6}>
+                <Textarea
+                  bgColor={"#F1F1F1"}
+                  resize={"none"}
+                  height={"200px"}
+                  border={"none"}
+                  placeholder={"put text"}
+                  onChange={(e) => setReply(e.target.value)}
+                ></Textarea>
+                <Center>
+                  <Button
+                    bgColor={popmint}
+                    color={"white"}
+                    w={"fit-content"}
+                    onClick={handleSubmit}
+                  >
+                    SUBMIT
+                  </Button>
+                </Center>
+              </Stack>
+            )}
           </Stack>
         </ModalBody>
       </ModalContent>

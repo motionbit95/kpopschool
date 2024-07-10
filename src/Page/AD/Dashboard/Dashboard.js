@@ -1,4 +1,4 @@
-import { Flex, Stack, Text } from "@chakra-ui/react";
+import { Container, Flex, Stack, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Home from "./Home";
 import User from "./User/User";
@@ -44,7 +44,7 @@ const Dashboard = (props) => {
   }, [window.location.pathname]);
 
   return (
-    <Flex w={"100%"} h={"100%"}>
+    <Flex w={"100%"} h={"100%"} minW={"1200px"}>
       {sideTab === "HOME" && <Home />}
       {sideTab === "User" && (
         <>

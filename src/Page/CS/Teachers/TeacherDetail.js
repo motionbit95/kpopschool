@@ -29,7 +29,7 @@ import React, { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import TeacherInfo from "./TeacherInfo";
 import { useNavigate } from "react-router-dom";
-import { host_url, popyellow } from "../../../App";
+import { host_url, popmag, popyellow } from "../../../App";
 import { popmint } from "../../../App";
 
 const TeacherDetail = (props) => {

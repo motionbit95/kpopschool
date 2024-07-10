@@ -25,6 +25,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
+import { popmint } from "../../App";
 
 const Cummunity = () => {
   const [FAQs, setFAQs] = useState([]);
@@ -120,7 +121,8 @@ const Cummunity = () => {
                 display={"flex"}
                 flexDirection={"row"}
                 gap={2}
-                h={"600px"}
+                // h={"600px"}
+                onChange={(index) => console.log(index)}
               >
                 <TabList
                   flexDirection={"column"}
@@ -153,7 +155,12 @@ const Cummunity = () => {
                     </Tab>
                   ))}
                 </TabList>
-                <TabPanels borderLeft={"1px solid #E1E4E4"} h={"full"} pl={2}>
+                <TabPanels
+                  borderLeft={"1px solid #E1E4E4"}
+                  h={"full"}
+                  pl={2}
+                  minW={"600px"}
+                >
                   {events.map((event, id) => (
                     <TabPanel key={id} p={0} h={"full"}>
                       <Stack h={"full"} spacing={4}>
@@ -171,9 +178,17 @@ const Cummunity = () => {
                             </Text>
                           </Box>
                           <Box w={"60%"}>
-                            <Text color={"#4E4E4E"} fontSize={"lg"}>
+                            {/* <Text color={"#4E4E4E"} fontSize={"lg"}>
                               {event.description}
-                            </Text>
+                            </Text> */}
+                            <div
+                              style={{
+                                overflowX: "hidden",
+                              }}
+                              dangerouslySetInnerHTML={{
+                                __html: event.description,
+                              }}
+                            />
                           </Box>
                         </Stack>
                       </Stack>

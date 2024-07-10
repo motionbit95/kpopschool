@@ -10,7 +10,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { popmint } from "../../App";
+import { popmag, popmint } from "../../App";
 
 const MakeInquiry = () => {
   const [selectedFile, setSelectedFile] = useState(null);

@@ -13,6 +13,7 @@ import React, { useEffect } from "react";
 import ToastEditor from "../../../../Component/ToastEditor";
 import ImageUpload from "../../../../Component/ImageUpload";
 import { host_url, popmint } from "../../../../App";
+import MessageBox from "../../../../Component/MessageBox";
 
 const CreateCoupon = () => {
   const [formData, setFormData] = React.useState({});
@@ -59,15 +60,29 @@ const CreateCoupon = () => {
       .then((res) => {
         console.log(res);
         if (res.id) {
-          window.location.reload();
+          setModalState({ ...modalState, isAddCoupon: true });
         }
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  const [modalState, setModalState] = React.useState({
+    isAddCoupon: false,
+  });
   return (
     <Flex w={"100%"} h={"100%"}>
+      <MessageBox
+        isOpen={modalState.isAddCoupon}
+        onClose={() => {
+          setModalState({ ...modalState, isAddCoupon: false });
+          window.location.reload();
+        }}
+      >
+        <Text>Coupon has been</Text>
+        <Text color={popmint}>issued</Text>
+      </MessageBox>
       <Stack px={16} pt={16} pb={32} w={"full"} spacing={16}>
         <Stack>
           <HStack justify={"space-between"}>

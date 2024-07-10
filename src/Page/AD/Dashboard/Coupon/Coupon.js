@@ -4,37 +4,31 @@ import {
   Flex,
   HStack,
   Image,
-  Input,
   Stack,
   StackDivider,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
   Text,
-  Th,
-  Thead,
-  Tr,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { host_url, popmint } from "../../../../App";
+import { host_url, popmag } from "../../../../App";
+
+export const toDate = (timestamp) => {
+  let date = new Date().toISOString().slice(0, 10).replaceAll("-", "/");
+  try {
+    date = new Date(timestamp._seconds * 1000)
+      .toISOString()
+      .slice(0, 10)
+      .replaceAll("-", "/");
+  } catch (err) {
+    console.log(err);
+    if (timestamp?.includes("T")) {
+      date = timestamp.split("T")[0].replaceAll("-", "/");
+    }
+  }
+  return date;
+};
 
 const Coupon = (props) => {
   const [list, setList] = useState([]);
-
-  const toDate = (timestamp) => {
-    let date = new Date().toISOString().slice(0, 10).replaceAll("-", "/");
-    try {
-      date = new Date(timestamp._seconds * 1000)
-        .toISOString()
-        .slice(0, 10)
-        .replaceAll("-", "/");
-    } catch (err) {
-      console.log(err);
-      date = timestamp.split("T")[0].replaceAll("-", "/");
-    }
-    return date;
-  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -104,48 +98,54 @@ const Coupon = (props) => {
                 border={"1px solid #E1E4E4"}
                 borderRadius={"md"}
                 p={4}
+                spacing={6}
               >
-                <HStack spacing={6}>
-                  <Box
-                    w={"330px"}
-                    h={"140px"}
-                    bgColor={popmint}
-                    borderRadius={"md"}
-                    overflow={"hidden"}
-                  >
-                    <Image w={"full"} h={"full"} src={data.thumbnail}></Image>
-                  </Box>
-                  <Stack>
+                <Box
+                  w={"330px"}
+                  h={"140px"}
+                  // bgColor={popmint}
+                  borderRadius={"md"}
+                  overflow={"hidden"}
+                >
+                  <Image
+                    w={"full"}
+                    h={"full"}
+                    objectFit={"cover"}
+                    src={data.thumbnail}
+                  ></Image>
+                </Box>
+                <Stack w={"100%"}>
+                  <HStack justify={"space-between"}>
                     <Text>{data.title}</Text>
+                    <Text>publication Date {toDate(data.createdAt)}</Text>
+                  </HStack>
+                  <HStack>
+                    <Text w={"200px"}>Discount details</Text>
+                    <Text>
+                      {data.discountAmount} {data.discountType} sale
+                    </Text>
+                  </HStack>
+                  <HStack>
+                    <Text w={"200px"}>Deadline for download</Text>
+                    <Text>~{toDate(data.deadline_end)}</Text>
+                  </HStack>
+                  <HStack justify={"space-between"}>
                     <HStack>
-                      <Text>Discount details</Text>
-                      <Text>
-                        {data.discountAmount} {data.discountType} sale
-                      </Text>
-                    </HStack>
-                    <HStack>
-                      <Text>Deadline for download</Text>
-                      <Text>~{toDate(data.deadline_end)}</Text>
-                    </HStack>
-                    <HStack>
-                      <Text>Date of use</Text>
+                      <Text w={"200px"}>Date of use</Text>
                       <Text>
                         {toDate(data.use_start)} ~ {toDate(data.use_end)}
                       </Text>
                     </HStack>
-                  </Stack>
-                </HStack>
-                <Stack h={"full"} justify={"space-between"}>
-                  <Text>publication Date {toDate(data.createdAt)}</Text>
-                  <Box display={"flex"} justifyContent={"flex-end"}>
-                    <Button
-                      color={"white"}
-                      bgColor={popmag}
-                      onClick={() => deleteCoupon(data.id)}
-                    >
-                      DELETE
-                    </Button>
-                  </Box>
+                    <Box display={"flex"} justifyContent={"flex-end"}>
+                      <Button
+                        color={"white"}
+                        bgColor={popmag}
+                        onClick={() => deleteCoupon(data.id)}
+                      >
+                        DELETE
+                      </Button>
+                    </Box>
+                  </HStack>
                 </Stack>
               </HStack>
             </Stack>

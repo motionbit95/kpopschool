@@ -9,7 +9,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { host_url } from "../../../../App";
+import { host_url, popmag } from "../../../../App";
 import ImageUpload from "../../../../Component/ImageUpload";
 import ConfirmBox from "../../../../Component/ConfirmBox";
 import { popmint } from "../../../../App";

@@ -33,7 +33,7 @@ import Notification from "../../Component/Notification";
 import TeacherDashboard from "./TeacherDashboard";
 import Management from "./Management";
 import { auth } from "../../Firebase/Config";
-import { host_url, popyellow } from "../../App";
+import { host_url, popmag, popyellow, popmint } from "../../App";
 
 const MyPage = () => {
   const navigation = useNavigate();

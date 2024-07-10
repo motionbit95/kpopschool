@@ -13,7 +13,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React from "react";
-import { popmint } from "../../../App";
+import { popmag, popmint } from "../../../App";
 
 const Info = () => {
   return (

@@ -12,7 +12,7 @@ import {
 import React, { useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { popmint } from "../../../App";
+import { popmag, popmint } from "../../../App";
 
 const Curriculum = () => {
   const [isHoveredDance, setIsHoveredDance] = useState(false);

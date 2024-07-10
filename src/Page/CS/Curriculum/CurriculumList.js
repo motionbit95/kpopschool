@@ -2,7 +2,7 @@ import { Container, Flex, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
-import { popyellow, popblue, popmint } from "../../../App";
+import { popyellow, popblue, popmint, popmag } from "../../../App";
 
 const CurriculumList = () => {
   const location = useLocation();

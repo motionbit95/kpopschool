@@ -16,7 +16,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { host_url } from "../../../App";
+import { host_url, popmag } from "../../../App";
 import {
   FacebookAuthProvider,
   GoogleAuthProvider,

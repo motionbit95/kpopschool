@@ -26,7 +26,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { host_url } from "../../../../App";
+import { host_url, popmag } from "../../../../App";
 import ConfirmBox from "../../../../Component/ConfirmBox";
 import MessageBox from "../../../../Component/MessageBox";
 import { popmint } from "../../../../App";

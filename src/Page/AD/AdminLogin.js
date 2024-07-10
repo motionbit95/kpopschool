@@ -11,6 +11,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import React from "react";
 import { auth } from "../../Firebase/Config";
 import { useNavigate } from "react-router-dom";
+import { popmint } from "../../App";
 
 const AdminLogin = () => {
   const formData = {

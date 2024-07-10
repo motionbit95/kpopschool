@@ -1,6 +1,7 @@
 import { Button, Flex, HStack, Image, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 import { items } from "./ClassInterestTab";
+import { popmag } from "../../App";
 
 const ClassinProgress = () => {
   const items = [

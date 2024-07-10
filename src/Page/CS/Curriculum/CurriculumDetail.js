@@ -24,7 +24,7 @@ import React, { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
 import Timetable from "../../../Component/TimeTabel";
-import { popyellow, popblue, popmint } from "../../../App";
+import { popyellow, popblue, popmint, popmag } from "../../../App";
 
 const CurriculumDetail = () => {
   const location = useLocation();
