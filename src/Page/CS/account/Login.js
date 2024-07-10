@@ -67,7 +67,7 @@ const Login = () => {
         </Box>
         <Stack w={"full"}>
           <Stack spacing={3} py={4}>
-            <Text fontSize={"20px"} fontWeight={"600"}>
+            <Text fontSize={"20px"} fontWeight={"600"} textAlign={"center"}>
               Log in to your Account
             </Text>
             <Input
@@ -131,7 +131,7 @@ const Login = () => {
                 />
               }
             />
-            <IconButton
+            {/* <IconButton
               borderRadius={"full"}
               icon={
                 <Image
@@ -148,7 +148,7 @@ const Login = () => {
                   w={"16px"}
                 />
               }
-            />
+            /> */}
           </ButtonGroup>
           <Stack textAlign={"center"} align={"center"}>
             <Text color={popmint} cursor={"pointer"}>

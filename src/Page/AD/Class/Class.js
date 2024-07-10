@@ -37,8 +37,7 @@ import { startOfWeek, parse } from "date-fns";
 const toDate = (timestamp) => {
   return new Date(timestamp._seconds * 1000);
 };
-
-function getWeekDates() {
+export function getWeekDates() {
   const today = new Date();
 
   // 오늘이 이번 주의 몇 번째 요일인지 계산 (일요일=0, 월요일=1, ...)
@@ -339,69 +338,6 @@ const ClassList = (props) => {
         console.log(teachers);
       });
   }, []);
-
-  const Schedule = (props) => {
-    const { list, time } = props;
-
-    return (
-      <Stack
-        borderLeft="0.1px solid #E1E4E4"
-        borderBottom={time.split(":")[1] === "30" && "0.1px solid #E1E4E4"}
-        p={2}
-        minH={"50px"}
-      >
-        {list.map(
-          (data, index) =>
-            data?.startTime === time && (
-              <Stack
-                spacing={1}
-                border={"1px solid"}
-                p={2}
-                borderRadius={"lg"}
-                borderColor={
-                  data?.difficulty === "Beginner"
-                    ? popyellow
-                    : data?.difficulty === "Intermediate"
-                    ? popmint
-                    : data?.difficulty === "Advanced"
-                    ? "#00B2FF"
-                    : data?.difficulty === "Professional"
-                    ? popmag
-                    : "gray.200"
-                }
-              >
-                <Box
-                  w={"fit-content"}
-                  borderRadius={"md"}
-                  // py={1}
-                  px={2}
-                  bgColor={
-                    data?.difficulty === "Beginner"
-                      ? popyellow
-                      : data?.difficulty === "Intermediate"
-                      ? popmint
-                      : data?.difficulty === "Advanced"
-                      ? "#00B2FF"
-                      : data?.difficulty === "Professional"
-                      ? popmag
-                      : "gray.200"
-                  }
-                >
-                  <Text fontSize={"sm"} color={"white"}>
-                    {data?.difficulty}
-                  </Text>
-                </Box>
-                <Text color="gray.800">
-                  {data?.startTime} {`(1/6)`}
-                </Text>
-                <Text fontSize={"16px"}>{data?.curriculum}</Text>
-              </Stack>
-            )
-        )}
-      </Stack>
-    );
-  };
-
   return (
     <Stack p={16} spacing={4}>
       <Text fontWeight={"600"} fontSize={"20px"}>
@@ -1072,6 +1008,68 @@ const ClassDetail = () => {
   return (
     <Stack>
       <Text>Class Detail</Text>
+    </Stack>
+  );
+};
+
+export const Schedule = (props) => {
+  const { list, time } = props;
+
+  return (
+    <Stack
+      borderLeft="0.1px solid #E1E4E4"
+      borderBottom={time.split(":")[1] === "30" && "0.1px solid #E1E4E4"}
+      p={2}
+      minH={"50px"}
+    >
+      {list.map(
+        (data, index) =>
+          data?.startTime === time && (
+            <Stack
+              spacing={1}
+              border={"1px solid"}
+              p={2}
+              borderRadius={"lg"}
+              borderColor={
+                data?.difficulty === "Beginner"
+                  ? popyellow
+                  : data?.difficulty === "Intermediate"
+                  ? popmint
+                  : data?.difficulty === "Advanced"
+                  ? "#00B2FF"
+                  : data?.difficulty === "Professional"
+                  ? popmag
+                  : "gray.200"
+              }
+            >
+              <Box
+                w={"fit-content"}
+                borderRadius={"md"}
+                // py={1}
+                px={2}
+                bgColor={
+                  data?.difficulty === "Beginner"
+                    ? popyellow
+                    : data?.difficulty === "Intermediate"
+                    ? popmint
+                    : data?.difficulty === "Advanced"
+                    ? "#00B2FF"
+                    : data?.difficulty === "Professional"
+                    ? popmag
+                    : "gray.200"
+                }
+              >
+                <Text fontSize={"sm"} color={"white"}>
+                  {data?.difficulty}
+                </Text>
+              </Box>
+              <Text color="gray.800">
+                {data?.startTime} {`(1/6)`}
+              </Text>
+              <Text fontSize={"16px"}>{data?.curriculum}</Text>
+            </Stack>
+          )
+      )}
     </Stack>
   );
 };

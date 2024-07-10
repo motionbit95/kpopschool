@@ -4,6 +4,8 @@ import {
   Button,
   Container,
   Flex,
+  Grid,
+  GridItem,
   HStack,
   Image,
   Input,
@@ -31,6 +33,7 @@ import TeacherInfo from "./TeacherInfo";
 import { useNavigate } from "react-router-dom";
 import { host_url, popmag, popyellow } from "../../../App";
 import { popmint } from "../../../App";
+import { getWeekDates, Schedule } from "../../AD/Class/Class";
 
 const TeacherDetail = (props) => {
   const [teacher, setTeacher] = useState({});
@@ -178,6 +181,107 @@ const TeacherDetail = (props) => {
     getReviews();
   }, [teacher]);
 
+  const [classes, setClasses] = useState([]);
+
+  useEffect(() => {
+    console.log(teacher);
+    fetch(`${host_url}/curriculums/search`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        conditions: [{ field: "teacherId", operator: "==", value: teacher.id }],
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        let classes = [];
+        res.forEach((data) => {
+          if (data.classes) {
+            data.classes.forEach((schedule) => {
+              classes.push({
+                ...schedule,
+                difficulty: data.difficulty,
+                curriculum: data.title,
+              });
+            });
+          }
+        });
+        console.log(classes.flat());
+        setClasses(classes.flat());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [teacher]);
+
+  const [timetable, setTimetable] = useState({
+    monday: [],
+    tuesday: [],
+    wednesday: [],
+    thursday: [],
+    friday: [],
+    saturday: [],
+    sunday: [],
+  });
+  useEffect(() => {
+    let monday,
+      tuesday,
+      wednesday,
+      thursday,
+      friday,
+      saturday,
+      sunday = [];
+    getWeekDates().forEach((date, index) => {
+      if (index === 0) {
+        monday = classes.filter((data) => {
+          return data?.date === date;
+        });
+      }
+      if (index === 1) {
+        tuesday = classes.filter((data) => {
+          return data?.date === date;
+        });
+      }
+      if (index === 2) {
+        wednesday = classes.filter((data) => {
+          return data?.date === date;
+        });
+      }
+      if (index === 3) {
+        thursday = classes.filter((data) => {
+          return data?.date === date;
+        });
+      }
+      if (index === 4) {
+        friday = classes.filter((data) => {
+          return data?.date === date;
+        });
+      }
+      if (index === 5) {
+        saturday = classes.filter((data) => {
+          return data?.date === date;
+        });
+      }
+      if (index === 6) {
+        sunday = classes.filter((data) => {
+          return data?.date === date;
+        });
+      }
+
+      setTimetable({
+        monday: monday,
+        tuesday: tuesday,
+        wednesday: wednesday,
+        thursday: thursday,
+        friday: friday,
+        saturday: saturday,
+        sunday: sunday,
+      });
+    });
+  }, [classes]);
+
   return (
     <Flex flex={1} direction={"column"}>
       <Container minW={"container.xl"}>
@@ -245,28 +349,122 @@ const TeacherDetail = (props) => {
           <TabPanel>
             {/* 수정 필요 */}
             <Container minW={"container.xl"} py={8}>
-              <TableContainer>
-                <Table>
-                  <Thead>
-                    <Tr>
-                      <Th></Th>
-                      <Th>1period</Th>
-                      <Th>2period</Th>
-                      <Th>3period</Th>
-                      <Th>4period</Th>
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    <Tr>
-                      <Td>MON 2.19</Td>
-                      <Td></Td>
-                      <Td>item</Td>
-                      <Td></Td>
-                      <Td></Td>
-                    </Tr>
-                  </Tbody>
-                </Table>
-              </TableContainer>
+              <Grid
+                templateColumns={"repeat(7, 1fr)"}
+                borderTop={"2px solid #00C3BA"}
+                borderBottom={"2px solid #00C3BA"}
+              >
+                {/** 트레이너 표 */}
+                <GridItem p={3} bgColor={"#F1F1F1"}>
+                  <Text textAlign={"center"}>MON</Text>
+                </GridItem>
+                <GridItem p={3} bgColor={"#F1F1F1"}>
+                  <Text textAlign={"center"}>TUE</Text>
+                </GridItem>
+                <GridItem p={3} bgColor={"#F1F1F1"}>
+                  <Text textAlign={"center"}>WED</Text>
+                </GridItem>
+                <GridItem p={3} bgColor={"#F1F1F1"}>
+                  <Text textAlign={"center"}>THU</Text>
+                </GridItem>
+                <GridItem p={3} bgColor={"#F1F1F1"}>
+                  <Text textAlign={"center"}>FRI</Text>
+                </GridItem>
+                <GridItem p={3} bgColor={"#F1F1F1"}>
+                  <Text textAlign={"center"}>SAT</Text>
+                </GridItem>
+                <GridItem p={3} bgColor={"#F1F1F1"}>
+                  <Text textAlign={"center"}>SUN</Text>
+                </GridItem>
+                {[
+                  timetable.monday,
+                  timetable.tuesday,
+                  timetable.wednesday,
+                  timetable.thursday,
+                  timetable.friday,
+                  timetable.saturday,
+                  timetable.sunday,
+                ].map((list, index) => (
+                  <Schedule list={list} time={"06:00"} />
+                ))}
+                {[
+                  timetable.monday,
+                  timetable.tuesday,
+                  timetable.wednesday,
+                  timetable.thursday,
+                  timetable.friday,
+                  timetable.saturday,
+                  timetable.sunday,
+                ].map((list, index) => (
+                  <Schedule list={list} time={"06:30"} />
+                ))}
+                {[
+                  timetable.monday,
+                  timetable.tuesday,
+                  timetable.wednesday,
+                  timetable.thursday,
+                  timetable.friday,
+                  timetable.saturday,
+                  timetable.sunday,
+                ].map((list, index) => (
+                  <Schedule list={list} time={"07:00"} />
+                ))}
+                {[
+                  timetable.monday,
+                  timetable.tuesday,
+                  timetable.wednesday,
+                  timetable.thursday,
+                  timetable.friday,
+                  timetable.saturday,
+                  timetable.sunday,
+                ].map((list, index) => (
+                  <Schedule list={list} time={"07:30"} />
+                ))}
+                {[
+                  timetable.monday,
+                  timetable.tuesday,
+                  timetable.wednesday,
+                  timetable.thursday,
+                  timetable.friday,
+                  timetable.saturday,
+                  timetable.sunday,
+                ].map((list, index) => (
+                  <Schedule list={list} time={"08:00"} />
+                ))}
+                {[
+                  timetable.monday,
+                  timetable.tuesday,
+                  timetable.wednesday,
+                  timetable.thursday,
+                  timetable.friday,
+                  timetable.saturday,
+                  timetable.sunday,
+                ].map((list, index) => (
+                  <Schedule list={list} time={"08:30"} />
+                ))}
+                {[
+                  timetable.monday,
+                  timetable.tuesday,
+                  timetable.wednesday,
+                  timetable.thursday,
+                  timetable.friday,
+                  timetable.saturday,
+                  timetable.sunday,
+                ].map((list, index) => (
+                  <Schedule list={list} time={"09:00"} />
+                ))}
+                {[
+                  timetable.monday,
+                  timetable.tuesday,
+                  timetable.wednesday,
+                  timetable.thursday,
+                  timetable.friday,
+                  timetable.saturday,
+                  timetable.sunday,
+                ].map((list, index) => (
+                  <Schedule list={list} time={"09:30"} />
+                ))}
+              </Grid>
             </Container>
           </TabPanel>
           <TabPanel>

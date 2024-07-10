@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+/* 특정 요소에 포커스 시 outline 제거 및 대체 시각적 표시 */
+button:focus,
+input:focus {
+  outline: none;
+  /* box-shadow: 0 0 0 2px blue;  */
+  /* 원하는 색상과 두께로 설정 가능 */
+}

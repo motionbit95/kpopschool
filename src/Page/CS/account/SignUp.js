@@ -6,6 +6,10 @@ import {
   Center,
   Divider,
   Flex,
+  FormControl,
+  FormErrorMessage,
+  FormHelperText,
+  FormLabel,
   HStack,
   IconButton,
   Image,
@@ -22,6 +26,7 @@ import {
   GoogleAuthProvider,
   OAuthProvider,
   TwitterAuthProvider,
+  createUserWithEmailAndPassword,
   signInWithPopup,
   signInWithRedirect,
 } from "firebase/auth";
@@ -77,7 +82,10 @@ const SignUp = () => {
         </Box>
         {step === 0 && (
           <EmailSignupForm
-            setStep={setStep}
+            setStep={(step) => {
+              setStep(step);
+              sendEmail();
+            }}
             navigate={navigate}
             formData={formData}
             setFormData={setFormData}
@@ -100,6 +108,14 @@ const SignUp = () => {
             sendEmail={sendEmail}
           />
         )}
+        {step === 3 && (
+          <NameSignupForm
+            setStep={setStep}
+            formData={formData}
+            setFormData={setFormData}
+            sendEmail={sendEmail}
+          />
+        )}
       </Stack>
     </Center>
   );
@@ -110,7 +126,13 @@ export default SignUp;
 const EmailSignupForm = ({ setStep, navigate, formData, setFormData }) => {
   const confirmPassword = () => {
     if (formData.password === formData.confirmPassword) {
-      setStep(1);
+      createUserWithEmailAndPassword(auth, formData.email, formData.password)
+        .then((res) => setStep(2))
+        .catch((err) => {
+          console.log(err);
+          window.alert(err.message);
+        });
+
       return true;
     } else {
       return false;
@@ -119,27 +141,49 @@ const EmailSignupForm = ({ setStep, navigate, formData, setFormData }) => {
   return (
     <Stack w={"full"}>
       <Stack spacing={3} py={4}>
-        <Text fontSize={"20px"} fontWeight={"600"}>
+        <Text fontSize={"20px"} fontWeight={"600"} textAlign={"center"}>
           Create your Account
         </Text>
-        <Input
+        <FormControl></FormControl>
+        {/* <Input
           size={"lg"}
           type="email"
           placeholder="Email"
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          onBlur={() => {}}
+        /> */}
+        <ErrorMessage
+          type={"email"}
+          inputType={"email"}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
         />
-        <Input
+        {/* <Input
           placeholder="Password"
           type="password"
           size={"lg"}
           onChange={(e) =>
             setFormData({ ...formData, password: e.target.value })
           }
+        /> */}
+        <ErrorMessage
+          type={"password"}
+          inputType={"password"}
+          onChange={(e) =>
+            setFormData({ ...formData, password: e.target.value })
+          }
         />
-        <Input
+        {/* <Input
           size={"lg"}
           placeholder="Confirm Password"
           type="password"
+          onChange={(e) =>
+            setFormData({ ...formData, confirmPassword: e.target.value })
+          }
+        /> */}
+        <ErrorMessage
+          type={"password"}
+          inputType={"passwordConfirm"}
+          password={formData.password}
           onChange={(e) =>
             setFormData({ ...formData, confirmPassword: e.target.value })
           }
@@ -186,7 +230,7 @@ const EmailSignupForm = ({ setStep, navigate, formData, setFormData }) => {
             <Image src={require("../../../Asset/Icon/apple.png")} w={"22px"} />
           }
         />
-        <IconButton
+        {/* <IconButton
           borderRadius={"full"}
           onClick={() => signInWithRedirect(auth, new TwitterAuthProvider())}
           icon={
@@ -209,7 +253,7 @@ const EmailSignupForm = ({ setStep, navigate, formData, setFormData }) => {
               w={"16px"}
             />
           }
-        />
+        /> */}
       </ButtonGroup>
       <Stack textAlign={"center"} align={"center"}>
         <Stack w={"320px"} align={"center"}>
@@ -304,12 +348,13 @@ const ConfirmForm = ({
       .then((data) => {
         console.log(data);
         // 회원가입
-        fetch(`${host_url}/users/addAuth`, {
+        fetch(`${host_url}/users/add`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            id: auth.currentUser.uid,
             email: formData.email,
             name: formData.name,
             firstName: formData.firstName,
@@ -319,13 +364,19 @@ const ConfirmForm = ({
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
-            if (data.code === "success") {
-              navigate("/signin");
-            } else {
-              // 해당 부분 정책 확인 필요
-              setErrEnter(true);
-              console.log(data);
-            }
+            // 스텝 이동해서 정보 받아오기
+            setStep(3);
+            // if (data.code === "success") {
+            //   navigate("/signin");
+            // } else {
+            //   // 해당 부분 정책 확인 필요
+            //   setErrEnter(true);
+            //   console.log(data);
+            // }
+          })
+          .catch((err) => {
+            console.log(err);
+            setErrEnter(true);
           });
       })
       .catch((err) => {
@@ -425,3 +476,75 @@ const ConfirmForm = ({
     </Stack>
   );
 };
+
+function ErrorMessage({ type, inputType, ...props }) {
+  const [input, setInput] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [isError, setIsError] = useState(false);
+
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+    props.onChange(e);
+  };
+
+  const checkValidation = () => {
+    console.log(inputType, input);
+    if (inputType === "email") {
+      if (input.length < 6) {
+        setIsError(true);
+        setErrorMsg(
+          "Please enter at least 6 characters including uppercase and lowercase letters."
+        );
+        return;
+      }
+    } else if (inputType === "password") {
+      if (input.length < 8) {
+        setIsError(true);
+        setErrorMsg("Password must be at least 8 characters long.");
+        return;
+      }
+    } else if (inputType === "passwordConfirm") {
+      if (props.password !== input) {
+        setIsError(true);
+        setErrorMsg("Passwords do not match.");
+        return;
+      }
+    }
+
+    setIsError(false);
+    setErrorMsg("");
+  };
+  return (
+    <FormControl isInvalid={isError}>
+      <Input
+        placeholder={
+          inputType === "email"
+            ? "Email"
+            : inputType === "password"
+            ? "Password"
+            : "Confirm Password"
+        }
+        size={"lg"}
+        _focus={{
+          outline: "none",
+          border: `2px solid ${popmint}`,
+          // boxShadow: `0 0 0 2px ${popmint}`, // 포커스 표시를 박스 쉐도우로 대체할 수 있습니다
+        }}
+        _invalid={{ borderColor: popmag, borderWidth: "2px" }}
+        type={type}
+        value={input}
+        onChange={handleInputChange}
+        onBlur={() => {
+          checkValidation();
+        }}
+      />
+      {isError ? (
+        <FormHelperText color={popmag}>
+          <Text w={"320px"}>{errorMsg}</Text>
+        </FormHelperText>
+      ) : (
+        <></>
+      )}
+    </FormControl>
+  );
+}

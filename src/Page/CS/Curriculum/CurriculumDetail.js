@@ -3,6 +3,8 @@ import {
   Button,
   Container,
   Flex,
+  Grid,
+  GridItem,
   HStack,
   Stack,
   StackDivider,
@@ -10,21 +12,14 @@ import {
   TabList,
   TabPanel,
   TabPanels,
-  Table,
-  TableContainer,
   Tabs,
-  Tbody,
-  Td,
   Text,
-  Th,
-  Thead,
-  Tr,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
-import Timetable from "../../../Component/TimeTabel";
-import { popyellow, popblue, popmint, popmag } from "../../../App";
+import { popyellow, popmint, popmag, host_url } from "../../../App";
+import { getWeekDates, Schedule } from "../../AD/Class/Class";
 
 const CurriculumDetail = () => {
   const location = useLocation();
@@ -36,41 +31,105 @@ const CurriculumDetail = () => {
     console.log(category, format);
   }, [category, format]);
 
-  const [curriculums, setCurriculums] = useState([]);
+  const [classes, setClasses] = useState([]);
 
-  // useEffect(() => {
-  //   const host_url =
-  //     window.location.hostname === "localhost" ? "http://localhost:8080" : "";
-  //   console.log(host_url);
+  useEffect(() => {
+    fetch(`${host_url}/curriculums/search`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        conditions: [{ field: "category", operator: "==", value: category }],
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        let classes = [];
+        res.forEach((data) => {
+          if (data.classes) {
+            data.classes.forEach((schedule) => {
+              classes.push({
+                ...schedule,
+                difficulty: data.difficulty,
+                curriculum: data.title,
+              });
+            });
+          }
+        });
+        console.log(classes.flat());
+        setClasses(classes.flat());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-  //   const getCurriculums = async () => {
-  //     // 필터링은 검색을 통해서 진행한다.
-  //     fetch(`${host_url}/curriculums/search`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         conditions: [
-  //           { field: "category", operator: "==", value: category },
-  //           { field: "format", operator: "==", value: format },
-  //         ],
-  //       }),
-  //     })
-  //       .then((res) => res.json())
-  //       .then((res) => {
-  //         console.log(res);
-  //         setCurriculums(res);
-  //       })
-  //       .catch((err) => {
-  //         // console.log(err);
-  //         console.log("데이터가 없습니다");
-  //         setCurriculums([]);
-  //       });
-  //   };
-  //   getCurriculums();
-  //   console.log(curriculums);
-  // }, [category, format]);
+  const [timetable, setTimetable] = useState({
+    monday: [],
+    tuesday: [],
+    wednesday: [],
+    thursday: [],
+    friday: [],
+    saturday: [],
+    sunday: [],
+  });
+  useEffect(() => {
+    let monday,
+      tuesday,
+      wednesday,
+      thursday,
+      friday,
+      saturday,
+      sunday = [];
+    getWeekDates().forEach((date, index) => {
+      if (index === 0) {
+        monday = classes.filter((data) => {
+          return data?.date === date;
+        });
+      }
+      if (index === 1) {
+        tuesday = classes.filter((data) => {
+          return data?.date === date;
+        });
+      }
+      if (index === 2) {
+        wednesday = classes.filter((data) => {
+          return data?.date === date;
+        });
+      }
+      if (index === 3) {
+        thursday = classes.filter((data) => {
+          return data?.date === date;
+        });
+      }
+      if (index === 4) {
+        friday = classes.filter((data) => {
+          return data?.date === date;
+        });
+      }
+      if (index === 5) {
+        saturday = classes.filter((data) => {
+          return data?.date === date;
+        });
+      }
+      if (index === 6) {
+        sunday = classes.filter((data) => {
+          return data?.date === date;
+        });
+      }
+
+      setTimetable({
+        monday: monday,
+        tuesday: tuesday,
+        wednesday: wednesday,
+        thursday: thursday,
+        friday: friday,
+        saturday: saturday,
+        sunday: sunday,
+      });
+    });
+  }, [classes]);
 
   return (
     <Flex flex={1} direction={"column"}>
@@ -179,7 +238,122 @@ const CurriculumDetail = () => {
           </TabPanel> */}
           <TabPanel>
             <Container minW={"container.xl"} py={8}>
-              <Timetable curriculums={curriculums} />
+              <Grid
+                templateColumns={"repeat(7, 1fr)"}
+                borderTop={"2px solid #00C3BA"}
+                borderBottom={"2px solid #00C3BA"}
+              >
+                {/** 트레이너 표 */}
+                <GridItem p={3} bgColor={"#F1F1F1"}>
+                  <Text textAlign={"center"}>MON</Text>
+                </GridItem>
+                <GridItem p={3} bgColor={"#F1F1F1"}>
+                  <Text textAlign={"center"}>TUE</Text>
+                </GridItem>
+                <GridItem p={3} bgColor={"#F1F1F1"}>
+                  <Text textAlign={"center"}>WED</Text>
+                </GridItem>
+                <GridItem p={3} bgColor={"#F1F1F1"}>
+                  <Text textAlign={"center"}>THU</Text>
+                </GridItem>
+                <GridItem p={3} bgColor={"#F1F1F1"}>
+                  <Text textAlign={"center"}>FRI</Text>
+                </GridItem>
+                <GridItem p={3} bgColor={"#F1F1F1"}>
+                  <Text textAlign={"center"}>SAT</Text>
+                </GridItem>
+                <GridItem p={3} bgColor={"#F1F1F1"}>
+                  <Text textAlign={"center"}>SUN</Text>
+                </GridItem>
+                {[
+                  timetable.monday,
+                  timetable.tuesday,
+                  timetable.wednesday,
+                  timetable.thursday,
+                  timetable.friday,
+                  timetable.saturday,
+                  timetable.sunday,
+                ].map((list, index) => (
+                  <Schedule list={list} time={"06:00"} />
+                ))}
+                {[
+                  timetable.monday,
+                  timetable.tuesday,
+                  timetable.wednesday,
+                  timetable.thursday,
+                  timetable.friday,
+                  timetable.saturday,
+                  timetable.sunday,
+                ].map((list, index) => (
+                  <Schedule list={list} time={"06:30"} />
+                ))}
+                {[
+                  timetable.monday,
+                  timetable.tuesday,
+                  timetable.wednesday,
+                  timetable.thursday,
+                  timetable.friday,
+                  timetable.saturday,
+                  timetable.sunday,
+                ].map((list, index) => (
+                  <Schedule list={list} time={"07:00"} />
+                ))}
+                {[
+                  timetable.monday,
+                  timetable.tuesday,
+                  timetable.wednesday,
+                  timetable.thursday,
+                  timetable.friday,
+                  timetable.saturday,
+                  timetable.sunday,
+                ].map((list, index) => (
+                  <Schedule list={list} time={"07:30"} />
+                ))}
+                {[
+                  timetable.monday,
+                  timetable.tuesday,
+                  timetable.wednesday,
+                  timetable.thursday,
+                  timetable.friday,
+                  timetable.saturday,
+                  timetable.sunday,
+                ].map((list, index) => (
+                  <Schedule list={list} time={"08:00"} />
+                ))}
+                {[
+                  timetable.monday,
+                  timetable.tuesday,
+                  timetable.wednesday,
+                  timetable.thursday,
+                  timetable.friday,
+                  timetable.saturday,
+                  timetable.sunday,
+                ].map((list, index) => (
+                  <Schedule list={list} time={"08:30"} />
+                ))}
+                {[
+                  timetable.monday,
+                  timetable.tuesday,
+                  timetable.wednesday,
+                  timetable.thursday,
+                  timetable.friday,
+                  timetable.saturday,
+                  timetable.sunday,
+                ].map((list, index) => (
+                  <Schedule list={list} time={"09:00"} />
+                ))}
+                {[
+                  timetable.monday,
+                  timetable.tuesday,
+                  timetable.wednesday,
+                  timetable.thursday,
+                  timetable.friday,
+                  timetable.saturday,
+                  timetable.sunday,
+                ].map((list, index) => (
+                  <Schedule list={list} time={"09:30"} />
+                ))}
+              </Grid>
             </Container>
           </TabPanel>
         </TabPanels>
