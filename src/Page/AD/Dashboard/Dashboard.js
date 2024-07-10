@@ -76,8 +76,8 @@ const Dashboard = (props) => {
       )}
       {sideTab === "Class" && (
         <>
-          {/* {!props.isdetail && <Class setIsdetail={props.setIsdetail} />} */}
-          {!props.isdetail && <ClassDetail />}
+          {!props.isdetail && <Class setIsdetail={props.setIsdetail} />}
+          {/* {!props.isdetail && <ClassDetail />} */}
         </>
       )}
       {sideTab === "Payment" && <Payment />}
