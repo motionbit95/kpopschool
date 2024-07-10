@@ -13,6 +13,7 @@ import UserDetail from "./User/UserDetail";
 import TrainerDetail from "./Trainer/TrainerDetail";
 import CreateCoupon from "./Coupon/CreateCoupon";
 import { getTab } from "./Sidebar";
+import ClassDetail from "../Class/ClassDetail";
 
 const Dashboard = (props) => {
   const [userList, setUserList] = useState([]);
@@ -73,7 +74,12 @@ const Dashboard = (props) => {
           )}
         </>
       )}
-      {sideTab === "Class" && <Class />}
+      {sideTab === "Class" && (
+        <>
+          {/* {!props.isdetail && <Class setIsdetail={props.setIsdetail} />} */}
+          {!props.isdetail && <ClassDetail />}
+        </>
+      )}
       {sideTab === "Payment" && <Payment />}
       {sideTab === "Coupon" && (
         <>

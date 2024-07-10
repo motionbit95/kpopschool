@@ -20,6 +20,8 @@ import CurriculumList from "./Page/CS/Curriculum/CurriculumList";
 import Test from "./Page/AD/AdminLogin/Test";
 import AdminLogin from "./Page/AD/AdminLogin";
 import Main from "./Page/AD/Dashboard/Main";
+import UserInfo from "./Component/Setting/UserInfo";
+import Info from "./Page/CS/account/Info";
 
 export const host_url =
   window.location.hostname === "localhost" ? "http://localhost:8080" : "";
@@ -70,6 +72,7 @@ function App() {
 
               <Route path="/signin" element={<Login />} />
               <Route path="/signup" element={<SignUp />} />
+              <Route path="/signup/info" element={<Info />} />
               <Route path="/signout" element={<SignOut />} />
               <Route path="/payment/result" element={<PaymentResult />} />
 
