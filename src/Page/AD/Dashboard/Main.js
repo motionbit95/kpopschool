@@ -1,10 +1,13 @@
 import { Box, Flex, HStack } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import Dashboard from "./Dashboard";
 import DashboardTopbar from "../../../Component/DashboardTopbar";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../../Firebase/Config";
 
 const Main = () => {
+  const navigate = useNavigate();
   const [sideTab, setSideTab] = useState("HOME");
   const [isdetail, setIsdetail] = useState({
     view: "",
@@ -16,6 +19,22 @@ const Main = () => {
     setSideTab(tab);
     setIsdetail("");
   };
+
+  // admin 로그인 확인
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        navigate("/admin/login");
+      } else {
+        if (user.uid !== "uGpljAk5EXMNh4M7mLHKbcLNAD72") {
+          // admin 계정
+          // admin@kpopschool.com
+          // test1234!
+          navigate("/admin/login");
+        }
+      }
+    });
+  }, []);
 
   return (
     <Flex>

@@ -7,9 +7,35 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import React from "react";
+import { auth } from "../../Firebase/Config";
+import { useNavigate } from "react-router-dom";
 
 const AdminLogin = () => {
+  const formData = {
+    id: "",
+    password: "",
+  };
+
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    signInWithEmailAndPassword(auth, formData.id, formData.password).then(
+      (userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        // ...
+
+        if (user.uid === "uGpljAk5EXMNh4M7mLHKbcLNAD72") {
+          navigate("/admin");
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
   return (
     <Center minH={"100vh"}>
       <Stack align={"center"} w={"520px"}>
@@ -26,12 +52,24 @@ const AdminLogin = () => {
             K-POP School admin
           </Text>
           <Stack w={"full"}>
-            <Input placeholder="ID" />
-            <Input placeholder="Password" />
+            <Input
+              placeholder="ID"
+              onChange={(e) => (formData.id = e.target.value)}
+            />
+            <Input
+              placeholder="Password"
+              type="password"
+              onChange={(e) => (formData.password = e.target.value)}
+            />
           </Stack>
         </Stack>
         <Box pt={16}>
-          <Button size={"lg"} color={"white"} bgColor={"#00C3BA"}>
+          <Button
+            size={"lg"}
+            color={"white"}
+            bgColor={"#00C3BA"}
+            onClick={handleLogin}
+          >
             SIGN IN
           </Button>
         </Box>

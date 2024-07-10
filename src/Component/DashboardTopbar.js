@@ -1,6 +1,8 @@
 import { Button, HStack, Text } from "@chakra-ui/react";
+import { signOut } from "firebase/auth";
 import React from "react";
 import { FiChevronRight } from "react-icons/fi";
+import { auth } from "../Firebase/Config";
 
 const DashboardTopbar = (props) => {
   return (
@@ -23,7 +25,9 @@ const DashboardTopbar = (props) => {
           </>
         )}
       </HStack>
-      <Button size={"lg"}>LOG OUT</Button>
+      <Button size={"lg"} onClick={() => signOut(auth)}>
+        LOG OUT
+      </Button>
     </HStack>
   );
 };
