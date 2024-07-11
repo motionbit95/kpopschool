@@ -16,7 +16,13 @@ function MessageBox(props) {
   const { isOpen, onClose } = props;
   return (
     <>
-      <Modal size={"sm"} isCentered isOpen={isOpen} onClose={onClose}>
+      <Modal
+        zIndex={"99999"}
+        size={"sm"}
+        isCentered
+        isOpen={isOpen}
+        onClose={onClose}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />

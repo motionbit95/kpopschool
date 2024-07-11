@@ -89,7 +89,7 @@ const Topbar = () => {
         position={"fixed"}
         w={"100%"}
         bgColor={"white"}
-        zIndex={9999}
+        zIndex={"100"}
       >
         <Container minW={"container.xl"}>
           <HStack justifyContent={"space-between"}>

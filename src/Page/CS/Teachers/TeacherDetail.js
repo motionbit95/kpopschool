@@ -385,7 +385,7 @@ const TeacherDetail = (props) => {
                   timetable.saturday,
                   timetable.sunday,
                 ].map((list, index) => (
-                  <Schedule list={list} time={"06:00"} />
+                  <Schedule key={index} list={list} time={"06:00"} />
                 ))}
                 {[
                   timetable.monday,
@@ -396,7 +396,7 @@ const TeacherDetail = (props) => {
                   timetable.saturday,
                   timetable.sunday,
                 ].map((list, index) => (
-                  <Schedule list={list} time={"06:30"} />
+                  <Schedule key={index} list={list} time={"06:30"} />
                 ))}
                 {[
                   timetable.monday,
@@ -407,7 +407,7 @@ const TeacherDetail = (props) => {
                   timetable.saturday,
                   timetable.sunday,
                 ].map((list, index) => (
-                  <Schedule list={list} time={"07:00"} />
+                  <Schedule key={index} list={list} time={"07:00"} />
                 ))}
                 {[
                   timetable.monday,
@@ -418,7 +418,7 @@ const TeacherDetail = (props) => {
                   timetable.saturday,
                   timetable.sunday,
                 ].map((list, index) => (
-                  <Schedule list={list} time={"07:30"} />
+                  <Schedule key={index} list={list} time={"07:30"} />
                 ))}
                 {[
                   timetable.monday,
@@ -429,7 +429,7 @@ const TeacherDetail = (props) => {
                   timetable.saturday,
                   timetable.sunday,
                 ].map((list, index) => (
-                  <Schedule list={list} time={"08:00"} />
+                  <Schedule key={index} list={list} time={"08:00"} />
                 ))}
                 {[
                   timetable.monday,
@@ -440,7 +440,7 @@ const TeacherDetail = (props) => {
                   timetable.saturday,
                   timetable.sunday,
                 ].map((list, index) => (
-                  <Schedule list={list} time={"08:30"} />
+                  <Schedule key={index} list={list} time={"08:30"} />
                 ))}
                 {[
                   timetable.monday,
@@ -451,7 +451,7 @@ const TeacherDetail = (props) => {
                   timetable.saturday,
                   timetable.sunday,
                 ].map((list, index) => (
-                  <Schedule list={list} time={"09:00"} />
+                  <Schedule key={index} list={list} time={"09:00"} />
                 ))}
                 {[
                   timetable.monday,
@@ -462,7 +462,7 @@ const TeacherDetail = (props) => {
                   timetable.saturday,
                   timetable.sunday,
                 ].map((list, index) => (
-                  <Schedule list={list} time={"09:30"} />
+                  <Schedule key={index} list={list} time={"09:30"} />
                 ))}
               </Grid>
             </Container>

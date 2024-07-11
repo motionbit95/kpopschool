@@ -14,13 +14,23 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
+import MessageBox from "../../../Component/MessageBox";
+import { popmag } from "../../../App";
 
 const TeacherInfo = ({ teacher }) => {
   const toast = useToast();
   const [isFavorite, setIsFavorite] = useState(false);
 
+  const [modalState, setModalState] = useState({
+    isInfo: false,
+  });
+
   const handleClickFavorite = () => {
-    console.log("handleClickFavorite");
+    setModalState({
+      ...modalState,
+      isInfo: true,
+    });
+    // console.log("handleClickFavorite");
     setIsFavorite(!isFavorite);
   };
 
@@ -48,6 +58,18 @@ const TeacherInfo = ({ teacher }) => {
 
   return (
     <HStack justify={"space-between"} align={"flex-start"}>
+      <MessageBox
+        isOpen={modalState.isInfo}
+        onClose={() => setModalState({ ...modalState, isInfo: false })}
+      >
+        <Text textAlign={"center"}>
+          Trainer has been{" "}
+          <span style={{ color: popmag }}>
+            {!isFavorite ? "added" : "removed"}{" "}
+          </span>
+          to the list
+        </Text>
+      </MessageBox>
       <HStack gap={4} h={"250px"}>
         <Box boxSize={"250px"} bgColor={"gray"} borderRadius={"xl"}>
           <Image src={teacher.profile} alt={""} />
