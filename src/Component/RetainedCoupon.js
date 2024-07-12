@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -10,9 +10,28 @@ import {
   Text,
   Tr,
 } from "@chakra-ui/react";
-import { popmint } from "../App";
+import { host_url, popmint } from "../App";
 
 const RetainedCoupon = () => {
+  const [list, setList] = useState([]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+
+    // 이벤트 데이터를 가지고 옵니다.
+    fetch(`${host_url}/event/list`)
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        setList(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const currentDate = new Date();
+
   return (
     <Stack color={"#4E4E4E"}>
       <TableContainer>
@@ -39,12 +58,21 @@ const RetainedCoupon = () => {
                 </Td>
               ))}
             </Tr>
-            {data.map((item) => (
+            {list.map((item) => (
               <Tr>
-                <Td textAlign={"center"}>{item.coupon}</Td>
-                <Td textAlign={"center"}>{item.discount}</Td>
-                <Td textAlign={"center"}>{item.date}</Td>
-                <Td textAlign={"center"}>{item.vailable}</Td>
+                <Td textAlign={"center"}>{item.title}</Td>
+                <Td
+                  textAlign={"center"}
+                >{`${item.discountAmount} ${item.discountType} 
+                ${item.discountclass}
+                `}</Td>
+                <Td textAlign={"center"}>
+                  {/* {item.use_end} */}
+                  {/* {toDate(item.use_end)} */}
+                </Td>
+                <Td textAlign={"center"}>
+                  {/* {toDate(item.use_end) < currentDate ? "X" : "O"} */}
+                </Td>
               </Tr>
             ))}
           </Tbody>
@@ -60,27 +88,35 @@ const headers = ["Coupon", "Discount", "Date of use", "Vailable"];
 
 const data = [
   {
-    coupon: "Big Opening",
-    discount: "20% for all class",
-    date: "20-07-2024",
+    title: "Big Opening",
+    discountAmount: "20",
+    discountType: "%",
+    discountclass: "for all class",
+    use_end: "20-07-2024",
     vailable: "O",
   },
   {
-    coupon: "Black Friday",
-    discount: "30% for all class",
-    date: "19-07-2024",
+    title: "Black Friday",
+    discountAmount: "30",
+    discountType: "%",
+    discountclass: "for all class",
+    use_end: "19-07-2024",
     vailable: "O",
   },
   {
-    coupon: "New trainer",
-    discount: "20% for only Vocal class",
-    date: "06-04-2024",
+    title: "New trainer",
+    discountAmount: "20",
+    discountType: "%",
+    discountclass: "for only Vocal class",
+    use_end: "06-04-2024",
     vailable: "X",
   },
   {
-    coupon: "Playvac ticket",
-    discount: "10% for Beginner course",
-    date: "03-03-2024",
+    title: "Playvac ticket",
+    discountAmount: "10",
+    discountType: "%",
+    discountclass: "10% for Beginner course",
+    use_end: "03-03-2024",
     vailable: "X",
   },
 ];

@@ -11,11 +11,11 @@ import {
   Text,
   Tr,
 } from "@chakra-ui/react";
-import { host_url, popmint } from "../../App";
+import { host_url, popmag, popmint, popyellow } from "../../App";
 
 const InquiryHistory = () => {
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
-  const [inquirys, setInquiries] = useState([]);
+  const [inquirydata, setInquirydata] = useState([]);
   const headers = ["Tag", "Title", "Date", "State"];
   const toDate = (timestamp) => {
     return new Date(timestamp._seconds * 1000);
@@ -26,20 +26,36 @@ const InquiryHistory = () => {
   };
 
   useEffect(() => {
-    const getInquiry = async () => {
-      fetch(`${host_url}/inquiry/list`)
+    const host_url =
+      window.location.hostname === "localhost" ? "http://localhost:8080" : "";
+    // console.log(host_url);
+
+    const getInquirys = async () => {
+      // 필터링은 검색을 통해서 진행한다.
+      fetch(`${host_url}/inquiry/search`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          conditions: [
+            // 유저 uid 검색해서 가져와야 한다.
+          ],
+        }),
+      })
         .then((res) => res.json())
         .then((res) => {
-          console.log(res);
-          setInquiries(res);
+          // console.log(res);
+          setInquirydata(res);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
+          console.log("데이터가 없습니다");
+          setInquirydata([]);
         });
     };
 
-    getInquiry();
-    console.log(inquirys);
+    getInquirys();
   }, []);
 
   return (
@@ -68,7 +84,7 @@ const InquiryHistory = () => {
                 </Td>
               ))}
             </Tr>
-            {inquirys.map((item, index) => (
+            {inquirydata.map((item, index) => (
               <>
                 <Tr onClick={() => handleClick(index)}>
                   <Td textAlign={"center"}>{item.tag}</Td>
@@ -82,11 +98,16 @@ const InquiryHistory = () => {
                       })
                       .replace(/(\d+)\/(\d+)\/(\d+)/, "$1-$2-$3")}
                   </Td>
-                  <Td textAlign={"center"}>{item.state}</Td>
+                  <Td
+                    textAlign={"center"}
+                    color={item.state === "completed" ? popmag : popyellow}
+                  >
+                    {item.state}
+                  </Td>
                 </Tr>
                 {selectedRowIndex === index && item.details && (
                   <Tr>
-                    <Td colSpan={4} textAlign={"start"}>
+                    <Td p={8} colSpan={4} textAlign={"start"}>
                       <Stack spacing={8}>
                         <Text whiteSpace={"pre-line"}>{item.details}</Text>
                         {/* 응대 부분 */}

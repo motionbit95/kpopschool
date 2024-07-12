@@ -22,6 +22,7 @@ import AdminLogin from "./Page/AD/AdminLogin";
 import Main from "./Page/AD/Dashboard/Main";
 import UserInfo from "./Component/Setting/UserInfo";
 import Info from "./Page/CS/account/Info";
+import { CodeForm } from "./Component/Setting/CodeForm";
 
 export const host_url =
   window.location.hostname === "localhost" ? "http://localhost:8080" : "";
@@ -37,7 +38,7 @@ function App() {
   const [showTopbarFooter, setShowTopbarFooter] = useState(true);
 
   useEffect(() => {
-    const hidePaths = ["/signin", "/signup", "/signout"];
+    const hidePaths = ["/signin", "/signup", "/signout", "passwordchange"];
     const shouldShow = !hidePaths.some((path) =>
       location.pathname.includes(path)
     );
@@ -77,6 +78,7 @@ function App() {
 
               <Route path="/signin" element={<Login />} />
               <Route path="/signup" element={<SignUp />} />
+              <Route path="/passwordchange" element={<CodeForm />} />
               <Route path="/signup/info" element={<Info />} />
               <Route path="/signout" element={<SignOut />} />
               <Route path="/payment/result" element={<PaymentResult />} />

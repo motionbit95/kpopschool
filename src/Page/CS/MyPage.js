@@ -215,6 +215,7 @@ const MyPage = () => {
                   >
                     <TabPanel p={0} h={"full"}>
                       <Stack spacing={6}>
+                        {/* 데이터 필요 */}
                         <CurrentClass />
                         <ClassinProgress />
                       </Stack>

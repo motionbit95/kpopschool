@@ -17,10 +17,15 @@ import { CheckCircleIcon } from "@chakra-ui/icons";
 
 const PasswordChange = () => {
   const [isEmailCode, setIsEmailCode] = useState(false);
-  const [isSecurity, setIsSecurity] = useState(true);
+  const [isSecurity, setIsSecurity] = useState(false);
   return (
     <Stack color={"#4E4E4E"}>
-      {!isEmailCode && !isSecurity && <PasswordForm />}
+      {!isEmailCode && !isSecurity && (
+        <PasswordForm
+          setIsEmailCode={setIsEmailCode}
+          setIsSecurity={setIsSecurity}
+        />
+      )}
       {isEmailCode && <EmailCodeForm />}
       {isSecurity && <SecurityForm />}
     </Stack>
@@ -30,6 +35,29 @@ const PasswordChange = () => {
 export default PasswordChange;
 
 const PasswordForm = (props) => {
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [verifymPassword, setVerifyPassword] = useState("");
+
+  const handlePWUpdate = (e) => {
+    if (e.target.name === "current-password") {
+      setCurrentPassword(e.target.value);
+    } else if (e.target.name === "new-password") {
+      setNewPassword(e.target.value);
+    } else if (e.target.name === "verify-password") {
+      setVerifyPassword(e.target.value);
+    }
+  };
+
+  const handleSubmit = () => {
+    // 현재 유저 비밀번호와, 입력된 비밀번호 일치할때 진행 - 현재 구현 X
+    if (newPassword === verifymPassword) {
+      alert("Email code 발송");
+      props.setIsEmailCode(true);
+    } else if (newPassword !== verifymPassword) {
+      alert("new password and verify password not match");
+    }
+  };
   return (
     <Stack divider={<StackDivider borderColor="gray.200" />} spacing={8}>
       <Stack spacing={8} pl={10}>
@@ -45,20 +73,34 @@ const PasswordForm = (props) => {
           <Text fontSize={"lg"} fontWeight={"600"}>
             Current Password
           </Text>
-          <Input w={"200px"} />
+          <Input
+            w={"200px"}
+            name="current-password"
+            onChange={handlePWUpdate}
+          />
         </Stack>
         <Stack spacing={3}>
           <Text fontSize={"lg"} fontWeight={"600"}>
             New Password
           </Text>
           <Stack>
-            <Input w={"200px"} placeholder="new Password" />
-            <Input w={"200px"} placeholder="verify Password" />
+            <Input
+              w={"200px"}
+              placeholder="new Password"
+              name="new-password"
+              onChange={handlePWUpdate}
+            />
+            <Input
+              w={"200px"}
+              placeholder="verify Password"
+              name="verify-password"
+              onChange={handlePWUpdate}
+            />
           </Stack>
           <Text color={popmint}>Forgot your password?</Text>
         </Stack>
         <Box>
-          <Button color={"white"} bgColor={popmint}>
+          <Button color={"white"} bgColor={popmint} onClick={handleSubmit}>
             SAVE
           </Button>
         </Box>
@@ -84,118 +126,24 @@ const PasswordForm = (props) => {
 };
 
 const EmailCodeForm = (props) => {
-  const [isCode, setIsCode] = useState(false);
   return (
     <Stack align={"center"}>
       <Box boxSize={"160px"}>
         <Image src={require("../../Asset/Logo/KpopLogo.png")} />
       </Box>
-      {isCode ? <CodeForm /> : <ClickForm setIsCode={setIsCode} />}
-    </Stack>
-  );
-};
-
-const ClickForm = (props) => {
-  return (
-    <Stack align={"center"}>
-      <Text fontSize={"20px"} fontWeight={"800"} color={popmint}>
-        Confirm you email address
-      </Text>
-      <Stack spacing={0} fontSize={"sm"} align={"center"}>
-        <Text>We sent a confirmation email to your accont</Text>
-        <Text>
-          check your email and click on the confirmation link to continue
+      <Stack align={"center"}>
+        <Text fontSize={"20px"} fontWeight={"800"} color={popmint}>
+          Confirm you email address
         </Text>
-        <Text
-          pt={32}
-          color={popmag}
-          fontWeight={"600"}
-          cursor={"pointer"}
-          onClick={() => props.setIsCode(true)}
-        >
-          Resend email
-        </Text>
-      </Stack>
-    </Stack>
-  );
-};
-
-const CodeForm = (props) => {
-  const [errEnter, setErrEnter] = useState(false);
-  const [validCode, setValidCode] = useState("");
-
-  return (
-    <Stack align={"center"}>
-      <Box w={"250px"} mt={-4}>
-        <Image src={require("../../Asset/Image/K-popBanner.png")} />
-      </Box>
-      <Stack align={"center"} py={8}>
-        <Text color={"black"} fontWeight={"600"}>
-          Hello, this is K-POP School!
-        </Text>
-        <Text fontSize={"20px"} fontWeight={"500"}>
-          Enter this code to complete the reset.
-        </Text>
-      </Stack>
-      <Stack spacing={4}>
-        <HStack justify={"center"}>
-          <HStack
-            p={3}
-            border={"1px solid"}
-            borderColor={errEnter ? popmag : "#E1E4E4"}
-            borderRadius={"md"}
-          >
-            <PinInput
-              onChange={(e) => {
-                setValidCode(e);
-                setErrEnter(false);
-              }}
-              variant={"flushed"}
-              focusBorderColor={popmint}
-              placeholder=""
-            >
-              <PinInputField
-                color={errEnter ? popmag : "black"}
-                fontSize={"24px"}
-                fontWeight={"700"}
-              />
-              <PinInputField
-                color={errEnter ? popmag : "black"}
-                fontSize={"24px"}
-                fontWeight={"700"}
-              />
-              <PinInputField
-                color={errEnter ? popmag : "black"}
-                fontSize={"24px"}
-                fontWeight={"700"}
-              />
-              <PinInputField
-                color={errEnter ? popmag : "black"}
-                fontSize={"24px"}
-                fontWeight={"700"}
-              />
-              <PinInputField
-                color={errEnter ? popmag : "black"}
-                fontSize={"24px"}
-                fontWeight={"700"}
-              />
-            </PinInput>
-          </HStack>
-        </HStack>
-        {errEnter && (
-          <Text color={popmag} fontSize={"24px"} textAlign={"center"}>
-            Code does not match
+        <Stack spacing={0} fontSize={"sm"} align={"center"}>
+          <Text>We sent a confirmation email to your accont</Text>
+          <Text>
+            check your email and click on the confirmation link to continue
           </Text>
-        )}
-      </Stack>
-      <Stack align={"center"} spacing={0} pt={16}>
-        <Text>If you didn't request this pin, we recommend you</Text>
-        <Text>change your Linkedin password.</Text>
-      </Stack>
-      <Stack pt={8}>
-        <Button color={"white"} bgColor={popmint}>
-          Send
-        </Button>
+          <Text pt={32} color={popmag} fontWeight={"600"} cursor={"pointer"}>
+            Resend email
+          </Text>
+        </Stack>
       </Stack>
     </Stack>
   );

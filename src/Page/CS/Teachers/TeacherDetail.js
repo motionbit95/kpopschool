@@ -11,6 +11,12 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
   Stack,
   StackDivider,
   Tab,
@@ -23,6 +29,7 @@ import {
   Tbody,
   Td,
   Text,
+  Textarea,
   Th,
   Thead,
   Tr,
@@ -282,6 +289,11 @@ const TeacherDetail = (props) => {
     });
   }, [classes]);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
   return (
     <Flex flex={1} direction={"column"}>
       <Container minW={"container.xl"}>
@@ -469,7 +481,45 @@ const TeacherDetail = (props) => {
           </TabPanel>
           <TabPanel>
             <Container minW={"container.xl"} py={8}>
-              <InputGroup h={"60px"} alignItems={"center"}>
+              <HStack
+                border={"1px solid #E1E4E4"}
+                py={2}
+                px={4}
+                borderRadius={"lg"}
+                justify={"space-between"}
+                onClick={handleModal}
+              >
+                <Text fontSize={"lg"} color={"#C0C0C0"}>
+                  You can use it after logging in. Please leave a review after
+                  taking the course
+                </Text>
+                <HStack>
+                  <Flex gap={1} w={"100%"} align={"center"} justify={"center"}>
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <Image
+                        key={i}
+                        src={
+                          i < 0
+                            ? require("../../../Asset/Icon/starFill.png")
+                            : require("../../../Asset/Icon/starDefault.png")
+                        }
+                        alt="star"
+                        boxSize="18px" // 적절한 크기로 설정
+                      />
+                    ))}
+                  </Flex>
+                  <Button px={6} size={"sm"} color={"white"} bgColor={popmint}>
+                    Go
+                  </Button>
+                </HStack>
+              </HStack>
+              {isModalOpen && (
+                <Stack>
+                  <ReviewModal isOpen={isModalOpen} onClose={handleModal} />
+                </Stack>
+              )}
+
+              {/* <InputGroup h={"60px"} alignItems={"center"}>
                 <Input
                   h={"full"}
                   fontSize={"lg"}
@@ -480,7 +530,7 @@ const TeacherDetail = (props) => {
                     GO
                   </Button>
                 </InputRightElement>
-              </InputGroup>
+              </InputGroup> */}
               {reviews.map((review) => (
                 <HStack py={12} gap={4} align={"start"}>
                   <Avatar size={"lg"} src={review.userProfile} />
@@ -589,5 +639,78 @@ const LessonForm = ({ curriculums, teacher, isOkay, navigate }) => {
         ))}
       </Stack>
     </Container>
+  );
+};
+
+const ReviewModal = (props) => {
+  const [rating, setRating] = useState(0);
+
+  const handleStarClick = (index) => {
+    setRating(index + 1);
+  };
+  return (
+    <>
+      <Modal size={"4xl"} isOpen={props.isOpen} onClose={props.onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          {/* <ModalCloseButton /> */}
+          {/* <ModalHeader></ModalHeader> */}
+          <ModalBody py={8} px={16}>
+            <Stack spacing={8} color={"#4E4E4E"}>
+              <Stack align={"center"}>
+                <Box>
+                  <Image src={require("../../../Asset/Logo/ReviewLogo.png")} />
+                </Box>
+                <Stack align={"center"} spacing={0}>
+                  <Text fontSize={"30px"} fontWeight={"600"}>
+                    The class is over!
+                  </Text>
+                  <Text>See you in the next class</Text>
+                </Stack>
+              </Stack>
+              <Stack>
+                <Text fontSize={"20px"} fontWeight={"500"}>
+                  How was the class?
+                </Text>
+                <Flex gap={1} pb={2}>
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <Image
+                      key={i}
+                      src={
+                        i < rating
+                          ? require("../../../Asset/Icon/starFill.png")
+                          : require("../../../Asset/Icon/starDefault.png")
+                      }
+                      alt="star"
+                      boxSize="24px" // 적절한 크기로 설정
+                      onClick={() => handleStarClick(i)}
+                      cursor={"pointer"}
+                    />
+                  ))}
+                </Flex>
+                <Textarea
+                  placeholder="Leave a comments"
+                  h={160}
+                  resize={"none"}
+                  focusBorderColor={popmint}
+                />
+                <Stack align={"center"} pt={4}>
+                  <Button
+                    px={16}
+                    h={"66px"}
+                    color={"white"}
+                    bg={popmint}
+                    fontSize={"25px"}
+                    onClick={() => props.onClose()}
+                  >
+                    COMPLETE
+                  </Button>
+                </Stack>
+              </Stack>
+            </Stack>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };

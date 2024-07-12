@@ -20,7 +20,7 @@ import { popmint } from "../App";
 const Topbar = () => {
   const [isLogin, setIsLogin] = useState(false);
   const location = useLocation();
-  const [userType, setUserType] = useState(1);
+  const [userType, setUserType] = useState(0);
   const Nav = useNavigate();
   const [hoveredButton, setHoveredButton] = useState(null);
 
