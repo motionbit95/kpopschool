@@ -117,7 +117,7 @@ const TabsItem = ({ item }) => {
           navigate(`/teachers/${item.id}`);
         }}
       >
-        <Image src={item.profile} />
+        <Image src={item.profile} w={"250px"} h={"250px"} objectFit={"cover"} />
         <Box
           position={"absolute"}
           right={2}
