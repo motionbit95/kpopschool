@@ -1739,7 +1739,7 @@ const ArrayManipulationComponent = ({ ...props }) => {
     setUploading(true);
 
     try {
-      const response = await fetch("http://localhost:8080/upload-image", {
+      const response = await fetch(`${host_url}/upload-image`, {
         method: "POST",
         body: formData,
       });

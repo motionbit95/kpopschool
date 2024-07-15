@@ -22,7 +22,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { popyellow, popblue, popmint } from "../../App";
+import { popyellow, popblue, popmint, host_url } from "../../App";
 
 const InterestTrainer = () => {
   const tabLists = ["ALL", "VOCAL", "DANCE"];
@@ -30,10 +30,6 @@ const InterestTrainer = () => {
   const [teachers, setTeachers] = useState([]);
 
   useEffect(() => {
-    const host_url =
-      window.location.hostname === "localhost" ? "http://localhost:8080" : "";
-    console.log(host_url);
-
     const getTeachers = async () => {
       fetch(`${host_url}/teachers/list`)
         .then((res) => res.json())

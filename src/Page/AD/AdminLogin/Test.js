@@ -3,12 +3,13 @@ import React from "react";
 // import { ZoomMtg } from "@zoom/meetingsdk";
 import { Button, Heading, Stack, VStack } from "@chakra-ui/react";
 import ToastEditor from "../../../Component/ToastEditor";
+import { host_url } from "../../../App";
 
 // ZoomMtg.preLoadWasm();
 // ZoomMtg.prepareWebSDK();
 
 function Test() {
-  var authEndpoint = "http://localhost:8080/zoom/generate-signature";
+  var authEndpoint = `${host_url}/zoom/generate-signature`;
   var sdkKey = "ipIZALKmSm2d4F_Vh_K3cw";
   var meetingNumber = "81484554160";
   var passWord = "B422L5";

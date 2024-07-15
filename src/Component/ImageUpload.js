@@ -1,7 +1,7 @@
 import { Box, Button, Center, IconButton, Image } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { IoAddCircle } from "react-icons/io5";
-import { popmint } from "../App";
+import { host_url, popmint } from "../App";
 
 const ImageUpload = ({ ...props }) => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -28,7 +28,7 @@ const ImageUpload = ({ ...props }) => {
     setUploading(true);
 
     try {
-      const response = await fetch("http://localhost:8080/upload-image", {
+      const response = await fetch(`${host_url}/upload-image`, {
         method: "POST",
         body: formData,
       });

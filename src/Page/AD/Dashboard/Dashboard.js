@@ -14,15 +14,12 @@ import TrainerDetail from "./Trainer/TrainerDetail";
 import CreateCoupon from "./Coupon/CreateCoupon";
 import { getTab } from "./Sidebar";
 import ClassDetail from "../Class/ClassDetail";
+import { host_url } from "../../../App";
 
 const Dashboard = (props) => {
   const [userList, setUserList] = useState([]);
   const [sideTab, setSideTab] = useState("HOME");
   useEffect(() => {
-    const host_url =
-      window.location.hostname === "localhost" ? "http://localhost:8080" : "";
-    console.log(host_url);
-
     setSideTab(getTab());
 
     const getUser = async () => {

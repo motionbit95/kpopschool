@@ -50,9 +50,6 @@ const TeacherDetail = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const host_url =
-      window.location.hostname === "localhost" ? "http://localhost:8080" : "";
-
     const id = window.location.pathname.split("/").pop();
     // console.log(id);
 
@@ -76,10 +73,6 @@ const TeacherDetail = (props) => {
   }, []);
 
   useEffect(() => {
-    const host_url =
-      window.location.hostname === "localhost" ? "http://localhost:8080" : "";
-    // console.log(host_url);
-
     const getCurriculums = async () => {
       // 필터링은 검색을 통해서 진행한다.
       fetch(`${host_url}/curriculums/search`, {

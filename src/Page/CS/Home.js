@@ -36,10 +36,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    const host_url =
-      window.location.hostname === "localhost" ? "http://localhost:8080" : "";
-    console.log(host_url);
-
     const getTeacher = async () => {
       fetch(`${host_url}/teachers/list`)
         .then((res) => res.json())

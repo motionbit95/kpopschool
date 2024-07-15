@@ -25,7 +25,9 @@ import Info from "./Page/CS/account/Info";
 import { CodeForm } from "./Component/Setting/CodeForm";
 
 export const host_url =
-  window.location.hostname === "localhost" ? "http://localhost:8080" : "";
+  window.location.hostname === "localhost"
+    ? "http://localhost:8080"
+    : "https://port-0-kpop-server-lygozwsq3510c5b3.sel5.cloudtype.app";
 
 export const popyellow = "#FFCC00";
 export const popblue = "#00B2FF";

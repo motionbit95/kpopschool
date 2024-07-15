@@ -25,7 +25,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
-import { popmint } from "../../App";
+import { host_url, popmint } from "../../App";
 
 const Cummunity = () => {
   const [FAQs, setFAQs] = useState([]);
@@ -43,10 +43,6 @@ const Cummunity = () => {
   };
 
   useEffect(() => {
-    const host_url =
-      window.location.hostname === "localhost" ? "http://localhost:8080" : "";
-    console.log(host_url);
-
     const getFAQs = async () => {
       fetch(`${host_url}/faq/list`)
         .then((res) => res.json())

@@ -26,10 +26,6 @@ const InquiryHistory = () => {
   };
 
   useEffect(() => {
-    const host_url =
-      window.location.hostname === "localhost" ? "http://localhost:8080" : "";
-    // console.log(host_url);
-
     const getInquirys = async () => {
       // 필터링은 검색을 통해서 진행한다.
       fetch(`${host_url}/inquiry/search`, {
