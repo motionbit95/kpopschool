@@ -25,6 +25,11 @@ const Sidebar = (props) => {
   return (
     <Stack
       minH={"100vh"}
+      position={"fixed"}
+      left={0}
+      top={0}
+      w={"280px"}
+      zIndex={"sticky"}
       py={8}
       bgColor={"#F1F1F1"}
       align={"center"}

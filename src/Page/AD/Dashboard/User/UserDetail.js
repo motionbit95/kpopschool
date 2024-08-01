@@ -140,7 +140,9 @@ const UserDetail = (props) => {
     <Flex w={"100%"} h={"100%"}>
       <ConfirmBox
         isOpen={userDeleteStep === 1}
-        onClose={() => {}}
+        onClose={() => {
+          setUserDeleteStep(0);
+        }}
         onConfirm={() => {
           console.log("삭제되었습니다.");
           setUserDeleteStep(2);

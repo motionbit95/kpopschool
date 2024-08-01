@@ -661,6 +661,23 @@ const AddClass = (props) => {
                     <option value="Advanced">Advanced</option>
                     <option value="Professional">Professional</option>
                   </Select>
+                  <Select
+                    maxW={"150px"}
+                    // onChange={(e) =>
+                    //   setClasses([
+                    //     ...classes.slice(0, index),
+                    //     { ...classes[index], location: e.target.value },
+                    //     ...classes.slice(index + 1),
+                    //   ])
+                    // }
+                    onChange={(e) =>
+                      setCurriculum({ ...curriculum, location: e.target.value })
+                    }
+                  >
+                    <option value="LA">LA</option>
+                    <option value="TEXAS">TEXAS</option>
+                    <option value="SEOUL">SEOUL</option>
+                  </Select>
                   <Input
                     placeholder="Cost"
                     maxW={"150px"}
@@ -668,9 +685,11 @@ const AddClass = (props) => {
                       setCurriculum({ ...curriculum, price: e.target.value })
                     }
                   />
-                  <Input placeholder="enrollment" maxW={"150px"} />
-                  <Text color={popmint}>{curriculum.month} months</Text>
-                  <Text color={popmint}>{curriculum.session} sessions</Text>
+                  <HStack gap={4}>
+                    {/* <Input placeholder="enrollment" maxW={"150px"} /> */}
+                    <Text color={popmint}>{curriculum.month} months</Text>
+                    <Text color={popmint}>{curriculum.session} sessions</Text>
+                  </HStack>
                 </HStack>
                 <Input
                   placeholder="title"
@@ -936,6 +955,7 @@ const AddClass = (props) => {
                       alignItems={"center"}
                       border={"1px solid #e4e4e4"}
                       borderRadius={"md"}
+                      maxW={"200px"}
                     >
                       <Input
                         border={"none"}
@@ -961,20 +981,6 @@ const AddClass = (props) => {
                         }}
                       />
                     </InputGroup>
-                    <Select
-                      maxW={"150px"}
-                      onChange={(e) =>
-                        setClasses([
-                          ...classes.slice(0, index),
-                          { ...classes[index], location: e.target.value },
-                          ...classes.slice(index + 1),
-                        ])
-                      }
-                    >
-                      <option value="LA">LA</option>
-                      <option value="TEXAS">TEXAS</option>
-                      <option value="SEOUL">SEOUL</option>
-                    </Select>
                   </HStack>
                 </Stack>
               </GridItem>

@@ -22,7 +22,7 @@ function ConfirmBox(props) {
       <Modal size={"sm"} isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalCloseButton />
+          {/* <ModalCloseButton /> */}
           <ModalBody fontSize={"20px"} fontWeight={"bold"} p={0}>
             <Center p={12}>
               <VStack textAlign={"center"} spacing={0}>
@@ -31,7 +31,7 @@ function ConfirmBox(props) {
             </Center>
           </ModalBody>
           <ModalFooter>
-            <Button variant={"ghost"} mr={3} onClick={onClose}>
+            <Button variant={"ghost"} mr={3} onClick={() => onClose()}>
               NO
             </Button>
             <Button

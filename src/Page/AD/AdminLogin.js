@@ -8,27 +8,28 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import React from "react";
+import React, { useState } from "react";
 import { auth } from "../../Firebase/Config";
 import { useNavigate } from "react-router-dom";
 import { popmint } from "../../App";
 
 const AdminLogin = () => {
-  const formData = {
+  const [formData, setFormData] = useState({
     id: "",
     password: "",
-  };
+  });
 
   const navigate = useNavigate();
 
   const handleLogin = () => {
+    console.log(formData);
     signInWithEmailAndPassword(auth, formData.id, formData.password).then(
       (userCredential) => {
         // Signed in
         const user = userCredential.user;
         // ...
 
-        if (user.uid === "uGpljAk5EXMNh4M7mLHKbcLNAD72") {
+        if (user.uid === "oNd1IccrCLTOQRbnsRFv7BUg3r32") {
           navigate("/admin");
         }
       },
@@ -55,12 +56,14 @@ const AdminLogin = () => {
           <Stack w={"full"}>
             <Input
               placeholder="ID"
-              onChange={(e) => (formData.id = e.target.value)}
+              onChange={(e) => setFormData({ ...formData, id: e.target.value })}
             />
             <Input
               placeholder="Password"
               type="password"
-              onChange={(e) => (formData.password = e.target.value)}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
             />
           </Stack>
         </Stack>

@@ -1,4 +1,4 @@
-import { Box, Flex, HStack } from "@chakra-ui/react";
+import { Box, calc, Flex, HStack } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import Dashboard from "./Dashboard";
@@ -26,7 +26,7 @@ const Main = () => {
       if (!user) {
         navigate("/admin/login");
       } else {
-        if (user.uid !== "uGpljAk5EXMNh4M7mLHKbcLNAD72") {
+        if (user.uid !== "oNd1IccrCLTOQRbnsRFv7BUg3r32") {
           // admin 계정
           // admin@kpopschool.com
           // test1234!
@@ -43,7 +43,12 @@ const Main = () => {
         setSideTab={setSideTab}
         handleSideTab={handleSideTab}
       />
-      <Box w={"full"} h={"full"} position={"relative"}>
+      <Box
+        w={'calc("100% - 280px")'}
+        left={"280px"}
+        h={"full"}
+        position={"relative"}
+      >
         <DashboardTopbar sideTab={sideTab} isdetail={isdetail.view} />
         <Dashboard
           sideTab={sideTab}

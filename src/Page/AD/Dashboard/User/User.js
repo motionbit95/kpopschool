@@ -119,12 +119,22 @@ const User = (props) => {
             <Table>
               <Tbody>
                 <Tr fontWeight={"500"} color={popmint}>
-                  <Td textAlign={"center"}>No.</Td>
-                  <Td textAlign={"center"}>Trainer</Td>
-                  <Td textAlign={"center"}>Name</Td>
+                  <Td textAlign={"center"} w={"10%"}>
+                    No.
+                  </Td>
+                  <Td textAlign={"center"} w={"10%"}>
+                    Trainer
+                  </Td>
+                  <Td textAlign={"center"} w={"20%"}>
+                    Name
+                  </Td>
                   {/* <Td textAlign={"center"}>ID</Td> */}
-                  <Td textAlign={"center"}>Email</Td>
-                  <Td textAlign={"center"}>Registration Date</Td>
+                  <Td textAlign={"center"} w={"40%"}>
+                    Email
+                  </Td>
+                  <Td textAlign={"center"} w={"20%"}>
+                    Registration Date
+                  </Td>
                 </Tr>
                 {currentData.map((data, index) => {
                   const itemNumber =
