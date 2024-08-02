@@ -15,15 +15,40 @@ import {
 import React, { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import MessageBox from "../../../Component/MessageBox";
-import { popmag } from "../../../App";
+import { host_url, popmag } from "../../../App";
+import { auth } from "../../../Firebase/Config";
 
 const TeacherInfo = ({ teacher }) => {
+  const [userInfo, setUserInfo] = useState({});
   const toast = useToast();
   const [isFavorite, setIsFavorite] = useState(false);
 
   const [modalState, setModalState] = useState({
     isInfo: false,
   });
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      console.log(user.uid);
+      fetch(`${host_url}/users/get`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: user.uid,
+        }),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          setUserInfo(res);
+          setIsFavorite(res.interestTeacher.includes(teacher.id));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  }, []);
 
   const handleClickFavorite = () => {
     setModalState({
@@ -32,6 +57,37 @@ const TeacherInfo = ({ teacher }) => {
     });
     // console.log("handleClickFavorite");
     setIsFavorite(!isFavorite);
+
+    let interestTeacher = userInfo.interestTeacher
+      ? userInfo.interestTeacher
+      : [];
+
+    if (isFavorite) {
+      if (!interestTeacher.includes(teacher.id))
+        interestTeacher.push(teacher.id);
+    } else {
+      interestTeacher = interestTeacher.filter((id) => id !== teacher.id);
+    }
+
+    console.log(interestTeacher);
+
+    fetch(`${host_url}/users/update`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: userInfo.id,
+        interestTeacher: interestTeacher,
+      }),
+    })
+      .then((res) => res.text())
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleClickCopyLink = () => {

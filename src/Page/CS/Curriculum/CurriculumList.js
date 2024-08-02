@@ -9,7 +9,7 @@ const CurriculumList = () => {
   const { state } = location;
   const { item } = state;
   return (
-    <Flex flex={1} direction={"column"}>
+    <Flex flex={1} direction={"column"} pb={16}>
       <Container minW={"container.xl"}>
         <Stack py={16} spacing={8}>
           <Flex

@@ -41,11 +41,20 @@ import { useNavigate } from "react-router-dom";
 import { host_url, popmag, popyellow } from "../../../App";
 import { popmint } from "../../../App";
 import { getWeekDates, Schedule } from "../../AD/Class/Class";
+import { auth } from "../../../Firebase/Config";
 
 const TeacherDetail = (props) => {
   const [teacher, setTeacher] = useState({});
   const [reviews, setReviews] = useState([]);
   const [curriculums, setCurriculums] = useState([]);
+  const [currentReview, setCurrentReview] = useState({
+    teacherId: "",
+    userId: "",
+    lessonId: "",
+    rating: 0,
+    comment: "",
+    division: "Teacher",
+  });
   const isOkay = false;
   const navigate = useNavigate();
 
@@ -72,112 +81,106 @@ const TeacherDetail = (props) => {
       });
   }, []);
 
-  useEffect(() => {
-    const getCurriculums = async () => {
-      // 필터링은 검색을 통해서 진행한다.
-      fetch(`${host_url}/curriculums/search`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          conditions: [
-            { field: "teacherId", operator: "==", value: teacher.id },
-          ],
-        }),
+  const getCurriculums = async () => {
+    // 필터링은 검색을 통해서 진행한다.
+    fetch(`${host_url}/curriculums/search`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        conditions: [{ field: "teacherId", operator: "==", value: teacher.id }],
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        // console.log(res);
+        setCurriculums(res);
       })
-        .then((res) => res.json())
-        .then((res) => {
-          // console.log(res);
-          setCurriculums(res);
-        })
-        .catch((err) => {
-          // console.log(err);
-          console.log("데이터가 없습니다");
-          setCurriculums([]);
-        });
-    };
+      .catch((err) => {
+        // console.log(err);
+        console.log("데이터가 없습니다");
+        setCurriculums([]);
+      });
+  };
 
+  useEffect(() => {
     getCurriculums();
     // console.log(curriculums);
   }, [teacher]);
 
-  useEffect(() => {
-    const getReviews = () => {
-      const tempList = [];
-      fetch(`${host_url}/review/search`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          conditions: [
-            { field: "teacherId", operator: "==", value: teacher.id },
-          ],
-        }),
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          // setReviews(res);
-          res.forEach((r) => {
-            let reviewData = {
-              id: r.id,
-              createdAt: r.createdAt,
-              rating: r.rating,
-              comment: r.comment,
-            };
+  const getReviews = () => {
+    const tempList = [];
+    fetch(`${host_url}/review/search`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        conditions: [{ field: "teacherId", operator: "==", value: teacher.id }],
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        // setReviews(res);
+        res.forEach((r) => {
+          let reviewData = {
+            id: r.id,
+            createdAt: r.createdAt,
+            rating: r.rating,
+            comment: r.comment,
+          };
 
-            fetch(`${host_url}/users/get`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                id: r.userId,
-              }),
+          fetch(`${host_url}/users/get`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: r.userId,
+            }),
+          })
+            .then((res) => res.json())
+            .then((res) => {
+              // 유저 정보
+              // console.log("user", res);
+              reviewData.userName = res.name;
+              reviewData.userProfile = res.profile;
             })
-              .then((res) => res.json())
-              .then((res) => {
-                // 유저 정보
-                // console.log("user", res);
-                reviewData.userName = res.name;
-                reviewData.userProfile = res.profile;
-              })
-              .catch((err) => {
-                console.log(err);
-              });
+            .catch((err) => {
+              console.log(err);
+            });
 
-            fetch(`${host_url}/curriculums/get`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                id: r.lessonId,
-              }),
+          fetch(`${host_url}/curriculums/get`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: r.lessonId === "" ? "IAsgKYQo27yljfJH8knV" : r.lessonId,
+            }),
+          })
+            .then((res) => res.json())
+            .then((res) => {
+              // 강의 정보
+              // console.log("lesson", res);
+              reviewData.difficulty = res.difficulty;
+              reviewData.category = res.category.toUpperCase();
+
+              tempList.push(reviewData);
+              setReviews(tempList);
             })
-              .then((res) => res.json())
-              .then((res) => {
-                // 강의 정보
-                // console.log("lesson", res);
-                reviewData.difficulty = res.difficulty;
-                reviewData.category = res.category.toUpperCase();
-
-                tempList.push(reviewData);
-                setReviews(tempList);
-
-                // console.log("total", reviewData);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          });
-        })
-        .catch((err) => {
-          console.log(err);
+            .catch((err) => {
+              console.log(err);
+            });
         });
-    };
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
+  useEffect(() => {
     getReviews();
   }, [teacher]);
 
@@ -287,8 +290,68 @@ const TeacherDetail = (props) => {
     setIsModalOpen(!isModalOpen);
   };
 
+  const addReview = () => {
+    setCurrentReview({
+      comment: "",
+      teacherId: "",
+      userId: "",
+      lessonId: "",
+      rating: 0,
+      division: "Teacher",
+    });
+    let tempList = [...reviews];
+    if (currentReview.comment === "") {
+      alert("Please write a comment");
+    }
+    currentReview.teacherId = teacher.id;
+    currentReview.userId = auth.currentUser.uid;
+    currentReview.lessonId = "IAsgKYQo27yljfJH8knV";
+    console.log(currentReview);
+
+    fetch(`${host_url}/review/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(currentReview),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+
+        fetch(`${host_url}/curriculums/get`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id:
+              currentReview.lessonId === ""
+                ? "IAsgKYQo27yljfJH8knV"
+                : currentReview.lessonId,
+          }),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            // 강의 정보
+            // console.log("lesson", res);
+            currentReview.difficulty = res.difficulty;
+            currentReview.category = res.category.toUpperCase();
+
+            tempList.unshift(currentReview);
+            setReviews(tempList);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
-    <Flex flex={1} direction={"column"}>
+    <Flex flex={1} direction={"column"} pb={16}>
       <Container minW={"container.xl"}>
         <Stack py={16} spacing={8}>
           {/* 페이지 정보 */}
@@ -476,33 +539,56 @@ const TeacherDetail = (props) => {
             <Container minW={"container.xl"} py={8}>
               <HStack
                 border={"1px solid #E1E4E4"}
-                py={2}
-                px={4}
+                py={1}
+                px={2}
                 borderRadius={"lg"}
                 justify={"space-between"}
-                onClick={handleModal}
+                // onClick={handleModal}
               >
-                <Text fontSize={"lg"} color={"#C0C0C0"}>
-                  You can use it after logging in. Please leave a review after
-                  taking the course
-                </Text>
-                <HStack>
+                <Input
+                  fontSize={"lg"}
+                  placeholder="You can use it after logging in. Please leave a review after
+                  taking the course"
+                  border={"none"}
+                  _focus={{
+                    border: "none",
+                    outline: "none",
+                    boxShadow: "none",
+                  }}
+                  value={currentReview.comment}
+                  onChange={(e) =>
+                    setCurrentReview({
+                      ...currentReview,
+                      comment: e.target.value,
+                    })
+                  }
+                ></Input>
+                <HStack spacing={6}>
                   <Flex gap={1} w={"100%"} align={"center"} justify={"center"}>
                     {Array.from({ length: 5 }, (_, i) => (
                       <Image
                         key={i}
                         src={
-                          i < 0
+                          i < currentReview.rating
                             ? require("../../../Asset/Icon/starFill.png")
                             : require("../../../Asset/Icon/starDefault.png")
                         }
                         alt="star"
                         boxSize="18px" // 적절한 크기로 설정
+                        onClick={() =>
+                          setCurrentReview({ ...currentReview, rating: i + 1 })
+                        }
                       />
                     ))}
                   </Flex>
-                  <Button px={6} size={"sm"} color={"white"} bgColor={popmint}>
-                    Go
+                  <Button
+                    px={6}
+                    size={"sm"}
+                    color={"white"}
+                    bgColor={popmint}
+                    onClick={() => addReview()}
+                  >
+                    GO
                   </Button>
                 </HStack>
               </HStack>
@@ -532,7 +618,7 @@ const TeacherDetail = (props) => {
                       <Stack spacing={0} color={"#4E4E4E"}>
                         <Text fontSize={"lg"}>{review.userName}</Text>
                         <Text fontSize={"sm"}>
-                          {review.difficulty} course|{review.category}
+                          {review.difficulty} course | {review.category}
                         </Text>
                       </Stack>
 

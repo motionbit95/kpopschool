@@ -23,8 +23,14 @@ import { getWeekDates, Schedule } from "../../AD/Class/Class";
 
 const CurriculumDetail = () => {
   const location = useLocation();
-  let { category } = location.state;
-  const [format, setFormat] = useState(location.state.format);
+  const [category, setCategory] = useState(
+    location.state
+      ? location.state.category
+      : location.pathname.split("/").pop()
+  );
+  const [format, setFormat] = useState(
+    location.state ? location.state.format : "1:1"
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -159,7 +165,7 @@ const CurriculumDetail = () => {
   }, [category]);
 
   return (
-    <Flex flex={1} direction={"column"}>
+    <Flex flex={1} direction={"column"} pb={16}>
       <Container minW={"container.xl"}>
         <Stack py={16} spacing={8}>
           <Flex

@@ -104,7 +104,13 @@ export const TeacherItem = ({ teacher }) => {
                   overflow={"hidden"}
                 >
                   <Box>
-                    <Image src={teacher.trainer3.image} alt={""} w={"full"} />
+                    <Image
+                      src={teacher.trainer3.image}
+                      alt={""}
+                      w={"full"}
+                      aspectRatio={1}
+                      objectFit={"cover"}
+                    />
                   </Box>
 
                   <Stack spacing={2} p={6}>
@@ -145,7 +151,13 @@ export const TeacherItem = ({ teacher }) => {
                   overflow={"hidden"}
                 >
                   <Box>
-                    <Image src={teacher.trainer4.image} alt={""} w={"full"} />
+                    <Image
+                      aspectRatio={1}
+                      objectFit={"cover"}
+                      src={teacher.trainer4.image}
+                      alt={""}
+                      w={"full"}
+                    />
                   </Box>
 
                   <Stack spacing={2} p={6}>
@@ -186,7 +198,13 @@ export const TeacherItem = ({ teacher }) => {
                   overflow={"hidden"}
                 >
                   <Box>
-                    <Image src={teacher.trainer5.image} alt={""} w={"full"} />
+                    <Image
+                      aspectRatio={1}
+                      objectFit={"cover"}
+                      src={teacher.trainer5.image}
+                      alt={""}
+                      w={"full"}
+                    />
                   </Box>
 
                   <Stack spacing={2} p={6}>

@@ -27,7 +27,7 @@ const Curriculum = () => {
   const navigate = useNavigate();
 
   return (
-    <Flex flex={1}>
+    <Flex flex={1} pb={16}>
       <Container minW={"container.xl"}>
         <Flex
           fontWeight={"300"}

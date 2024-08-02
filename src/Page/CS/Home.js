@@ -109,101 +109,74 @@ const Home = () => {
 
   return (
     <Flex flex={1} direction={"column"} gap={24}>
-      <Container minW={"container.xl"}>
-        <Stack spacing={16}>
-          <Stack direction={{ base: "column", md: "row" }}>
-            <Box flex={1} borderRadius={"20"} overflow={"hidden"}>
-              <Image src={main?.banner?.[0]} alt={""} />
-            </Box>
+      <Stack spacing={"190px"}>
+        <Container minW={"container.xl"}>
+          <Stack spacing={16}>
+            <Stack direction={{ base: "column", md: "row" }}>
+              <Box flex={1} borderRadius={"20"} overflow={"hidden"}>
+                <Image src={main?.banner?.[0]} alt={""} />
+              </Box>
+            </Stack>
+            <Stack spacing={12}>
+              <Text fontSize={"xl"} whiteSpace={"pre-line"}>
+                {main?.description}
+              </Text>
+              <Box>
+                <Button
+                  fontSize={"2xl"}
+                  px={24}
+                  py={8}
+                  variant={"outline"}
+                  borderColor={popmag}
+                  color={popmag}
+                  onClick={() => scrollToSection(main?.strLink)}
+                >
+                  VIEW MORE
+                </Button>
+              </Box>
+            </Stack>
           </Stack>
-          <Stack spacing={12}>
-            <Text fontSize={"xl"} whiteSpace={"pre-line"}>
-              {main?.description}
-            </Text>
-            <Box>
-              <Button
-                fontSize={"2xl"}
-                px={24}
-                py={8}
-                variant={"outline"}
-                borderColor={popmag}
-                color={popmag}
-                onClick={() => scrollToSection(main?.strLink)}
-              >
-                VIEW MORE
-              </Button>
-            </Box>
-          </Stack>
-        </Stack>
-      </Container>
-      <Box bgColor={"#E1E4E4"}>
-        <Container minW={"container.xl"} py={16}>
-          <ImageCarousel />
         </Container>
-      </Box>
-      <Container minW={"container.xl"} pb={24}>
-        <Stack spacing={16}>
-          <Stack>
-            <Box>
-              <Text fontSize={"6xl"} color={popyellow} fontWeight={"bold"}>
-                Teachers
+        <Box bgColor={"#E1E4E4"}>
+          <Container minW={"container.xl"} py={16}>
+            <ImageCarousel />
+          </Container>
+        </Box>
+        <Container minW={"container.xl"} pb={24}>
+          <Stack spacing={16}>
+            <Stack>
+              <Box>
+                <Text fontSize={"6xl"} color={popyellow} fontWeight={"bold"}>
+                  Teachers
+                </Text>
+              </Box>
+              <TeacherItem teacher={matching} />
+            </Stack>
+            <Stack id="Lessons">
+              <Box>
+                <Text fontSize={"6xl"} color={popmag} fontWeight={"bold"}>
+                  Lessons
+                </Text>
+              </Box>
+              <LessonItem lessons={lessons} />
+            </Stack>
+            <Stack id="Our Courses">
+              <Text fontSize={"6xl"} color={"#00B2FF"} fontWeight={"bold"}>
+                {course?.title}
               </Text>
-            </Box>
-            <TeacherItem teacher={matching} />
-          </Stack>
-          <Stack id="Lessons">
-            <Box>
-              <Text fontSize={"6xl"} color={popmag} fontWeight={"bold"}>
-                Lessons
-              </Text>
-            </Box>
-            <LessonItem lessons={lessons} />
-          </Stack>
-          <Stack id="Our Courses">
-            <Text fontSize={"6xl"} color={"#00B2FF"} fontWeight={"bold"}>
-              {course?.title}
-            </Text>
-            <HStack justifyContent={"space-between"} h={"680px"} spacing={8}>
-              <Stack w={"100%"} h={"100%"} justifyContent={"space-between"}>
-                <Stack>
-                  <Image src={course?.beginner?.image} alt={""} />
-                  <Text color={popyellow} fontSize={"40px"} fontWeight={"bold"}>
-                    Beginner
-                  </Text>
-                  <Text fontSize={"24px"} whiteSpace={"pre-line"}>
-                    {course?.beginner?.description.split("\n").map((item) => (
-                      <Text
-                        color={item.includes("#") ? popmag : "black"}
-                        key={item}
-                      >
-                        {item}
-                      </Text>
-                    ))}
-                    {/* {course?.beginner?.description} */}
-                  </Text>
-                </Stack>
-                <Button
-                  bgColor={popyellow}
-                  color="white"
-                  fontSize={"24px"}
-                  whiteSpace={"pre-line"}
-                  height={"110px"}
-                  lineHeight={"36px"}
-                  onClick={() => Nav(course?.beginner?.strLink)}
-                >
-                  {`$80 per session\nPAYMENT`}
-                </Button>
-              </Stack>
-              <Stack w={"100%"} h={"100%"} justifyContent={"space-between"}>
-                <Stack>
-                  <Image src={course?.intermediate?.image} alt={""} />
-                  <Text color={popmint} fontSize={"40px"} fontWeight={"bold"}>
-                    Intermediate
-                  </Text>
-                  <Text fontSize={"24px"} whiteSpace={"pre-line"}>
-                    {course?.intermediate?.description
-                      .split("\n")
-                      .map((item) => (
+              <HStack justifyContent={"space-between"} h={"680px"} spacing={8}>
+                <Stack w={"100%"} h={"100%"} justifyContent={"space-between"}>
+                  <Stack>
+                    <Image src={course?.beginner?.image} alt={""} />
+                    <Text
+                      color={popyellow}
+                      fontSize={"40px"}
+                      fontWeight={"bold"}
+                    >
+                      Beginner
+                    </Text>
+                    <Text fontSize={"24px"} whiteSpace={"pre-line"}>
+                      {course?.beginner?.description.split("\n").map((item) => (
                         <Text
                           color={item.includes("#") ? popmag : "black"}
                           key={item}
@@ -211,61 +184,65 @@ const Home = () => {
                           {item}
                         </Text>
                       ))}
-                    {/* {course?.beginner?.description} */}
-                  </Text>
+                      {/* {course?.beginner?.description} */}
+                    </Text>
+                  </Stack>
+                  <Button
+                    bgColor={popyellow}
+                    color="white"
+                    fontSize={"24px"}
+                    whiteSpace={"pre-line"}
+                    height={"110px"}
+                    lineHeight={"36px"}
+                    onClick={() => Nav(course?.beginner?.strLink)}
+                  >
+                    {`$80 per session\nPAYMENT`}
+                  </Button>
                 </Stack>
-                <Button
-                  bgColor={popmint}
-                  color="white"
-                  fontSize={"24px"}
-                  whiteSpace={"pre-line"}
-                  height={"110px"}
-                  lineHeight={"36px"}
-                  onClick={() => Nav(course?.beginner?.strLink)}
-                >
-                  {`$85 per session\nPAYMENT`}
-                </Button>
-              </Stack>
-              <Stack w={"100%"} h={"100%"} justifyContent={"space-between"}>
-                <Stack>
-                  <Image src={course?.advanced?.image} alt={""} />
-                  <Text color={"#00B2FF"} fontSize={"40px"} fontWeight={"bold"}>
-                    Advanced
-                  </Text>
-                  <Text fontSize={"24px"} whiteSpace={"pre-line"}>
-                    {course?.advanced?.description.split("\n").map((item) => (
-                      <Text
-                        color={item.includes("#") ? popmag : "black"}
-                        key={item}
-                      >
-                        {item}
-                      </Text>
-                    ))}
-                    {/* {course?.beginner?.description} */}
-                  </Text>
+                <Stack w={"100%"} h={"100%"} justifyContent={"space-between"}>
+                  <Stack>
+                    <Image src={course?.intermediate?.image} alt={""} />
+                    <Text color={popmint} fontSize={"40px"} fontWeight={"bold"}>
+                      Intermediate
+                    </Text>
+                    <Text fontSize={"24px"} whiteSpace={"pre-line"}>
+                      {course?.intermediate?.description
+                        .split("\n")
+                        .map((item) => (
+                          <Text
+                            color={item.includes("#") ? popmag : "black"}
+                            key={item}
+                          >
+                            {item}
+                          </Text>
+                        ))}
+                      {/* {course?.beginner?.description} */}
+                    </Text>
+                  </Stack>
+                  <Button
+                    bgColor={popmint}
+                    color="white"
+                    fontSize={"24px"}
+                    whiteSpace={"pre-line"}
+                    height={"110px"}
+                    lineHeight={"36px"}
+                    onClick={() => Nav(course?.beginner?.strLink)}
+                  >
+                    {`$85 per session\nPAYMENT`}
+                  </Button>
                 </Stack>
-                <Button
-                  bgColor={"#00B2FF"}
-                  color="white"
-                  fontSize={"24px"}
-                  whiteSpace={"pre-line"}
-                  height={"110px"}
-                  lineHeight={"36px"}
-                  onClick={() => Nav(course?.advanced?.strLink)}
-                >
-                  {`$90 per session\nPAYMENT`}
-                </Button>
-              </Stack>
-              <Stack w={"100%"} h={"100%"} justifyContent={"space-between"}>
-                <Stack>
-                  <Image src={course?.professional?.image} alt={""} />
-                  <Text color={popmag} fontSize={"40px"} fontWeight={"bold"}>
-                    Professional
-                  </Text>
-                  <Text fontSize={"24px"} whiteSpace={"pre-line"}>
-                    {course?.professional?.description
-                      .split("\n")
-                      .map((item) => (
+                <Stack w={"100%"} h={"100%"} justifyContent={"space-between"}>
+                  <Stack>
+                    <Image src={course?.advanced?.image} alt={""} />
+                    <Text
+                      color={"#00B2FF"}
+                      fontSize={"40px"}
+                      fontWeight={"bold"}
+                    >
+                      Advanced
+                    </Text>
+                    <Text fontSize={"24px"} whiteSpace={"pre-line"}>
+                      {course?.advanced?.description.split("\n").map((item) => (
                         <Text
                           color={item.includes("#") ? popmag : "black"}
                           key={item}
@@ -273,92 +250,125 @@ const Home = () => {
                           {item}
                         </Text>
                       ))}
-                    {/* {course?.beginner?.description} */}
-                  </Text>
+                      {/* {course?.beginner?.description} */}
+                    </Text>
+                  </Stack>
+                  <Button
+                    bgColor={"#00B2FF"}
+                    color="white"
+                    fontSize={"24px"}
+                    whiteSpace={"pre-line"}
+                    height={"110px"}
+                    lineHeight={"36px"}
+                    onClick={() => Nav(course?.advanced?.strLink)}
+                  >
+                    {`$90 per session\nPAYMENT`}
+                  </Button>
                 </Stack>
-                <Button
-                  bgColor={popmag}
-                  color="white"
-                  fontSize={"24px"}
-                  whiteSpace={"pre-line"}
-                  height={"110px"}
-                  lineHeight={"36px"}
-                  onClick={() => Nav(course?.professional?.strLink)}
-                >
-                  {`$99 per session\nPAYMENT`}
-                </Button>
-              </Stack>
-            </HStack>
+                <Stack w={"100%"} h={"100%"} justifyContent={"space-between"}>
+                  <Stack>
+                    <Image src={course?.professional?.image} alt={""} />
+                    <Text color={popmag} fontSize={"40px"} fontWeight={"bold"}>
+                      Professional
+                    </Text>
+                    <Text fontSize={"24px"} whiteSpace={"pre-line"}>
+                      {course?.professional?.description
+                        .split("\n")
+                        .map((item) => (
+                          <Text
+                            color={item.includes("#") ? popmag : "black"}
+                            key={item}
+                          >
+                            {item}
+                          </Text>
+                        ))}
+                      {/* {course?.beginner?.description} */}
+                    </Text>
+                  </Stack>
+                  <Button
+                    bgColor={popmag}
+                    color="white"
+                    fontSize={"24px"}
+                    whiteSpace={"pre-line"}
+                    height={"110px"}
+                    lineHeight={"36px"}
+                    onClick={() => Nav(course?.professional?.strLink)}
+                  >
+                    {`$99 per session\nPAYMENT`}
+                  </Button>
+                </Stack>
+              </HStack>
+            </Stack>
           </Stack>
-        </Stack>
-      </Container>
-      <Image src={main?.promotion} alt={""} />
-      <Container minW={"container.xl"} p={24}>
-        <Image src={main?.withus} alt={""} />
-      </Container>
-      <Container minW={"container.xl"} pb={24}>
-        <Text fontSize={"6xl"} color={popmag} fontWeight={"bold"}>
-          Lesson Type
-        </Text>
-        <HStack
-          justifyContent={"space-between"}
-          alignItems={"flex-start"}
-          spacing={8}
-        >
-          <Stack
-            onClick={() => Nav(lessonType?.one?.strLink)}
-            w={"100%"}
-            h={"100%"}
-            cursor={"pointer"}
+        </Container>
+        <Image src={main?.promotion} alt={""} />
+        <Container minW={"container.xl"} p={24}>
+          <Image src={main?.withus} alt={""} />
+        </Container>
+        <Container minW={"container.xl"} pb={24}>
+          <Text fontSize={"6xl"} color={popmag} fontWeight={"bold"}>
+            Lesson Type
+          </Text>
+          <HStack
             justifyContent={"space-between"}
+            alignItems={"flex-start"}
+            spacing={8}
           >
-            <Image src={lessonType?.one?.image} alt={""} />
-            <Text color={popyellow} fontSize={"40px"} fontWeight={"bold"}>
-              1:1 Personal
-            </Text>
-            <Text fontSize={"24px"}>{lessonType?.one?.description}</Text>
-          </Stack>
-          <Stack
-            onClick={() => Nav(lessonType?.six?.strLink)}
-            w={"100%"}
-            h={"100%"}
-            cursor={"pointer"}
-            justifyContent={"space-between"}
-          >
-            <Image src={lessonType?.six?.image} alt={""} />
-            <Text color={popmint} fontSize={"40px"} fontWeight={"bold"}>
-              1:6 Group
-            </Text>
-            <Text fontSize={"24px"}>{lessonType?.vod?.description}</Text>
-          </Stack>
-          <Stack
-            onClick={() => Nav(lessonType?.vod?.strLink)}
-            w={"100%"}
-            h={"100%"}
-            cursor={"pointer"}
-            justifyContent={"space-between"}
-          >
-            <Image src={lessonType?.vod?.image} alt={""} />
-            <Text color={"#00B2FF"} fontSize={"40px"} fontWeight={"bold"}>
-              VOD
-            </Text>
-            <Text fontSize={"24px"}>{lessonType?.vod?.description}</Text>
-          </Stack>
-        </HStack>
-      </Container>
+            <Stack
+              onClick={() => Nav(lessonType?.one?.strLink)}
+              w={"100%"}
+              h={"100%"}
+              cursor={"pointer"}
+              justifyContent={"space-between"}
+            >
+              <Image src={lessonType?.one?.image} alt={""} />
+              <Text color={popyellow} fontSize={"40px"} fontWeight={"bold"}>
+                1:1 Personal
+              </Text>
+              <Text fontSize={"24px"}>{lessonType?.one?.description}</Text>
+            </Stack>
+            <Stack
+              onClick={() => Nav(lessonType?.six?.strLink)}
+              w={"100%"}
+              h={"100%"}
+              cursor={"pointer"}
+              justifyContent={"space-between"}
+            >
+              <Image src={lessonType?.six?.image} alt={""} />
+              <Text color={popmint} fontSize={"40px"} fontWeight={"bold"}>
+                1:6 Group
+              </Text>
+              <Text fontSize={"24px"}>{lessonType?.vod?.description}</Text>
+            </Stack>
+            <Stack
+              onClick={() => Nav(lessonType?.vod?.strLink)}
+              w={"100%"}
+              h={"100%"}
+              cursor={"pointer"}
+              justifyContent={"space-between"}
+            >
+              <Image src={lessonType?.vod?.image} alt={""} />
+              <Text color={"#00B2FF"} fontSize={"40px"} fontWeight={"bold"}>
+                VOD
+              </Text>
+              <Text fontSize={"24px"}>{lessonType?.vod?.description}</Text>
+            </Stack>
+          </HStack>
+        </Container>
 
-      <Center bgColor={"#F1F1F1"} py={24} mb={36}>
-        <HStack
-          fontSize={"140px"}
-          spacing={8}
-          fontWeight={"bold"}
-          whiteSpace={"nowrap"}
-        >
-          <Text color={popmint}>Be a</Text>
-          <Text color={popyellow}>STAR</Text>
-          <Text color={popmint}>with us!</Text>
-        </HStack>
-      </Center>
+        <Center bgColor={"#F1F1F1"} py={24}>
+          <HStack
+            fontSize={"140px"}
+            spacing={8}
+            fontWeight={"bold"}
+            whiteSpace={"nowrap"}
+          >
+            <Text color={popmint}>Be a</Text>
+            <Text color={popyellow}>STAR</Text>
+            <Text color={popmint}>with us!</Text>
+          </HStack>
+        </Center>
+      </Stack>
     </Flex>
   );
 };

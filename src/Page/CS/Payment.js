@@ -53,7 +53,7 @@ const Payment = () => {
   };
 
   return (
-    <Flex flex={1} direction={"column"} color={"#4E4E4E"}>
+    <Flex flex={1} direction={"column"} color={"#4E4E4E"} pb={16}>
       <Container minW={"container.xl"}>
         <HStack py={16} spacing={8} align={"start"} position={"relative"}>
           <Stack

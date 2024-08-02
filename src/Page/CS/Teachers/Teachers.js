@@ -39,7 +39,7 @@ const Teachers = () => {
   }, []);
 
   return (
-    <Flex flex={1}>
+    <Flex flex={1} pb={16}>
       <Container minW={"container.xl"}>
         <Box py={6}>
           <Text fontSize={"5xl"} fontWeight={"bold"} color={popyellow}>

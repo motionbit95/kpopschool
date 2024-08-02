@@ -323,6 +323,22 @@ const Topbar = () => {
                         >
                           1:1 inquiry
                         </Button>
+                        <Button
+                          w={"full"}
+                          position={"absolute"}
+                          bgColor={"white"}
+                          borderRadius={0}
+                          top={48}
+                          _hover={{ color: popmint }}
+                          onClick={() => {
+                            const myPageIndex = 4;
+                            Nav(`/mypage`, {
+                              state: { myPageIndex },
+                            });
+                          }}
+                        >
+                          setting
+                        </Button>
                       </>
                     ) : (
                       <>

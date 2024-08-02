@@ -118,7 +118,7 @@ const MyPage = () => {
 
   return (
     <Flex flex={1}>
-      <Container minW={"container.xl"} pb={16}>
+      <Container minW={"container.xl"} mb={-4}>
         <Flex py={6} justify={"space-between"} align={"end"}>
           <Text fontSize={"5xl"} fontWeight={"bold"} color={popmint}>
             My Page
@@ -212,6 +212,7 @@ const MyPage = () => {
                     pt={4}
                     borderLeft={"1px solid #E1E4E4"}
                     minH={"400px"}
+                    pb={20}
                   >
                     <TabPanel p={0} h={"full"}>
                       <Stack spacing={6}>
@@ -250,6 +251,7 @@ const MyPage = () => {
                     h={"full"}
                     borderLeft={"1px solid #E1E4E4"}
                     minH={"400px"}
+                    pb={20}
                   >
                     <TabPanel p={0} h={"full"}>
                       <PaymentHistory />
@@ -284,6 +286,7 @@ const MyPage = () => {
                     h={"full"}
                     borderLeft={"1px solid #E1E4E4"}
                     minH={"400px"}
+                    pb={20}
                   >
                     <TabPanel p={0} h={"full"}>
                       <RetainedCoupon />
@@ -312,6 +315,7 @@ const MyPage = () => {
                     h={"full"}
                     borderLeft={"1px solid #E1E4E4"}
                     minH={"400px"}
+                    pb={20}
                   >
                     <TabPanel p={0} h={"full"}>
                       <InquiryHistory />
@@ -356,6 +360,7 @@ const MyPage = () => {
                     pt={4}
                     borderLeft={"1px solid #E1E4E4"}
                     minH={"400px"}
+                    pb={20}
                   >
                     <TabPanel p={0} pl={10} h={"full"}>
                       <UserInfo
