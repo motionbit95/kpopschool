@@ -92,6 +92,7 @@ const TrainerDetail = (props) => {
             </HStack>
             <HStack spacing={4} w={"40%"}>
               <Box
+                boxSize={"160px"}
                 height={"100%"}
                 aspectRatio={"1"}
                 borderRadius={"md"}

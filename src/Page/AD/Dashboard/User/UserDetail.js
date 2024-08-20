@@ -145,12 +145,12 @@ const UserDetail = (props) => {
         }}
         onConfirm={() => {
           console.log("삭제되었습니다.");
-          setUserDeleteStep(2);
           // 유저 삭제
           fetch(`${host_url}/users/deleteAuth/${props.data.id}`)
-            .then((res) => res.json())
+            .then((res) => res.text())
             .then((res) => {
               console.log(res);
+              setUserDeleteStep(2);
             })
             .catch((err) => {
               console.log(err);

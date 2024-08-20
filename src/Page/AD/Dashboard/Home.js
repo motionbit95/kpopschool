@@ -573,7 +573,12 @@ const TrainerSection = ({ ...props }) => {
   return (
     <Stack spacing={3}>
       <HStack h={"full"}>
-        <Box boxSize={"200px"} borderRadius={"md"} bgColor={"#E1E4E4"}>
+        <Box
+          boxSize={"200px"}
+          borderRadius={"md"}
+          bgColor={"#E1E4E4"}
+          position={"relative"}
+        >
           <ImageUpload
             defaultValue={trainer ? trainer.image : ""}
             setImageUrl={(value) =>
@@ -624,7 +629,12 @@ const CurriculumSection = ({ ...props }) => {
   return (
     <Stack spacing={3}>
       <HStack>
-        <Box boxSize={"200px"} borderRadius={"md"} bgColor={"#E1E4E4"}>
+        <Box
+          boxSize={"200px"}
+          borderRadius={"md"}
+          bgColor={"#E1E4E4"}
+          position={"relative"}
+        >
           <ImageUpload
             defaultValue={curriculum ? curriculum.image : ""}
             setImageUrl={(value) =>
@@ -658,7 +668,7 @@ const CurriculumSection = ({ ...props }) => {
 const PromotionSection = ({ ...props }) => {
   return (
     <Stack spacing={3}>
-      <Box w={"full"} h={"300px"} borderRadius={"md"}>
+      <Box w={"full"} h={"300px"} borderRadius={"md"} position={"relative"}>
         <ImageUpload
           defaultValue={props.defaultValue}
           setImageUrl={props.setImageUrl}
@@ -684,7 +694,12 @@ const LessonSection = ({ ...props }) => {
   return (
     <Stack spacing={3}>
       <HStack>
-        <Box boxSize={"200px"} borderRadius={"md"} bgColor={"#E1E4E4"}>
+        <Box
+          boxSize={"200px"}
+          borderRadius={"md"}
+          bgColor={"#E1E4E4"}
+          position={"relative"}
+        >
           <ImageUpload
             defaultValue={lesson ? lesson.image : ""}
             setImageUrl={(value) =>

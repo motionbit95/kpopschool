@@ -349,36 +349,42 @@ const Program = () => {
           </Tab>
         </TabList>
         <TabPanels>
-          <TabPanel>
-            <Stack>
-              {item?.classes?.map((value, index) => (
-                <HStack border={"1px solid #E1E4E4"} borderRadius={"md"} p={4}>
-                  {value.file.length > 0 && (
-                    <Image
-                      src={require("../../../Asset/Image/video.png")}
-                      alt={value.title}
-                    />
-                  )}
-                  <Stack>
-                    <Text fontSize={"22px"} fontWeight={"600"}>
-                      {index + 1}. {value.title}
-                    </Text>
-                    <Text fontSize={"15px"} color="#8c8c8c">
-                      {value.details}
-                    </Text>
-                    {value.link.length > 0 && (
-                      <Link
-                        style={{ color: "#8c8c8c", fontSize: "12px" }}
-                        onClick={() => window.open(value.link)}
-                      >
-                        🔗 {value.link}
-                      </Link>
+          <Container minW={"container.xl"} py={8}>
+            <TabPanel>
+              <Stack>
+                {item?.classes?.map((value, index) => (
+                  <HStack
+                    border={"1px solid #E1E4E4"}
+                    borderRadius={"md"}
+                    p={4}
+                  >
+                    {value.file.length > 0 && (
+                      <Image
+                        src={require("../../../Asset/Image/video.png")}
+                        alt={value.title}
+                      />
                     )}
-                  </Stack>
-                </HStack>
-              ))}
-            </Stack>
-          </TabPanel>
+                    <Stack>
+                      <Text fontSize={"22px"} fontWeight={"600"}>
+                        {index + 1}. {value.title}
+                      </Text>
+                      <Text fontSize={"15px"} color="#8c8c8c">
+                        {value.details}
+                      </Text>
+                      {value.link.length > 0 && (
+                        <Link
+                          style={{ color: "#8c8c8c", fontSize: "12px" }}
+                          onClick={() => window.open(value.link)}
+                        >
+                          🔗 {value.link}
+                        </Link>
+                      )}
+                    </Stack>
+                  </HStack>
+                ))}
+              </Stack>
+            </TabPanel>
+          </Container>
           <TabPanel>
             <Container minW={"container.xl"} py={8}>
               <InputGroup h={"60px"} alignItems={"center"}>

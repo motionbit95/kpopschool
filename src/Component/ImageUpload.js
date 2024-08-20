@@ -2,6 +2,7 @@ import { Box, Button, Center, IconButton, Image } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { IoAddCircle } from "react-icons/io5";
 import { host_url, popmint } from "../App";
+import { AddIcon, EditIcon } from "@chakra-ui/icons";
 
 const ImageUpload = ({ ...props }) => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -63,20 +64,44 @@ const ImageUpload = ({ ...props }) => {
         ref={imageRef}
         style={{ display: "none" }}
       />
-      {!imageUrl && (
+      {/* Image Add Button */}
+      <Box position={"absolute"} top={2} right={2}>
+        {imageUrl ? (
+          <IconButton
+            _hover={{ bgColor: "#000000aa" }}
+            borderRadius={"full"}
+            icon={<EditIcon />}
+            size="sm"
+            color={"white"}
+            bgColor={"#00000088"}
+            onClick={() => imageRef.current.click()}
+          />
+        ) : (
+          <IconButton
+            _hover={{ bgColor: "#000000aa" }}
+            borderRadius={"full"}
+            icon={<AddIcon />}
+            size="sm"
+            color={"white"}
+            bgColor={popmint}
+            onClick={() => imageRef.current.click()}
+          />
+        )}
+      </Box>
+      {/* {!imageUrl && (
         <IoAddCircle
           color={popmint}
           style={{ width: "36px", height: "36px" }}
           onClick={() => imageRef.current.click()}
         />
-      )}
+      )} */}
       {imageUrl && (
         <Image
           src={imageUrl}
           alt="Uploaded"
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
           borderRadius={"md"}
-          onClick={() => imageRef.current.click()}
+          // onClick={() => imageRef.current.click()}
         />
       )}
     </Center>

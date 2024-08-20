@@ -101,7 +101,13 @@ const CreateCoupon = () => {
             </Box>
           </HStack>
           <HStack w={"full"} spacing={6}>
-            <Box w="320px" h="156px" bgColor={"gray.200"} borderRadius={"md"}>
+            <Box
+              w="320px"
+              h="156px"
+              bgColor={"gray.200"}
+              borderRadius={"md"}
+              position={"relative"}
+            >
               <ImageUpload
                 setImageUrl={(url) =>
                   setFormData({ ...formData, thumbnail: url })
