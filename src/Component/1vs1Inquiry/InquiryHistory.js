@@ -12,6 +12,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { host_url, popmag, popmint, popyellow } from "../../App";
+import { auth } from "../../Firebase/Config";
 
 const InquiryHistory = () => {
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
@@ -28,27 +29,36 @@ const InquiryHistory = () => {
   useEffect(() => {
     const getInquirys = async () => {
       // 필터링은 검색을 통해서 진행한다.
-      fetch(`${host_url}/inquiry/search`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          conditions: [
-            // 유저 uid 검색해서 가져와야 한다.
-          ],
-        }),
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          // console.log(res);
-          setInquirydata(res);
-        })
-        .catch((err) => {
-          // console.log(err);
-          console.log("데이터가 없습니다");
-          setInquirydata([]);
-        });
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          fetch(`${host_url}/inquiry/search`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              conditions: [
+                // 유저 uid 검색해서 가져와야 한다.
+                {
+                  field: "id",
+                  operator: "==",
+                  value: user.uid,
+                },
+              ],
+            }),
+          })
+            .then((res) => res.json())
+            .then((res) => {
+              // console.log(res);
+              setInquirydata(res);
+            })
+            .catch((err) => {
+              // console.log(err);
+              console.log("데이터가 없습니다");
+              setInquirydata([]);
+            });
+        }
+      });
     };
 
     getInquirys();

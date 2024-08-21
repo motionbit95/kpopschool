@@ -44,6 +44,7 @@ import { getWeekDates, Schedule } from "../../AD/Class/Class";
 import { auth } from "../../../Firebase/Config";
 
 const TeacherDetail = (props) => {
+  const [user, setUser] = useState({});
   const [teacher, setTeacher] = useState({});
   const [reviews, setReviews] = useState([]);
   const [curriculums, setCurriculums] = useState([]);
@@ -144,6 +145,7 @@ const TeacherDetail = (props) => {
             .then((res) => {
               // 유저 정보
               // console.log("user", res);
+              setUser(res);
               reviewData.userName = res.name;
               reviewData.userProfile = res.profile;
             })
@@ -291,6 +293,20 @@ const TeacherDetail = (props) => {
   };
 
   const addReview = () => {
+    if (user.classes) {
+      let isStudent = false;
+      user.classes.forEach((element) => {
+        if (element.curriculum === teacher.curriculum) {
+          isStudent = true;
+        }
+      });
+
+      if (!isStudent) {
+        alert("You are not a student of this curriculum");
+        return;
+      }
+    }
+
     setCurrentReview({
       comment: "",
       teacherId: "",

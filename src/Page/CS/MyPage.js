@@ -34,6 +34,7 @@ import TeacherDashboard from "./TeacherDashboard";
 import Management from "./Management";
 import { auth } from "../../Firebase/Config";
 import { host_url, popmag, popyellow, popmint } from "../../App";
+import { signOut } from "firebase/auth";
 
 const MyPage = () => {
   const navigation = useNavigate();
@@ -346,10 +347,20 @@ const MyPage = () => {
                         ))}
                       </Stack>
                       <Stack p={6} borderTop={"1px solid #00C3BA"}>
-                        <Text color={popyellow} fontWeight={"600"}>
+                        <Text
+                          color={popyellow}
+                          fontWeight={"600"}
+                          onClick={() => signOut()}
+                          cursor={"pointer"}
+                        >
                           LOGOUT
                         </Text>
-                        <Text color={popmag} fontWeight={"600"}>
+                        <Text
+                          color={popmag}
+                          fontWeight={"600"}
+                          cursor={"pointer"}
+                          onClick={() => navigation("/signout")}
+                        >
                           Membership Withdrawal
                         </Text>
                       </Stack>

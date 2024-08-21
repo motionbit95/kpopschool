@@ -121,6 +121,7 @@ const Cummunity = () => {
                 onChange={(index) => console.log(index)}
               >
                 <TabList
+                  borderRight={"1px solid #E1E4E4"}
                   flexDirection={"column"}
                   w={"500px"}
                   overflowY={"scroll"}
@@ -151,12 +152,7 @@ const Cummunity = () => {
                     </Tab>
                   ))}
                 </TabList>
-                <TabPanels
-                  borderLeft={"1px solid #E1E4E4"}
-                  h={"full"}
-                  pl={2}
-                  minW={"600px"}
-                >
+                <TabPanels h={"full"} pl={2} minW={"600px"}>
                   {events.map((event, id) => (
                     <TabPanel key={id} p={0} h={"full"}>
                       <Stack h={"full"} spacing={4}>

@@ -14,6 +14,13 @@ import {
 import React, { useState } from "react";
 import { popmag, popmint } from "../../App";
 import { CheckCircleIcon } from "@chakra-ui/icons";
+import {
+  EmailAuthProvider,
+  getAuth,
+  reauthenticateWithCredential,
+  updatePassword,
+} from "firebase/auth";
+import { auth } from "../../Firebase/Config";
 
 const PasswordChange = () => {
   const [isEmailCode, setIsEmailCode] = useState(false);
@@ -50,13 +57,61 @@ const PasswordForm = (props) => {
   };
 
   const handleSubmit = () => {
-    // 현재 유저 비밀번호와, 입력된 비밀번호 일치할때 진행 - 현재 구현 X
-    if (newPassword === verifymPassword) {
-      alert("Email code 발송");
-      props.setIsEmailCode(true);
-    } else if (newPassword !== verifymPassword) {
-      alert("new password and verify password not match");
+    if (
+      currentPassword === "" ||
+      newPassword === "" ||
+      verifymPassword === ""
+    ) {
+      alert("Please fill out all the fields");
+      return;
     }
+
+    if (newPassword !== verifymPassword) {
+      alert("new password and verify password not match");
+      return;
+    }
+
+    // 사용자 인증 가져오기
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (user) {
+      // 사용자가 입력한 현재 비밀번호
+
+      // 자격 증명 생성 (이메일과 현재 비밀번호를 사용)
+      const credential = EmailAuthProvider.credential(
+        user.email,
+        currentPassword
+      );
+
+      // 다시 인증 시도
+      reauthenticateWithCredential(user, credential)
+        .then(() => {
+          updatePassword(user, newPassword)
+            .then(() => {
+              console.log("비밀번호가 성공적으로 변경되었습니다.");
+              alert("Password changed successfully");
+            })
+            .catch((error) => {
+              console.error("비밀번호 변경 중 오류 발생:", error);
+              alert(error.message);
+            });
+        })
+        .catch((error) => {
+          console.error("다시 인증 중 오류 발생:", error);
+          alert(error.message);
+        });
+    } else {
+      console.log("로그인된 사용자가 없습니다.");
+      alert("Login required");
+    }
+    // 현재 유저 비밀번호와, 입력된 비밀번호 일치할때 진행 - 현재 구현 X
+    // if (newPassword === verifymPassword) {
+    //   alert("Email code 발송");
+    //   props.setIsEmailCode(true);
+    // } else if (newPassword !== verifymPassword) {
+    //   alert("new password and verify password not match");
+    // }
   };
   return (
     <Stack divider={<StackDivider borderColor="gray.200" />} spacing={8}>
@@ -77,6 +132,7 @@ const PasswordForm = (props) => {
             w={"200px"}
             name="current-password"
             onChange={handlePWUpdate}
+            type="password"
           />
         </Stack>
         <Stack spacing={3}>
@@ -89,12 +145,14 @@ const PasswordForm = (props) => {
               placeholder="new Password"
               name="new-password"
               onChange={handlePWUpdate}
+              type="password"
             />
             <Input
               w={"200px"}
               placeholder="verify Password"
               name="verify-password"
               onChange={handlePWUpdate}
+              type="password"
             />
           </Stack>
           <Text color={popmint}>Forgot your password?</Text>
@@ -116,7 +174,11 @@ const PasswordForm = (props) => {
         </Stack>
         <HStack>
           <Input w={"200px"} />
-          <Button color={"white"} bgColor={popmint}>
+          <Button
+            color={"white"}
+            bgColor={popmint}
+            onClick={() => props.setIsSecurity(true)}
+          >
             Get Code
           </Button>
         </HStack>
@@ -136,7 +198,7 @@ const EmailCodeForm = (props) => {
           Confirm you email address
         </Text>
         <Stack spacing={0} fontSize={"sm"} align={"center"}>
-          <Text>We sent a confirmation email to your accont</Text>
+          <Text>We sent a confirmation email to your account</Text>
           <Text>
             check your email and click on the confirmation link to continue
           </Text>

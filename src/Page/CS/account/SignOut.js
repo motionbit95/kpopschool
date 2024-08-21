@@ -10,18 +10,24 @@ import {
   Radio,
   Stack,
   Text,
+  VStack,
 } from "@chakra-ui/react";
-import { host_url } from "../../../App";
+import { host_url, popblue, popmint } from "../../../App";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../../Firebase/Config";
 
 const SignOut = () => {
+  const navigate = useNavigate();
   const [step, setStep] = useState(0);
+  const [currentPassword, setCurrentPassword] = useState("");
   const confirmPassword = () => {
     // 현재 유저의 패스워드 비교
     // 소셜 로그인의 경우는?
     // TODO - 패스워드 일치 시
     // 탈퇴
-    const uid = "ombyTaM13UVeTZ5SJCNcWbgoOgB3";
-    fetch(`${host_url}/users/deleteAuth/${uid}`)
+    console.log("currentPassword", currentPassword, auth.currentUser.uid);
+
+    fetch(`${host_url}/users/deleteAuth/${auth.currentUser.uid}`)
       .then((res) => res.text())
       .then((res) => {
         console.log(res);
@@ -42,9 +48,25 @@ const SignOut = () => {
         </Box>
         {step === 0 && <Step1 />}
         {step === 1 && <Step2 />}
-        {step === 2 && <Step3 />}
+        {step === 2 && (
+          <Step3 onChange={(e) => setCurrentPassword(e.target.value)} />
+        )}
         {step === 3 && <Step4 />}
-        <Button onClick={() => confirmPassword()}>CONTINUE</Button>
+        <Button
+          onClick={() => {
+            step === 2
+              ? confirmPassword()
+              : step === 3
+              ? navigate("/")
+              : setStep(step + 1);
+          }}
+          bgColor={popmint}
+          color={"white"}
+          size={"lg"}
+          w={"full"}
+        >
+          {step === 3 ? "HOME" : "CONTINUE"}
+        </Button>
       </Stack>
     </Center>
   );
@@ -54,15 +76,24 @@ export default SignOut;
 
 const Step1 = () => {
   return (
-    <Stack>
-      <Text>Do you really want to leave K-Pop School?</Text>
-      <Text>When re-registering, usage history will not be restored.</Text>
-      <Text>
+    <VStack spacing={4} py={8}>
+      <Text
+        whiteSpace={"nowrap"}
+        textAlign={"center"}
+        fontWeight={"600"}
+        fontSize={"lg"}
+      >
+        Do you really want to leave K-Pop School?
+      </Text>
+      <Text textAlign={"center"} fontSize={"md"}>
+        When re-registering, usage history will not be restored.
+      </Text>
+      <Text textAlign={"center"} fontSize={"sm"} color={"gray.500"}>
         {`Personal information of withdrawn members will be stored safely \nfor
           a certain period of time in accordance with relevant laws and \nwill
           be automatically destroyed thereafter.`}
       </Text>
-    </Stack>
+    </VStack>
   );
 };
 const Step2 = () => {
@@ -75,8 +106,16 @@ const Step2 = () => {
     "etc",
   ];
   return (
-    <Stack>
-      <Text>Please tell us the reason for your withdrawal</Text>
+    <VStack py={4} whiteSpace={"nowrap"}>
+      <Text
+        whiteSpace={"nowrap"}
+        textAlign={"center"}
+        fontWeight={"600"}
+        fontSize={"md"}
+        py={2}
+      >
+        Please tell us the reason for your withdrawal
+      </Text>
       <Stack>
         {items.map((item) => (
           <Stack>
@@ -84,30 +123,49 @@ const Step2 = () => {
               <Radio />
               <Text>{item}</Text>
             </HStack>
-            {item === "etc" && <Input />}
+            {item === "etc" && (
+              <Input
+                placeholder="Please provide reason"
+                variant={"flushed"}
+                mx={8}
+              />
+            )}
           </Stack>
         ))}
       </Stack>
-    </Stack>
+    </VStack>
   );
 };
-const Step3 = () => {
+const Step3 = (props) => {
   return (
-    <Stack>
-      <Text>Enter your password to close your account</Text>
-      <Input />
+    <Stack py={4}>
+      <Text
+        whiteSpace={"nowrap"}
+        textAlign={"center"}
+        fontWeight={"600"}
+        fontSize={"md"}
+        py={2}
+      >
+        Enter your password to close your account
+      </Text>
+      <Input type="password" placeholder="Password" onChange={props.onChange} />
     </Stack>
   );
 };
 const Step4 = () => {
   return (
-    <Stack>
-      <Text>we closed your account</Text>
-      <Text>
-        Goodbye!
-        <br />
-        Hope to see you again
+    <Stack py={8}>
+      <Text
+        fontSize={"20px"}
+        fontWeight={"600"}
+        color={popblue}
+        align={"center"}
+        py={4}
+        whiteSpace={"pre-line"}
+      >
+        {"Goodbye!\nHope to see you again"}
       </Text>
+      <Text align={"center"}>{"we closed your account"}</Text>
     </Stack>
   );
 };

@@ -11,6 +11,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { host_url, popmint } from "../App";
+import { toDate } from "date-fns";
 
 const RetainedCoupon = () => {
   const [list, setList] = useState([]);
@@ -68,10 +69,10 @@ const RetainedCoupon = () => {
                 `}</Td>
                 <Td textAlign={"center"}>
                   {/* {item.use_end} */}
-                  {/* {toDate(item.use_end)} */}
+                  {toDate(item.use_end).toLocaleDateString("en-US")}
                 </Td>
                 <Td textAlign={"center"}>
-                  {/* {toDate(item.use_end) < currentDate ? "X" : "O"} */}
+                  {toDate(item.use_end) < currentDate ? "X" : "O"}
                 </Td>
               </Tr>
             ))}
