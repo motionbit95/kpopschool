@@ -225,8 +225,8 @@ const ClassList = (props) => {
         let classes = [];
         res.forEach((data) => {
           if (data.classes) {
-            data.classes.forEach((schedule) => {
-              classes.push({
+            data.classes?.forEach((schedule) => {
+              classes?.push({
                 ...schedule,
                 difficulty: data.difficulty,
                 curriculum: data.title,
@@ -234,7 +234,7 @@ const ClassList = (props) => {
             });
           }
         });
-        setClasses(classes.flat());
+        setClasses(classes?.flat());
       })
       .catch((err) => {
         console.log(err);
@@ -261,37 +261,37 @@ const ClassList = (props) => {
     getWeekDates().forEach((date, index) => {
       console.log(date, index);
       if (index === 0) {
-        monday = classes.filter((data) => {
+        monday = classes?.filter((data) => {
           return data?.date === date;
         });
       }
       if (index === 1) {
-        tuesday = classes.filter((data) => {
+        tuesday = classes?.filter((data) => {
           return data?.date === date;
         });
       }
       if (index === 2) {
-        wednesday = classes.filter((data) => {
+        wednesday = classes?.filter((data) => {
           return data?.date === date;
         });
       }
       if (index === 3) {
-        thursday = classes.filter((data) => {
+        thursday = classes?.filter((data) => {
           return data?.date === date;
         });
       }
       if (index === 4) {
-        friday = classes.filter((data) => {
+        friday = classes?.filter((data) => {
           return data?.date === date;
         });
       }
       if (index === 5) {
-        saturday = classes.filter((data) => {
+        saturday = classes?.filter((data) => {
           return data?.date === date;
         });
       }
       if (index === 6) {
-        sunday = classes.filter((data) => {
+        sunday = classes?.filter((data) => {
           return data?.date === date;
         });
       }
@@ -665,9 +665,9 @@ const AddClass = (props) => {
                     maxW={"150px"}
                     // onChange={(e) =>
                     //   setClasses([
-                    //     ...classes.slice(0, index),
+                    //     ...classes?.slice(0, index),
                     //     { ...classes[index], location: e.target.value },
-                    //     ...classes.slice(index + 1),
+                    //     ...classes?.slice(index + 1),
                     //   ])
                     // }
                     onChange={(e) =>
@@ -868,7 +868,7 @@ const AddClass = (props) => {
             rowGap={16}
             p={16}
           >
-            {classes.map((item, index) => (
+            {classes?.map((item, index) => (
               <GridItem
                 key={index}
                 border={"1px solid #e1e1e1"}
@@ -882,9 +882,9 @@ const AddClass = (props) => {
                       placeholder="class title"
                       onChange={(e) => {
                         setClasses([
-                          ...classes.slice(0, index),
+                          ...classes?.slice(0, index),
                           { ...classes[index], title: e.target.value },
-                          ...classes.slice(index + 1),
+                          ...classes?.slice(index + 1),
                         ]);
                       }}
                     />
@@ -896,9 +896,9 @@ const AddClass = (props) => {
                       placeholder="description"
                       onChange={(e) => {
                         setClasses([
-                          ...classes.slice(0, index),
+                          ...classes?.slice(0, index),
                           { ...classes[index], details: e.target.value },
-                          ...classes.slice(index + 1),
+                          ...classes?.slice(index + 1),
                         ]);
                       }}
                     />
@@ -913,9 +913,9 @@ const AddClass = (props) => {
                           variant={"flushed"}
                           onChange={(e) => {
                             setClasses([
-                              ...classes.slice(0, index),
+                              ...classes?.slice(0, index),
                               { ...classes[index], link: e.target.value },
-                              ...classes.slice(index + 1),
+                              ...classes?.slice(index + 1),
                             ]);
                           }}
                         ></Input>
@@ -930,9 +930,9 @@ const AddClass = (props) => {
                           variant={"flushed"}
                           onChange={(e) => {
                             setClasses([
-                              ...classes.slice(0, index),
+                              ...classes?.slice(0, index),
                               { ...classes[index], file: e.target.value },
-                              ...classes.slice(index + 1),
+                              ...classes?.slice(index + 1),
                             ]);
                           }}
                         ></Input>
@@ -945,9 +945,9 @@ const AddClass = (props) => {
                       placeholder="DD/MM/YY"
                       onChange={(e) => {
                         setClasses([
-                          ...classes.slice(0, index),
+                          ...classes?.slice(0, index),
                           { ...classes[index], date: e.target.value },
-                          ...classes.slice(index + 1),
+                          ...classes?.slice(index + 1),
                         ]);
                       }}
                     />
@@ -962,9 +962,9 @@ const AddClass = (props) => {
                         placeholder="HH:MM"
                         onChange={(e) => {
                           setClasses([
-                            ...classes.slice(0, index),
+                            ...classes?.slice(0, index),
                             { ...classes[index], startTime: e.target.value },
-                            ...classes.slice(index + 1),
+                            ...classes?.slice(index + 1),
                           ]);
                         }}
                       />
@@ -974,9 +974,9 @@ const AddClass = (props) => {
                         placeholder="HH:MM"
                         onChange={(e) => {
                           setClasses([
-                            ...classes.slice(0, index),
+                            ...classes?.slice(0, index),
                             { ...classes[index], endTime: e.target.value },
-                            ...classes.slice(index + 1),
+                            ...classes?.slice(index + 1),
                           ]);
                         }}
                       />

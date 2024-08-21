@@ -53,8 +53,8 @@ const CurriculumDetail = () => {
         let classes = [];
         res.forEach((data) => {
           if (data.classes) {
-            data.classes.forEach((schedule) => {
-              classes.push({
+            data.classes?.forEach((schedule) => {
+              classes?.push({
                 ...schedule,
                 difficulty: data.difficulty,
                 curriculum: data.title,
@@ -62,7 +62,7 @@ const CurriculumDetail = () => {
             });
           }
         });
-        setClasses(classes.flat());
+        setClasses(classes?.flat());
       })
       .catch((err) => {
         console.log(err);
@@ -88,37 +88,37 @@ const CurriculumDetail = () => {
       sunday = [];
     getWeekDates().forEach((date, index) => {
       if (index === 0) {
-        monday = classes.filter((data) => {
+        monday = classes?.filter((data) => {
           return data?.date === date;
         });
       }
       if (index === 1) {
-        tuesday = classes.filter((data) => {
+        tuesday = classes?.filter((data) => {
           return data?.date === date;
         });
       }
       if (index === 2) {
-        wednesday = classes.filter((data) => {
+        wednesday = classes?.filter((data) => {
           return data?.date === date;
         });
       }
       if (index === 3) {
-        thursday = classes.filter((data) => {
+        thursday = classes?.filter((data) => {
           return data?.date === date;
         });
       }
       if (index === 4) {
-        friday = classes.filter((data) => {
+        friday = classes?.filter((data) => {
           return data?.date === date;
         });
       }
       if (index === 5) {
-        saturday = classes.filter((data) => {
+        saturday = classes?.filter((data) => {
           return data?.date === date;
         });
       }
       if (index === 6) {
-        sunday = classes.filter((data) => {
+        sunday = classes?.filter((data) => {
           return data?.date === date;
         });
       }

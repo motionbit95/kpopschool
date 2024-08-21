@@ -27,19 +27,53 @@ import React, { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { host_url, popyellow, popblue, popmint } from "../../../App";
+import { auth } from "../../../Firebase/Config";
 
 const Program = () => {
   const location = useLocation();
   const { state } = location;
   const { item, teacher } = state;
   const toast = useToast();
+  const [userInfo, setUserInfo] = useState({});
   const [isFavorite, setIsFavorite] = useState(false);
   const navigate = useNavigate();
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        fetch(`${host_url}/users/get`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: user.uid,
+          }),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(
+              res.interestClass,
+              item.id,
+              res.interestClass.includes(item.id)
+            );
+            setUserInfo(res);
+            setIsFavorite(
+              res.interestClass ? res.interestClass.includes(item.id) : false
+            );
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
+  }, []);
+
+  useEffect(() => {
     const tempList = [];
     console.log(item);
+
     fetch(`${host_url}/review/search`, {
       method: "POST",
       headers: {
@@ -114,6 +148,34 @@ const Program = () => {
   const handleClickFavorite = () => {
     console.log("handleClickFavorite");
     setIsFavorite(!isFavorite);
+
+    let interestClass = userInfo.interestClass ? userInfo.interestClass : [];
+
+    if (!isFavorite) {
+      if (!interestClass.includes(item.id)) interestClass.push(item.id);
+    } else {
+      interestClass = interestClass.filter((id) => id !== item.id);
+    }
+
+    console.log(interestClass);
+
+    fetch(`${host_url}/users/update`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: userInfo.id,
+        interestClass: interestClass,
+      }),
+    })
+      .then((res) => res.text())
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleClickCopyLink = () => {
@@ -210,7 +272,7 @@ const Program = () => {
                       icon={
                         <Image
                           src={
-                            isFavorite
+                            !isFavorite
                               ? require("../../../Asset/Icon/star.png")
                               : require("../../../Asset/Icon/starFill.png")
                           }

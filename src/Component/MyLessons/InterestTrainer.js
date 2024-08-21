@@ -63,7 +63,7 @@ const InterestTrainer = () => {
               if (res.interestTeacher) {
                 let teachers = [];
                 console.log(res.interestTeacher);
-                res.interestTeacher.forEach((element) => {
+                res.interestTeacher?.forEach((element) => {
                   fetch(`${host_url}/teachers/get/`, {
                     method: "POST",
                     headers: {

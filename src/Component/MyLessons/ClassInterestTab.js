@@ -12,8 +12,10 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
-import { popyellow, popblue, popmint, popmag } from "../../App";
+import React, { useEffect, useState } from "react";
+import { popyellow, popblue, popmint, popmag, host_url } from "../../App";
+import { auth } from "../../Firebase/Config";
+import { useNavigate } from "react-router-dom";
 
 const ClassInterestTab = () => {
   const tabLists = [
@@ -59,6 +61,52 @@ const ClassInterestTab = () => {
     },
   ];
 
+  const [classes, setClasses] = useState([]);
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        fetch(`${host_url}/users/get`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: user.uid,
+          }),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            let classes = [];
+            res.interestClass?.forEach((element) => {
+              console.log(element);
+              fetch(`${host_url}/curriculums/get`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  id: element,
+                }),
+              })
+                .then((res) => res.json())
+                .then((res) => {
+                  // console.log(res);
+                  classes?.push(res);
+                  setClasses(classes);
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
+  }, []);
+
   return (
     <Stack>
       <Tabs variant={"soft-rounded"}>
@@ -79,28 +127,28 @@ const ClassInterestTab = () => {
         <TabPanels>
           <TabPanel px={0} pt={8} pb={0}>
             <Stack spacing={2}>
-              {items.map((item) => (
+              {classes?.map((item) => (
                 <TabsItem item={item} />
               ))}
             </Stack>
           </TabPanel>
           <TabPanel px={0} pt={8} pb={0}>
             <Stack spacing={2}>
-              {items.map(
+              {classes?.map(
                 (item) => item.category === "Vocal" && <TabsItem item={item} />
               )}
             </Stack>
           </TabPanel>
           <TabPanel px={0} pt={8} pb={0}>
             <Stack spacing={2}>
-              {items.map(
+              {classes?.map(
                 (item) => item.category === "Dance" && <TabsItem item={item} />
               )}
             </Stack>
           </TabPanel>
           <TabPanel px={0} pt={8} pb={0}>
             <Stack spacing={2}>
-              {items.map(
+              {classes?.map(
                 (item) =>
                   item.difficulty === "Beginner" && <TabsItem item={item} />
               )}
@@ -108,7 +156,7 @@ const ClassInterestTab = () => {
           </TabPanel>
           <TabPanel px={0} pt={8} pb={0}>
             <Stack spacing={2}>
-              {items.map(
+              {classes?.map(
                 (item) =>
                   item.difficulty === "Intermediate" && <TabsItem item={item} />
               )}
@@ -116,7 +164,7 @@ const ClassInterestTab = () => {
           </TabPanel>
           <TabPanel px={0} pt={8} pb={0}>
             <Stack spacing={2}>
-              {items.map(
+              {classes?.map(
                 (item) =>
                   item.difficulty === "Advanced" && <TabsItem item={item} />
               )}
@@ -124,7 +172,7 @@ const ClassInterestTab = () => {
           </TabPanel>
           <TabPanel px={0} pt={8} pb={0}>
             <Stack spacing={2}>
-              {items.map(
+              {classes?.map(
                 (item) =>
                   item.difficulty === "Professional" && <TabsItem item={item} />
               )}
@@ -139,6 +187,26 @@ const ClassInterestTab = () => {
 export default ClassInterestTab;
 
 const TabsItem = ({ item }) => {
+  const navigate = useNavigate();
+  const [trainer, setTrainer] = useState({});
+  useEffect(() => {
+    fetch(`${host_url}/teachers/get`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: item.teacherId,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setTrainer(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <HStack
       border={"1px solid #E1E4E4"}
@@ -166,7 +234,7 @@ const TabsItem = ({ item }) => {
                 Progress
               </Text>
               <Text fontSize={"15px"} color={"#4E4E4E"} fontWeight={"500"}>
-                {item.progress}
+                {Math.round((item.sessions / item.totalSessions) * 100)}%
               </Text>
             </Stack>
           )}
@@ -175,7 +243,7 @@ const TabsItem = ({ item }) => {
               Trainer
             </Text>
             <Text fontSize={"15px"} color={"#4E4E4E"} fontWeight={"500"}>
-              Mr.Lee
+              {trainer.name}
             </Text>
           </Stack>
           <Stack>
@@ -183,7 +251,7 @@ const TabsItem = ({ item }) => {
               Sessions
             </Text>
             <Text fontSize={"15px"} color={"#4E4E4E"} fontWeight={"500"}>
-              {item.sessions}
+              {item.sessions}/{item.totalSessions}
             </Text>
           </Stack>
           <Stack>
@@ -194,24 +262,35 @@ const TabsItem = ({ item }) => {
               {item.month}
             </Text>
           </Stack>
-          {item?.progress !== "100%" && (
-            <Stack>
-              <Text fontSize={"sm"} fontWeight={"500"} color={"#C0C0C0"}>
-                STATE
-              </Text>
-              <Text fontSize={"15px"} color={"#4E4E4E"} fontWeight={"500"}>
-                {item.state}
-              </Text>
-            </Stack>
-          )}
+          <Stack>
+            <Text fontSize={"sm"} fontWeight={"500"} color={"#C0C0C0"}>
+              GMT
+            </Text>
+            <Text fontSize={"15px"} color={"#4E4E4E"} fontWeight={"500"}>
+              {item.gmt ? "element.gmt" : "LA"}
+            </Text>
+          </Stack>
+          <Stack>
+            <Text fontSize={"sm"} fontWeight={"500"} color={"#C0C0C0"}>
+              STATE
+            </Text>
+            <Text fontSize={"15px"} color={"#4E4E4E"} fontWeight={"500"}>
+              {"in Class"}
+            </Text>
+          </Stack>
         </Flex>
         <Button
           size={"lg"}
           bgColor={item.progress !== "100%" ? "#00B2FF" : popmag}
           color={"white"}
-          onClick={() => console.log(item)}
+          onClick={() => {
+            let teacher = trainer;
+            navigate(`/curriculum/program/${item.id}`, {
+              state: { item, teacher },
+            });
+          }}
         >
-          {item.progress !== "100%" ? "CONTINUE" : "APPLY"}
+          {"CONTINUE"}
         </Button>
       </HStack>
     </HStack>

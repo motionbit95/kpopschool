@@ -1,41 +1,80 @@
 import { Button, Flex, HStack, Image, Stack, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { items } from "./ClassInterestTab";
-import { popmag } from "../../App";
+import { host_url, popmag } from "../../App";
+import { auth } from "../../Firebase/Config";
+import { useNavigate } from "react-router-dom";
 
 const ClassinProgress = () => {
-  const items = [
-    {
-      difficulty: "Professional",
-      category: "Vocal",
-      title: "Debut or Die",
-      trainer: "Mr.Lee",
-      sessions: "3/12",
-      month: "3",
-      progress: "24%",
-      state: "in Class",
-    },
-    {
-      difficulty: "Advanced",
-      category: "Dance",
-      title: "Important of Prounance",
-      trainer: "Mr.Lee",
-      sessions: "5/24",
-      month: "6",
-      progress: "24%",
-      state: "in Class",
-    },
-    {
-      difficulty: "Beginner",
-      category: "Vocal",
-      title: "Vocal Pitch",
-      trainer: "Jessie",
-      sessions: "5/24",
-      month: "6",
-      progress: "100%",
-      state: "in Class",
-    },
-  ];
+  const [classes, setClasses] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const getClasses = () => {
+      auth.onAuthStateChanged((user) => {
+        fetch(`${host_url}/users/get`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: user.uid,
+          }),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            // 커리큘럼 정보를 가지고옵니다.
+            let classes = [];
+
+            res.classes?.forEach((element) => {
+              fetch(`${host_url}/curriculums/get`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  id: element.curriculum,
+                }),
+              })
+                .then((res) => res.json())
+                .then((res) => {
+                  let curriculum = res;
+                  fetch(`${host_url}/users/get`, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      id: res.teacherId,
+                    }),
+                  })
+                    .then((res) => res.json())
+                    .then((teacher) => {
+                      classes?.push({
+                        curriculum: curriculum,
+                        teacher: teacher,
+                        element: element,
+                      });
+                      setClasses(classes);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    };
+
+    getClasses();
+    console.log("classes!!!!", classes);
+  }, []);
 
   return (
     <Stack>
@@ -43,7 +82,7 @@ const ClassinProgress = () => {
         Class in Progress
       </Text>
       <Stack spacing={2}>
-        {items.map((item) => (
+        {classes?.map(({ curriculum, teacher, element }) => (
           <HStack
             border={"1px solid #E1E4E4"}
             px={6}
@@ -53,34 +92,31 @@ const ClassinProgress = () => {
           >
             <Stack>
               <Text fontWeight={"500"}>
-                {item.difficulty} {item.category} course
+                {curriculum.difficulty} {curriculum.category} course
               </Text>
               <Text fontSize={"22px"} fontWeight={"700"}>
-                {item.title}
+                {curriculum.title}
               </Text>
             </Stack>
             <HStack spacing={8} textAlign={"center"}>
               <Flex gap={4}>
-                {item?.progress === "100%" || (
-                  <Stack>
-                    <Text fontSize={"sm"} fontWeight={"500"} color={"#C0C0C0"}>
-                      Progress
-                    </Text>
-                    <Text
-                      fontSize={"15px"}
-                      color={"#4E4E4E"}
-                      fontWeight={"500"}
-                    >
-                      {item.progress}
-                    </Text>
-                  </Stack>
-                )}
+                <Stack>
+                  <Text fontSize={"sm"} fontWeight={"500"} color={"#C0C0C0"}>
+                    Progress
+                  </Text>
+                  <Text fontSize={"15px"} color={"#4E4E4E"} fontWeight={"500"}>
+                    {Math.round(
+                      (element.sessions / element.totalSession) * 100
+                    )}
+                    %
+                  </Text>
+                </Stack>
                 <Stack>
                   <Text fontSize={"sm"} fontWeight={"500"} color={"#C0C0C0"}>
                     Trainer
                   </Text>
                   <Text fontSize={"15px"} color={"#4E4E4E"} fontWeight={"500"}>
-                    Mr.Lee
+                    {teacher.name}
                   </Text>
                 </Stack>
                 <Stack>
@@ -88,7 +124,7 @@ const ClassinProgress = () => {
                     Sessions
                   </Text>
                   <Text fontSize={"15px"} color={"#4E4E4E"} fontWeight={"500"}>
-                    {item.sessions}
+                    {element.sessions}/{element.totalSession}
                   </Text>
                 </Stack>
                 <Stack>
@@ -96,32 +132,39 @@ const ClassinProgress = () => {
                     Month
                   </Text>
                   <Text fontSize={"15px"} color={"#4E4E4E"} fontWeight={"500"}>
-                    {item.month}
+                    {element.month}
                   </Text>
                 </Stack>
-                {item?.progress === "100%" || (
-                  <Stack>
-                    <Text fontSize={"sm"} fontWeight={"500"} color={"#C0C0C0"}>
-                      STATE
-                    </Text>
-                    <Text
-                      fontSize={"15px"}
-                      color={"#4E4E4E"}
-                      fontWeight={"500"}
-                    >
-                      {item.state}
-                    </Text>
-                  </Stack>
-                )}
+                <Stack>
+                  <Text fontSize={"sm"} fontWeight={"500"} color={"#C0C0C0"}>
+                    GMT
+                  </Text>
+                  <Text fontSize={"15px"} color={"#4E4E4E"} fontWeight={"500"}>
+                    {element.gmt ? "element.gmt" : "LA"}
+                  </Text>
+                </Stack>
+                <Stack>
+                  <Text fontSize={"sm"} fontWeight={"500"} color={"#C0C0C0"}>
+                    STATE
+                  </Text>
+                  <Text fontSize={"15px"} color={"#4E4E4E"} fontWeight={"500"}>
+                    {"in Class"}
+                  </Text>
+                </Stack>
               </Flex>
               <Button
                 w={"140px"}
                 size={"lg"}
-                bgColor={item.progress !== "100%" ? "#00B2FF" : popmag}
+                bgColor={element.sessions !== "100%" ? "#00B2FF" : popmag}
                 color={"white"}
-                onClick={() => console.log(item)}
+                onClick={() => {
+                  let item = curriculum;
+                  navigate(`/curriculum/program/${curriculum.id}`, {
+                    state: { item, teacher },
+                  });
+                }}
               >
-                {item.progress !== "100%" ? "CONTINUE" : "APPLY"}
+                CONTINUE
               </Button>
             </HStack>
           </HStack>
