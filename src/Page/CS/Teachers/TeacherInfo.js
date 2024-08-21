@@ -28,6 +28,10 @@ const TeacherInfo = ({ teacher }) => {
   });
 
   useEffect(() => {
+    console.log(isFavorite);
+  }, [isFavorite]);
+
+  useEffect(() => {
     auth.onAuthStateChanged((user) => {
       console.log(user.uid);
       fetch(`${host_url}/users/get`, {
@@ -42,13 +46,17 @@ const TeacherInfo = ({ teacher }) => {
         .then((res) => res.json())
         .then((res) => {
           setUserInfo(res);
-          setIsFavorite(res.interestTeacher.includes(teacher.id));
+          setIsFavorite(
+            res.interestTeacher
+              ? res.interestTeacher.includes(teacher.id)
+              : false
+          );
         })
         .catch((err) => {
           console.log(err);
         });
     });
-  }, []);
+  }, [teacher.id]);
 
   const handleClickFavorite = () => {
     setModalState({
@@ -62,7 +70,7 @@ const TeacherInfo = ({ teacher }) => {
       ? userInfo.interestTeacher
       : [];
 
-    if (isFavorite) {
+    if (!isFavorite) {
       if (!interestTeacher.includes(teacher.id))
         interestTeacher.push(teacher.id);
     } else {
@@ -121,7 +129,7 @@ const TeacherInfo = ({ teacher }) => {
         <Text textAlign={"center"}>
           Trainer has been{" "}
           <span style={{ color: popmag }}>
-            {!isFavorite ? "added" : "removed"}{" "}
+            {isFavorite ? "added" : "removed"}{" "}
           </span>
           to the list
         </Text>
@@ -175,7 +183,7 @@ const TeacherInfo = ({ teacher }) => {
           icon={
             <Image
               src={
-                isFavorite
+                !isFavorite
                   ? require("../../../Asset/Icon/star.png")
                   : require("../../../Asset/Icon/starFill.png")
               }

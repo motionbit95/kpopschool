@@ -23,6 +23,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { popyellow, popblue, popmint, host_url } from "../../App";
+import { auth } from "../../Firebase/Config";
 
 const InterestTrainer = () => {
   const tabLists = ["ALL", "VOCAL", "DANCE"];
@@ -30,19 +31,65 @@ const InterestTrainer = () => {
   const [teachers, setTeachers] = useState([]);
 
   useEffect(() => {
+    // const getTeachers = async () => {
+    //   fetch(`${host_url}/teachers/list`)
+    //     .then((res) => res.json())
+    //     .then((res) => {
+    //       console.log(res);
+    //       const sortList = res.sort((a, b) => {
+    //         return a.index - b.index;
+    //       });
+    //       setTeachers(sortList);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // };
+
     const getTeachers = async () => {
-      fetch(`${host_url}/teachers/list`)
-        .then((res) => res.json())
-        .then((res) => {
-          console.log(res);
-          const sortList = res.sort((a, b) => {
-            return a.index - b.index;
-          });
-          setTeachers(sortList);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          fetch(`${host_url}/users/get`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: user.uid,
+            }),
+          })
+            .then((res) => res.json())
+            .then((res) => {
+              if (res.interestTeacher) {
+                let teachers = [];
+                console.log(res.interestTeacher);
+                res.interestTeacher.forEach((element) => {
+                  fetch(`${host_url}/teachers/get/`, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      id: element,
+                    }),
+                  })
+                    .then((res) => res.json())
+                    .then((res) => {
+                      console.log(res);
+                      teachers.push(res);
+                      setTeachers(teachers);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                });
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      });
     };
     getTeachers();
     console.log(teachers);
