@@ -16,7 +16,12 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../../Firebase/Config";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import { popmint } from "../../../App";
 
 const Login = () => {
@@ -56,6 +61,35 @@ const Login = () => {
       }
     });
   };
+
+  const handleGoogleLogin = () => {
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+        navigate("/");
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+
+        alert(error.message);
+      });
+  };
+
   return (
     <Center minH={"100vh"}>
       <Stack minw={"320px"} align={"center"}>
@@ -114,6 +148,7 @@ const Login = () => {
             py={4}
           >
             <IconButton
+              onClick={handleGoogleLogin}
               borderRadius={"full"}
               icon={
                 <Image

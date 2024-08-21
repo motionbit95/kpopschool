@@ -15,6 +15,24 @@ import { LessonItem, TeacherItem } from "../../Component/HomeDetail";
 import ImageCarousel from "../../Component/ImageCarousel";
 import { host_url, popyellow, popmag, popmint } from "../../App";
 import { useNavigate } from "react-router-dom";
+import Slider from "react-slick";
+
+export function SimpleSlider({ images, ...props }) {
+  var settings = {
+    // dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+  return (
+    <Slider {...settings}>
+      {images?.map((image) => (
+        <Image src={image} alt="" />
+      ))}
+    </Slider>
+  );
+}
 
 const Home = () => {
   const Nav = useNavigate();
@@ -112,11 +130,12 @@ const Home = () => {
       <Stack spacing={"190px"}>
         <Container minW={"container.xl"}>
           <Stack spacing={16}>
-            <Stack direction={{ base: "column", md: "row" }}>
+            <SimpleSlider images={main?.banner} />
+            {/* <Stack direction={{ base: "column", md: "row" }}>
               <Box flex={1} borderRadius={"20"} overflow={"hidden"}>
                 <Image src={main?.banner?.[0]} alt={""} />
               </Box>
-            </Stack>
+            </Stack> */}
             <Stack spacing={12}>
               <Text fontSize={"xl"} whiteSpace={"pre-line"}>
                 {main?.description}

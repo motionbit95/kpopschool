@@ -32,6 +32,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../../../Firebase/Config";
 import { popmint } from "../../../App";
+import Info from "./Info";
 
 const SignUp = () => {
   const [step, setStep] = useState(0);
@@ -74,12 +75,16 @@ const SignUp = () => {
   return (
     <Center minH={"100vh"}>
       <Stack minw={"320px"} align={"center"}>
-        <Box boxSize={"200px"}>
-          <Image src={require("../../../Asset/Logo/KpopLogo.png")} />
-        </Box>
-        <Box w={"320px"} mt={-8}>
-          <Image src={require("../../../Asset/Image/K-popBanner.png")} />
-        </Box>
+        {step !== 3 && (
+          <>
+            <Box boxSize={"200px"}>
+              <Image src={require("../../../Asset/Logo/KpopLogo.png")} />
+            </Box>
+            <Box w={"320px"} mt={-8}>
+              <Image src={require("../../../Asset/Image/K-popBanner.png")} />
+            </Box>
+          </>
+        )}
         {step === 0 && (
           <EmailSignupForm
             setStep={(step) => {
@@ -109,12 +114,13 @@ const SignUp = () => {
           />
         )}
         {step === 3 && (
-          <NameSignupForm
-            setStep={setStep}
-            formData={formData}
-            setFormData={setFormData}
-            sendEmail={sendEmail}
-          />
+          <Info />
+          // <NameSignupForm
+          //   setStep={setStep}
+          //   formData={formData}
+          //   setFormData={setFormData}
+          //   sendEmail={sendEmail}
+          // />
         )}
       </Stack>
     </Center>
