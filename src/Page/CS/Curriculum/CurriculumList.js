@@ -9,15 +9,72 @@ import {
   Tag,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
-import { useLocation } from "react-router-dom";
-import { popyellow, popblue, popmint, popmag } from "../../../App";
+import { useLocation, useNavigate } from "react-router-dom";
+import { popyellow, popblue, popmint, popmag, host_url } from "../../../App";
 
 const CurriculumList = () => {
   const location = useLocation();
-  const { state } = location;
-  const { item } = state;
+  const state = location.state;
+  const { category, difficulty } = state;
+  const [item, setItem] = useState({
+    category: category,
+    difficulty: difficulty,
+  });
+
+  const [curriculums, setCurriculums] = useState([]);
+
+  useEffect(() => {
+    const getCurriculums = async () => {
+      const res = await fetch(`${host_url}/curriculums/search`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          conditions: [
+            { field: "category", operator: "==", value: category },
+            { field: "difficulty", operator: "==", value: difficulty },
+          ],
+        }),
+      });
+      const data = await res.json();
+      data.forEach((res, index) => {
+        console.log(res.teacherId);
+        if (!res.teacherId) return;
+        fetch(`${host_url}/users/get`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: res.teacherId,
+          }),
+        })
+          .then((res) => {
+            return res.json();
+          })
+          .then((res) => {
+            data[index].teacherName = res.name;
+            setCurriculums(data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    };
+    getCurriculums();
+  }, []);
+
+  useEffect(() => {
+    console.log(curriculums);
+    curriculums.forEach((item) => {
+      console.log(item);
+    });
+  }, [curriculums]);
+
+  const navigate = useNavigate();
   return (
     <Flex flex={1} direction={"column"} pb={16}>
       <Container minW={"container.xl"}>
@@ -53,29 +110,48 @@ const CurriculumList = () => {
             >
               {`${item.difficulty} course`}
             </Text>
-            {[1, 2, 3].map((item) => (
+            {curriculums.map((item) => (
               <HStack
+                cursor={"pointer"}
                 border={"1px solid #E1E4E4"}
                 borderRadius={"md"}
                 p={6}
                 justify={"space-between"}
+                onClick={() => {
+                  fetch(`${host_url}/teachers/get`, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      id: item.teacherId,
+                    }),
+                  })
+                    .then((res) => {
+                      return res.json();
+                    })
+                    .then((teacher) => {
+                      navigate("/curriculum/program/" + item.id, {
+                        state: { item, teacher },
+                      });
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                }}
               >
-                <HStack spacing={6}>
-                  <Box
-                    w={"246px"}
-                    h={"142px"}
-                    borderRadius={"lg"}
-                    bgColor={"gray.200"}
-                  >
-                    <Image />
-                  </Box>
+                <HStack spacing={6} alignItems={"start"}>
+                  <Image src={item.image} aspectRatio={3 / 2} h={"160px"} />
+
                   <Stack>
                     <Text fontWeight={"700"} fontSize={"22px"}>
-                      Title
+                      {item.title}
                     </Text>
                     <HStack spacing={8}>
                       <Text>Trainer</Text>
-                      <Text>ZEN</Text>
+                      <Text>
+                        {item.teacherName ? item.teacherName : "Unknown"}
+                      </Text>
                       <Flex gap={1} pb={2}>
                         {Array.from({ length: 5 }, (_, i) => (
                           <Image
@@ -92,13 +168,7 @@ const CurriculumList = () => {
                         ))}
                       </Flex>
                     </HStack>
-                    <Text>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s, when an unknown
-                      printer took a galley of type and scrambled it to make a
-                      type specimen book.
-                    </Text>
+                    <Text>{item.description}</Text>
                     <HStack
                       divider={<StackDivider borderColor={"#E1E4E4"} />}
                       spacing={3}
@@ -106,48 +176,48 @@ const CurriculumList = () => {
                     >
                       <HStack spacing={3}>
                         <Text>Number of lickes</Text>
-                        <Text color={popmint}>532</Text>
+                        <Text color={popmint}>{item.likes}</Text>
                       </HStack>
                       <HStack spacing={3}>
                         <Text>review</Text>
-                        <Text color={popmint}>15</Text>
+                        <Text color={popmint}>{item.review}</Text>
                       </HStack>
                       <HStack spacing={3}>
                         <Text>student</Text>
-                        <Text color={popmint}>6</Text>
+                        <Text color={popmint}>{item.student}</Text>
                       </HStack>
                     </HStack>
                     <HStack spacing={8}>
-                      <Stack>
+                      <HStack>
                         <Text fontSize={"15px"}>Month</Text>
                         <Text color={popmint} fontSize={"17px"}>
-                          3
+                          {item.month}
                         </Text>
-                      </Stack>
-                      <Stack>
+                      </HStack>
+                      <HStack>
                         <Text fontSize={"15px"}>Sessions</Text>
                         <HStack spacing={0} fontSize={"17px"}>
-                          <Text color={popmint}>2</Text>
-                          <Text>/12</Text>
+                          <Text color={popmint}>{item.sessions}</Text>
+                          <Text>/{item.totalSessions}</Text>
                         </HStack>
-                      </Stack>
-                      <Stack>
+                      </HStack>
+                      <HStack>
                         <Text fontSize={"15px"}>Price</Text>
                         <Text
                           color={popmint}
                           fontSize={"17px"}
-                        >{`$80 per session`}</Text>
-                      </Stack>
-                      <Stack>
+                        >{`$${item.price} per session`}</Text>
+                      </HStack>
+                      <HStack>
                         <Text fontSize={"15px"}>GMT</Text>
                         <Text color={popmint} fontSize={"17px"}>
-                          LA
+                          {item?.gmt ? item?.gmt : "LA"}
                         </Text>
-                      </Stack>
+                      </HStack>
                     </HStack>
                   </Stack>
                 </HStack>
-                <Text>in Progress</Text>
+                {/* <Text>in Progress</Text> */}
               </HStack>
             ))}
           </Stack>

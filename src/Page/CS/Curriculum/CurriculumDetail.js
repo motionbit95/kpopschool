@@ -434,8 +434,27 @@ const NotFound = () => {
 
 const Lessons = ({ item }) => {
   const Section = ({ item }) => {
+    const navigate = useNavigate();
+    const category = window.location.pathname.split("/").pop();
     return (
-      <Stack>
+      <Stack
+        cursor={"pointer"}
+        onClick={() => {
+          navigate(`/curriculum/list`, {
+            state: {
+              difficulty:
+                item?.title === "Beginner Course"
+                  ? "Beginner"
+                  : item?.title === "Intermediate Course"
+                  ? "Intermediate"
+                  : item?.title === "Advanced Course"
+                  ? "Advanced"
+                  : "Professional",
+              category: category,
+            },
+          });
+        }}
+      >
         <Text
           fontSize={"2xl"}
           fontWeight={"600"}
