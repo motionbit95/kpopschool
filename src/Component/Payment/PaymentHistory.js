@@ -9,10 +9,30 @@ import {
   Text,
   Tr,
 } from "@chakra-ui/react";
-import React from "react";
-import { popmint } from "../../App";
+import React, { useEffect, useState } from "react";
+import { host_url, popmint } from "../../App";
 
 const PaymentHistory = () => {
+  const [payment, setPayment] = useState([]);
+  useEffect(() => {
+    const getPayment = async () => {
+      let paymentList = [];
+      fetch(`${host_url}/payment/list`)
+        .then((res) => res.json())
+        .then((data) => {
+          let paymentList = [];
+          data.forEach((element) => {
+            console.log(element.items?.[0].description);
+            // 상품데이터
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    getPayment();
+  }, []);
   return (
     <Stack color={"#4E4E4E"}>
       <TableContainer>

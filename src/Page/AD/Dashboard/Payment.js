@@ -245,7 +245,9 @@ const Payment = () => {
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentData = paymentList.slice(startIndex, endIndex);
+  const [currentData, setCurrentData] = useState(
+    paymentList.slice(startIndex, endIndex)
+  );
 
   const [vat, setVat] = useState(0);
   const [preAmount, setPreAmount] = useState(0);
@@ -258,9 +260,12 @@ const Payment = () => {
         .then((data) => {
           let paymentList = [];
           data.forEach((element) => {
-            let pid = element?.items[0]?.price?.product;
+            let pid = element?.items?.[0]?.price?.product;
             let uid = element?.uid;
             let user = {};
+            if (!pid || !uid) return;
+
+            console.log(element);
 
             // 유저 정보를 가지고 온다
             fetch(`${host_url}/users/get`, {
@@ -279,13 +284,14 @@ const Payment = () => {
               .catch((err) => {
                 console.log(err);
               });
+
             // 상품 정보를 가지고 온다
             fetch(`${host_url}/payment/get/product/${pid}`)
               .then((res) => res.json())
               .then((res) => {
                 paymentList.push({ ...element, user: user, curriculum: res });
 
-                // console.log(paymentList.length, data.length);
+                console.log(paymentList);
                 if (paymentList.length === data.length) {
                   setPaymentList(paymentList);
                 }
@@ -302,6 +308,11 @@ const Payment = () => {
 
     getPayment();
   }, []);
+
+  useEffect(() => {
+    console.log(paymentList);
+    // setCurrentData(paymentList.slice(startIndex, endIndex));
+  }, [paymentList]);
 
   useEffect(() => {
     let data = getRatio(paymentList);

@@ -4,6 +4,7 @@ import {
   Flex,
   HStack,
   Image,
+  Select,
   Stack,
   Text,
   Textarea,
@@ -16,6 +17,7 @@ import { popmint } from "../../../../App";
 
 const TrainerDetail = (props) => {
   const [career, setCareer] = useState("");
+  const [division, setDivision] = useState("");
   const toDate = (timestamp) => {
     return new Date(timestamp._seconds * 1000);
   };
@@ -157,6 +159,16 @@ const TrainerDetail = (props) => {
                 </Stack>
               </Stack>
             </HStack>
+            <Stack>
+              <Text>Division</Text>
+              <Select
+                defaultValue={props.data.division}
+                onChange={(e) => setDivision(e.target.value)}
+              >
+                <option value="Vocal">Vocal</option>
+                <option value="Dance">Dance</option>
+              </Select>
+            </Stack>
             <Stack>
               <Text>About Career</Text>
               <Textarea
