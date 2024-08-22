@@ -202,7 +202,12 @@ const UserDetail = (props) => {
             <HStack justify={"space-between"} spacing={8}>
               <HStack spacing={4} w={"40%"}>
                 <Box boxSize={"160px"} borderRadius={"md"} bgColor={"gray.200"}>
-                  <Image src={props.data.profile} borderRadius={"md"} />
+                  <Image
+                    src={props.data.profile}
+                    borderRadius={"md"}
+                    aspectRatio={1}
+                    objectFit={"cover"}
+                  />
                 </Box>
                 <Stack spacing={4}>
                   <Text fontSize={"lg"} fontWeight={"500"}>
